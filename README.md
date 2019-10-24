@@ -21,6 +21,12 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Classes </h1>
 
+*TO-DO*
+
+1. When we figure out what classes we need, add them here and describe them
+
 <h1> Prototypes / Reaserch </h1>
+
+
 
 <h1> Development and Testing Roadmap </h1>
