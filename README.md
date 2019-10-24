@@ -12,9 +12,12 @@ We have created a shell in C++ called rshell, which is able to do the following:
 1. Print a command prompt (e.g. `$`)
 2. Read in a line of command(s) (and connector(s)) from standard input
 3. Execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
-Inline `code` has `back-ticks around` it.
 
 <h1> Diagram </h1>
+*TO-DO*
+
+1. Make an OMT diagram using [Lucid Chart](https://www.lucidchart.com/pages/)
+2. Add the image to the `/images` folder and link it here
 
 <h1> Classes </h1>
 
