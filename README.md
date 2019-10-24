@@ -2,7 +2,7 @@
 
 <h1> Project Information </h1>
 
-<h1> PIntroduction </h1>
+<h1> Introduction </h1>
 
 <h1> Diagram </h1>
 
