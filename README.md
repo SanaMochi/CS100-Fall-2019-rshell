@@ -7,6 +7,10 @@ Fall 2019
 * Sana Mohiuddin, 862075288, smohi002@ucr.edu
 
 <h1> Introduction </h1>
+We have created a shell in C++ called rshell, which is able to do the following: 
+1. Print a command prompt (e.g. `$`)
+2. Read in a line of command(s) (and connector(s)) from standard input
+3. Execute the appropriate commands using '''fork''', '''execvp''', and '''waitpid'''
 
 <h1> Diagram </h1>
 
