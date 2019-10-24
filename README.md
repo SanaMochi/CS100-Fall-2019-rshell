@@ -6,6 +6,12 @@ Fall 2019
 *Michael Wdowiak, 862063084, mwdow001@ucr.edu 
 *Sana Mohiuddin, 862075288, smohi002@ucr.edu
 
+Sometimes you want bullet points:
+
+* Start a line with a star
+* Profit!
+
+
 <h1> Introduction </h1>
 
 <h1> Diagram </h1>
