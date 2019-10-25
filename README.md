@@ -14,6 +14,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
 3. Execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
 
 <h1> Diagram </h1>
+
 *TO-DO*
 
 1. Make an OMT diagram using [Lucid Chart](https://www.lucidchart.com/pages/)
@@ -27,6 +28,14 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Prototypes / Reaserch </h1>
 
+Insert relavant prototypes that we have made that using `fork()` , `execvp()` , and `waitpid()`, and figure out a parser to use to get input from the console (maybe `std::cin' ?)
+
 
 
 <h1> Development and Testing Roadmap </h1>
+
+* Figure out a parser to use
+* Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
+* Make integration tests using the `googletest` framework
+* Create [Github issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) for each partner to work on
+* Add more items as they become necessary
