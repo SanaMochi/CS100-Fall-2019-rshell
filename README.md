@@ -21,6 +21,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
 <h1> Classes </h1>
 
 * Commands - will take in all of the executables and connectors into a vector (using std::cin)
+
                 class Commands {
                   vector <Commands*> comm;
                   void getCommands() {
@@ -32,6 +33,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
                 };
         
 * Connector - inherits from Commands; will have subclasses to run each command based on the connector
+
                 class Connector : public Commands {
                   vector <Command*> conn
                   public:
@@ -44,6 +46,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
                 };
 
 * SemicolonConnector - will run the next command (no matter what)
+
                 class SemicolonConnector : public Connector {
                   public:
                   bool isSemicolon() {
@@ -55,6 +58,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
                 };
     
 * ANDConnector - will execute the next command if the previous one was successful
+
                 class ADDConnector : public Connector {
                   public:
                   bool isADD() {
@@ -66,6 +70,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
                 };
 
 * ORConnector - will execute if the first one fails
+
                 class ORConnector : public Connector {
                   public:
                   bool isOR() {
@@ -77,6 +82,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
                 };
 
 * ExecutableExpression - inherits from Commands; will run the executables
+
                 class ExecutableExpression : public Command {
                   vector <Executable*> commandList;
                   Executable()
