@@ -20,13 +20,72 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Classes </h1>
 
-* Commands - will take in all of the executables and connectors into a vector.
+* Commands - will take in all of the executables and connectors into a vector (using std::cin)
+    class Commands {
+      vector <Commands*> comm;
+      void getCommands() {
+        string command;
+        while (cin >> command) {
+          comm.push_back(command);
+        }
+      }
+    };
+        
 * Connector - inherits from Commands; will have subclasses to run each command based on the connector
+    class Connector : public Commands {
+      vector <Command*> conn
+      public:
+      void getConnectors() {
+        for (int i = 0; comm.at(i) != " " && comm.at(i) != "\n"; i++) {
+          conn.push_back(comm.at(i));
+        }
+      }
+      virtual void runCommands() {...}
+    };
+      
 * SemicolonConnector - will run the next command (no matter what)
+    class SemicolonConnector : public Connector {
+      public:
+      bool isSemicolon() {
+        //check if semicolon (or not && and not ||)
+      }
+      void runCommand() {
+        //always execute next command
+      }
+    };
+    
 * ANDConnector - will execute the next command if the previous one was successful
-* OrConnector - will execute if the first one fails
-* ExecutableExpression - inherits from Commands; will run the executables
+    class ADDConnector : public Connector {
+      public:
+      bool isADD() {
+        //check if ADD (or not ; and not ||)
+      }
+      void runCommand() {
+        //execute next command is prev passed
+      }
+    };
 
+* ORConnector - will execute if the first one fails
+    class ORConnector : public Connector {
+      public:
+      bool isOR() {
+        //check if OR (or not ; and not &&)
+      }
+      void runCommand() {
+        //execute next command is prev failed
+      }
+    };
+
+* ExecutableExpression - inherits from Commands; will run the executables
+    class ExecutableExpression : public Command {
+      vector <Executable*> commandList;
+      Executable()
+      void parse(const string&) {...}
+      void runExeCommand() {
+        //runs the command
+        //executes next command based on connector
+      }
+    }
 
 <h1> Prototypes / Reaserch </h1>
 
