@@ -15,10 +15,8 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Diagram </h1>
 
-*TO-DO*
-
-1. Make an OMT diagram using [Lucid Chart](https://www.lucidchart.com/pages/)
-2. Add the image to the `/images` folder and link it here
+![Image of OMT Diagram]
+(https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
 
 <h1> Classes </h1>
 
