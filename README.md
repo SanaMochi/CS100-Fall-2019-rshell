@@ -22,9 +22,13 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Classes </h1>
 
-*TO-DO*
+Commands - will take in all of the executables and connectors into a vector.
+Connector - inherits from Commands; will have subclasses to run each command based on the connector
+SemicolonConnector - will run the next command (no matter what)
+ANDConnector - will execute the next command if the previous one was successful
+OrConnector - will execute if the first one fails
+ExecutableExpression - inherits from Commands; will run the executables
 
-1. When we figure out what classes we need, add them here and describe them
 
 <h1> Prototypes / Reaserch </h1>
 
