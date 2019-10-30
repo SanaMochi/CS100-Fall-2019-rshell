@@ -15,8 +15,8 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Diagram </h1>
 
-![Image of OMT Diagram]
-(/images/RShell_OMT_Diagram.jpeg)
+![OMT Diagram:]
+(https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
 
 <h1> Classes </h1>
 
