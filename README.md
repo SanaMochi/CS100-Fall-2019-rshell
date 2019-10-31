@@ -94,7 +94,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Prototypes / Reaserch </h1>
 
-Insert relavant prototypes that we have made that using `fork()` , `execvp()` , and `waitpid()`, and figure out a parser to use to get input from the console (maybe `std::cin' ?)
+We have created basic prototypes that test and show basic functionality of 'fork()' , 'waitpid()', and 'execvp'
 
 
 
