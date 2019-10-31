@@ -94,7 +94,7 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Prototypes / Reaserch </h1>
 
-We have created basic prototypes that test and show basic functionality of `fork()` , `execvp()` , and `waitpid()` 
+We have created basic prototypes that test and show basic functionality of `fork()` , `execvp()` , `waitpid()`, and parse function.
 
 
 
