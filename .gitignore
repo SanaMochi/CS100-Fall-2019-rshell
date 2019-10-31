@@ -33,6 +33,9 @@
 *.app
 rshell
 test
+fork
+waitpid
+execvp
 
 # CMake Temp Files
 CMakeCache.txt
