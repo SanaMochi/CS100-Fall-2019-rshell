@@ -101,7 +101,7 @@ We have created basic prototypes that test and show basic functionality of `fork
 <h1> Development and Testing Roadmap </h1>
 
 * Figure out a parser to use and the functionality of other relevant functions that work with it
+* Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
 * Make unit tests using the `googletest` framework
 * Make integration tests using the `googletest` framework
-* Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
 * Add more items as they become necessary
