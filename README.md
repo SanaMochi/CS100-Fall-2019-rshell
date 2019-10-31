@@ -100,8 +100,8 @@ We have created basic prototypes that test and show basic functionality of `fork
 
 <h1> Development and Testing Roadmap </h1>
 
-* Figure out a parser to use
 * Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
+* Figure out a parser to use and the functionality of other relevant functions that work with it
+* Make unit tests using the `googletest` framework
 * Make integration tests using the `googletest` framework
-* Create [Github issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) for each partner to work on
 * Add more items as they become necessary
