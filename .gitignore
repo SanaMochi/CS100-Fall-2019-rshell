@@ -36,6 +36,7 @@ test
 fork
 waitpid
 execvp
+parser
 
 # CMake Temp Files
 CMakeCache.txt
