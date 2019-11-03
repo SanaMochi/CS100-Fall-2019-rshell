@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
 
 int main(int argc, char **argv){
 std::string command;
@@ -8,7 +9,9 @@ std::string space = " ";
 std::string and_symbol = "&&";
 std::string or_symbol = "||";
 std::string end_symbol = ";";
-std::string path = std::getenv("PATH");
+//std::string path = std::getenv("PATH");
+//path += "/";
+std::string path = "/bin/";
 int pos_start = 0;
 int pos_end = 0;
 std::vector<std::string> commands;
@@ -47,7 +50,8 @@ for(int i = 0; i < commands.size(); i++){
 }
 
 for(int i = 0; i < to_run.size(); i++){
-	std::cout << to_run.at(i) << std::endl;
+	//std::cout << to_run.at(i) << std::endl;
+	std::system((path + to_run.at(i)).c_str());
 }
 return 0;
 }
