@@ -1,4 +1,6 @@
 #include "../header/command.h"
 
 Command::Command(){}
-//Command::Command(Parser* p){ parser = *p;}
+virtual runCommand(const char * file, char * const argv[]){
+	execvp(file, argv[]);
+}

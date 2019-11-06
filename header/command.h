@@ -5,14 +5,14 @@
 #include <iostream>
 //#include "parser.h"
 #include <vector>
+#include "component.h"
+#include <unistd.h>
 
-class Command{
-	//Parser parser;
-	std::vector<std::string> commands;
+class Command : public Component{
 	
 	public:
 	Command();
-	//Command(Parser* p);
+	virtual runCommand(const char * file, char * const argv[]);
 	
 };
 

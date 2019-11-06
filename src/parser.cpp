@@ -66,33 +66,67 @@ void Parser::parseFileNames(){
 		std::cout << fileNames.at(i) << " , ";
 	}
 }
-//--------------------fix this-------------------------
+
 //parses the arguments for each file, followed by a ??? to signify that these arguments are for the next file
 void Parser::parseArguments(){
-	int pos_start = 0;
-	int pos_end = 0;
-	pos_start = to_run.at(0).find(" ", pos_start);
+	//int pos_start = 0;
+	//int pos_end = 0;
+	
 	for(int x = 0; x < to_run.size(); x++){
+		int pos_start = 0;
+		int pos_end = 0;
+		pos_start = to_run.at(x).find(" ", pos_start) + 1;		//ignore the firsr word (its the file name)
+		//std::cout << "\nStarting pos: " << pos_start;
 		while(to_run.at(x).find(space, pos_start) != -1){	
-		pos_end = to_run.at(x).find(space, pos_start);
-		//std::cout << "Starting pos: " << pos_start << " Ending pos " << pos_end <<  " Next space: " << command.find(space, pos_start) << std::endl;
-		argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
-		pos_end++;
-		pos_start = pos_end;
+			pos_end = to_run.at(x).find(space, pos_start);
+			//std::cout << "Starting pos: " << pos_start << " Ending pos " << pos_end <<  " Next space: " << command.find(space, pos_start) << std::endl;
+			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
+			//std::cout << "\nCutting : " << to_run.at(x) << " at " << pos_start << " to " << pos_end << " = " << to_run.at(x).substr(pos_start, (pos_end - pos_start));
+			pos_end++;
+			pos_start = pos_end;
 	}
 	//assume there is always a last command ofter the last space
-	argv.push_back(to_run.at(x).substr(pos_start, (to_run.at(x).size() - pos_start)));
+	//argv.push_back(to_run.at(x).substr(pos_start, (to_run.at(x).size() - pos_start)));
 	argv.push_back("???");
 	}
 }
 
 void Parser::printArguments(){
-	std::cout << std::endl << "Size: " << argv.size() << std::endl;
+	//std::cout << std::endl << "Size: " << argv.size() << std::endl;
 	for(int i = 0; i < argv.size(); i++){
 		std::cout << argv.at(i) << " , ";
 	}
 	std::cout << std::endl;
 }
+
+
+const char* Parser::formatFileName(int location){
+	return fileNames.at(location).c_str();
+}
+
+//---------------fix this----------------
+char** Parser::formatArguments(int location){
+	pointerSize = argv.size();
+	char** c = new char *[pointerSize];
+	//char * const c[] = new char *[pointerSize];
+	//char* c  ;//= new char *[pointerSize];
+	
+	for(int i = 0; i < argv.size(); i++){
+		c[i] = const_cast<char*> (argv.at(i).c_str());
+	}
+	//char * const args[] = {c};
+	//store pointer to delete later
+	pointer = c;
+	return c;
+}
+//--------------------fix this--------------------
+void Parser::deletePointer(){
+	for(int i = 0; i < pointerSize; i++)
+		delete[] pointer[i];
+	delete[] pointer;
+}
+
+
 
 
 

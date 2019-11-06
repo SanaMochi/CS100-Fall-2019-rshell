@@ -16,6 +16,8 @@ class Parser{
 	std::vector<std::string> to_run;
 	std::vector<std::string> fileNames;
 	std::vector<std::string> argv;
+	char ** pointer;
+	int pointerSize;
 	
 	public:
 	Parser();
@@ -31,6 +33,10 @@ class Parser{
 	void parseFileNames();
 	void parseArguments();
 	void printArguments();
+	
+	const char* formatFileName(int location);
+	char ** formatArguments(int location);
+	
+	void deletePointer();
 };
-
 #endif

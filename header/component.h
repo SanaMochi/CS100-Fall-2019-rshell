@@ -1,4 +1,5 @@
+
 class Component{
 	
-	runCommand(const char * file, char * const argv[]);
+	virtual runCommand(const char * file, char * const argv[]) = 0;
 };
