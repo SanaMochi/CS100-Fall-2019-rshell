@@ -1,6 +1,14 @@
 #include "../header/command.h"
 
 Command::Command(){}
-virtual runCommand(const char * file, char * const argv[]){
-	execvp(file, argv[]);
+
+
+void Command::runCommand(const char * file, char ** argv){
+	execvp(file, argv);
 }
+
+void Command::runAll(std::vector<std::string> file_names, std::vector<std::string> arguments){
+	//TO-DO
+}
+
+
