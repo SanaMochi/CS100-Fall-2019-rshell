@@ -6,7 +6,8 @@ Command::Command(){}
 int* status;
 
 void Command::runCommand(char ** argv){
-	execvp(*argv, argv);					//hijacks child process to retun to parent		
+	execvp(*argv, argv);					//hijacks child process to retun to parent
+	//to do, check for error
 }
 
 void Command::runAll(int numOfCommands, Parser* parser){

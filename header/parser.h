@@ -50,6 +50,7 @@ class Parser{
 	int getSize(); 			//get total number of commands to execute
 	
 	void resetVectors();	//resets all vectors to empty, incase multiple lines of commands are typed
+	void preParse(); 		//look for comments or exit
 	void deletePointer();	//TO-DO
 };
 #endif

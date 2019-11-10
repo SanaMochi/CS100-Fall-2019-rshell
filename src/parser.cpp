@@ -13,6 +13,7 @@ void Parser::parse(){
 	int pos_start = 0;
 	int pos_end = 0;
 	resetVectors();
+	Parser::preParse();
 	while(command.find(space, pos_start) != -1){	
 		pos_end = command.find(space, pos_start);
 		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
@@ -139,6 +140,16 @@ void Parser::resetVectors(){
 	argv.erase(argv.begin(), argv.end());
 }
 
+void Parser::preParse(){
+											//look for comments
+	int commentLocation = command.find("#");
+	if(commentLocation != -1){
+		command.erase(commentLocation, (command.size() - commentLocation));
+	}
+											//trim and unwanted spaces
+	command.erase(command.find_last_not_of(" ")+1);
+	std::cout << std::endl << command << std::endl;
+}
 //--------------------fix this--------------------
 void Parser::deletePointer(){
 	for(int i = 0; i < pointerSize; i++)
