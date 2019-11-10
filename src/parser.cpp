@@ -12,6 +12,7 @@ void Parser::print(){
 void Parser::parse(){
 	int pos_start = 0;
 	int pos_end = 0;
+	resetVectors();
 	while(command.find(space, pos_start) != -1){	
 		pos_end = command.find(space, pos_start);
 		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
@@ -30,6 +31,9 @@ void Parser::parse(){
 	}
 	to_run.push_back(temp_str);
 	}
+	Parser::parseFileNames();
+	Parser::parseArguments();
+	numOfCommands = fileNames.size();
 }
 
 void Parser::printCommands(){
@@ -110,7 +114,6 @@ char** Parser::formatArguments(int location){
 			break;
 		commandCount++;
 	}
-		
 	pointerSize = commandCount;//argv.size();
 	pointerSize += 2;		// for some reson execvp ignores the first argument and there needs to be room for a null char at the end
 	char** c = new char *[pointerSize];
@@ -128,6 +131,13 @@ char** Parser::formatArguments(int location){
 }
 
 int Parser::getSize(){return fileNames.size();}
+
+void Parser::resetVectors(){
+	commands.erase(commands.begin(), commands.end());
+	to_run.erase(to_run.begin(), to_run.end());
+	fileNames.erase(fileNames.begin(), fileNames.end());
+	argv.erase(argv.begin(), argv.end());
+}
 
 //--------------------fix this--------------------
 void Parser::deletePointer(){

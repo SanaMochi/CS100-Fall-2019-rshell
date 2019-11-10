@@ -7,6 +7,8 @@
 
 
 class Parser{
+	public:
+	int numOfCommands;
 	std::string command;				//used to store the whole command entered as a string
 	std::string space = " ";			//
 	std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
@@ -23,7 +25,7 @@ class Parser{
 	char ** pointer;					//stores the pointer to the arguments to run, should probably delete dynamically alocated pointers?
 	int pointerSize;					//stores how many pointers deep the 2d array is, help with deleting?
 	
-	public:
+	//public:
 	Parser();
 	Parser(std::string s);
 	
@@ -47,6 +49,7 @@ class Parser{
 							//		execvp(formatFileName(i), formatArguments(i))
 	int getSize(); 			//get total number of commands to execute
 	
-	void deletePointer();
+	void resetVectors();	//resets all vectors to empty, incase multiple lines of commands are typed
+	void deletePointer();	//TO-DO
 };
 #endif
