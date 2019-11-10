@@ -17,7 +17,8 @@ int main(){
 			std::getline(std::cin, input);
 		}
 	p.getInput(input);
-	
+	if(input == "exit")
+		return 0;
 	//p.getInput(test);
 	p.parse();				//
 	//p.parseFileNames();		//could probably combine all 3 into 1 because they all need to be run
@@ -31,11 +32,14 @@ int main(){
 	
 
 	// c->runCommand(p.formatArguments(0));
-	c->runAll(p.getSize(), &p);
 	
+	c->runAll(p.getSize(), &p);
+	/*
+	std::cout << "\nPrint args: "; p.printArguments();
+	p.removeNextCommand(1);
+	std::cout << "\nPrint args: "; p.printArguments();
+	* */
 	std::cout << std::endl;
-	if(input == "exit")
-		return 0;
 	input = "";
 }
 	return 0;

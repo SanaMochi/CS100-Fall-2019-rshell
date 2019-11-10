@@ -2,7 +2,10 @@
 #define _COMPONENT_H_
 
 class Component{
-	Parser p;
+	
+	Component* c1;
+	Component* c2;
+	char** command;
 	
 	public:
 	virtual void runCommand(char ** argv) = 0;

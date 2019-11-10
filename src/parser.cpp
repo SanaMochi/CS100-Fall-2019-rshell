@@ -90,6 +90,13 @@ void Parser::printArguments(){
 	std::cout << std::endl;
 }
 
+void Parser::printFileNames(){
+	for(int i = 0; i < fileNames.size(); i++){
+		std::cout << fileNames.at(i) << " , ";
+	}
+	std::cout << std::endl;
+}
+
 
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
@@ -148,7 +155,38 @@ void Parser::preParse(){
 	}
 											//trim and unwanted spaces
 	command.erase(command.find_last_not_of(" ")+1);
-	std::cout << std::endl << command << std::endl;
+	//std::cout << std::endl << command << std::endl;
+}
+
+void Parser::removeNextCommand(int location){
+	if(location > numOfCommands)
+		return;
+	std::vector<std::string>::iterator loc = fileNames.begin() + location;
+	fileNames.erase(loc);
+	numOfCommands == fileNames.size();
+	int start = 0;
+	int end = 0;
+	int countQ = 0;
+	while(countQ != location){
+		for(int i = start; i < argv.size(); i++){
+			start++;
+			if(argv.at(i) == "???"){
+				countQ++;
+				break;
+			}
+			
+		}
+	}
+	//count how many commands are in between that ??? and the next one
+	for(int i = start; i < argv.size();i++){
+		if(argv.at(i) == "???")
+			break;
+		end++;
+	}
+	std::vector<std::string>::iterator v_start, v_end;
+	v_start = argv.begin() + start;
+	v_end = argv.begin() + start + end + 1;
+	argv.erase(v_start, v_end);
 }
 //--------------------fix this--------------------
 void Parser::deletePointer(){
