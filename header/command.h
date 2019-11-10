@@ -12,9 +12,9 @@ class Command : public Component{
 	Parser p;
 	public:
 	Command();
-	virtual void runCommand(const char * file, char ** argv);
+	virtual void runCommand(char ** argv);
 	
-	virtual void runAll(std::vector<std::string> file_names, std::vector<std::string> arguments);
+	virtual void runAll(int numOfCommands, Parser* parser);
 
 	
 };
