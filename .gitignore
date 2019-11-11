@@ -38,6 +38,7 @@ waitpid
 execvp
 parser
 main
+output.txt
 ./src/main
 
 # CMake Temp Files
