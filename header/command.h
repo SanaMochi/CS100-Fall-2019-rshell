@@ -9,13 +9,13 @@
 #include <unistd.h>
 
 class Command : public Component{
-	Parser p;
+	
 	public:
 	Command();
 	virtual void runCommand(char ** argv);
 	
 	virtual void runAll(int numOfCommands, Parser* parser);
-
+	//void makeList(int numOfCommands, Parser* parser);
 	
 };
 

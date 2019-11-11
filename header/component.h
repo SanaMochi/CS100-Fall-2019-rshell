@@ -3,8 +3,7 @@
 
 class Component{
 	
-	Component* c1;
-	Component* c2;
+	Component* nextCommand;
 	char** command;
 	
 	public:

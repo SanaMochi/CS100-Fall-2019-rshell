@@ -1,4 +1,5 @@
 #include "../header/parser.h"
+#include <stdio.h>
 
 Parser::Parser(){ command = "";}
 Parser::Parser(std::string s){ command = s; }
@@ -14,17 +15,32 @@ void Parser::parse(){
 	int pos_end = 0;
 	resetVectors();
 	Parser::preParse();
+	pattern.push_back("");
 	while(command.find(space, pos_start) != -1){	
 		pos_end = command.find(space, pos_start);
 		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
 		pos_end++;
 		pos_start = pos_end;
+		
+		
 	}
 	//assume there is always a last command ofter the last space
 	commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	
 	for(int i = 0; i < commands.size(); i++){
+		//std::cout << "\ncomparing: " << commands.at(i) << " and &&";
+		if(commands.at(i) == and_symbol)
+			pattern.push_back(and_symbol);
+		else if(commands.at(i) == or_symbol)
+			pattern.push_back(or_symbol);
+		else if(commands.at(i) == end_symbol)
+			pattern.push_back(end_symbol);
+	}
+	
+	for(int i = 0; i < commands.size(); i++){
 	std::string temp_str = "";
+	
+		
 	while(commands.size() != (i) && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
 		temp_str += commands.at(i);
 		temp_str += " ";
@@ -35,6 +51,7 @@ void Parser::parse(){
 	Parser::parseFileNames();
 	Parser::parseArguments();
 	numOfCommands = fileNames.size();
+	//pattern.push_back("");
 }
 
 void Parser::printCommands(){
@@ -47,7 +64,7 @@ void Parser::printCommands(){
 		std::cout << std::endl;
 	}
 	for(int i = 0; i < to_run.size(); i++){
-		std::cout << to_run.at(i) << " ,";
+		std::cout << to_run.at(i) << " , ";
 	}
 		std::cout << std::endl;
 }
@@ -97,12 +114,22 @@ void Parser::printFileNames(){
 	std::cout << std::endl;
 }
 
+void Parser::printPattern(){
+	for(int i = 0; i < pattern.size(); i++){
+		std::cout << pattern.at(i) << " , ";
+	}
+	std::cout << std::endl;
+}
+
+
 
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
 
 char** Parser::formatArguments(int location){
+	if(location >= argv.size() || location >= fileNames.size())
+		return nullptr;
 	int index = 0;
 	int countQ = 0;
 	int commandCount = 0;
@@ -133,7 +160,7 @@ char** Parser::formatArguments(int location){
 		c[num] = const_cast<char*> (argv.at(i).c_str()); 
 		num++;
 	}
-	c[num+1] = NULL;
+	c[num] = NULL;
 	pointer = c;
 	return c;
 }
@@ -141,10 +168,13 @@ char** Parser::formatArguments(int location){
 int Parser::getSize(){return fileNames.size();}
 
 void Parser::resetVectors(){
+	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
 	to_run.erase(to_run.begin(), to_run.end());
 	fileNames.erase(fileNames.begin(), fileNames.end());
 	argv.erase(argv.begin(), argv.end());
+	numOfCommands = 0;
+	//deletePointer();
 }
 
 void Parser::preParse(){
@@ -163,6 +193,7 @@ void Parser::removeNextCommand(int location){
 		return;
 	std::vector<std::string>::iterator loc = fileNames.begin() + location;
 	fileNames.erase(loc);
+	pattern.erase(loc);
 	numOfCommands == fileNames.size();
 	int start = 0;
 	int end = 0;
@@ -188,7 +219,15 @@ void Parser::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-//--------------------fix this--------------------
+
+bool Parser::shouldIExit(){
+	return exit;
+}
+
+void Parser::shouldIExit(bool shouldI){
+	exit = shouldI;
+}
+
 void Parser::deletePointer(){
 	for(int i = 0; i < pointerSize; i++)
 		delete[] pointer[i];

@@ -4,23 +4,35 @@
 #include "../header/command.h"
 
 
-int main(){
+int main(int argc, char *argv[]){
 	std::string input = "";
 	std::string test = "geany f1 || ls -a ./ -a ../ ; gedit -s f2";
 	char money = '$';
 	Parser p;
 	Component* c = new Command();
 	
+	if(argc > 1){
+		for(int i = 1; i < argc; i++){
+			input += argv[i];
+			input += " ";
+		}
+	}
+	//std::cout << "input: " << input;
 	while(input != "exit"){
+		
 		while(input == "\n" || input == ""){
 			std::cout << money;
+			//std::cout << "lets go bucko";
 			std::getline(std::cin, input);
 		}
 	p.getInput(input);
-	if(input == "exit")
+	std::cout << "\nInput: " << input <<"\n";
+	if(input == "exit" || p.shouldIExit()){
 		return 0;
+	}
 	//p.getInput(test);
 	p.parse();				//
+	input = "";
 	//p.parseFileNames();		//could probably combine all 3 into 1 because they all need to be run
 	//p.parseArguments();		//
 	
@@ -31,16 +43,18 @@ int main(){
 	//std::cout << "\nArgument 1: " << *(p.formatArguments(0));
 	
 
-	// c->runCommand(p.formatArguments(0));
-	
+	//c->runCommand(p.formatArguments(0));
+	//std::cout << "\nPrint commands: "; p.printCommands();
+	//std::cout << "\nPrint pattern: "; p.printPattern();
 	c->runAll(p.getSize(), &p);
 	/*
 	std::cout << "\nPrint args: "; p.printArguments();
 	p.removeNextCommand(1);
 	std::cout << "\nPrint args: "; p.printArguments();
 	* */
+	//std::cout << "input: " << input;
 	std::cout << std::endl;
-	input = "";
+	
 }
 	return 0;
 }
