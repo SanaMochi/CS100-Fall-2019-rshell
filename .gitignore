@@ -40,6 +40,7 @@ parser
 main
 output.txt
 ./src/main
+data-file
 
 # CMake Temp Files
 CMakeCache.txt
