@@ -12,32 +12,27 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
-//--------------------fix this-------------
-TEST(Test1, HelloWorld) {
-	std::string s = "echo hello world";
+
+TEST(Test1, single_command_test) {
+	system("./integration_tests/single_command_tests.sh");
 	std::string output;
-	std::fstream file; 
-    file.open("output.txt", std::ios::out); 
-    std::streambuf* coutBuffer = std::cout.rdbuf();	//store cout buffer
-    
-    std::streambuf* fileBuffer = file.rdbuf();		//store file buffer
-    
-	Parser p;
-	Component* c = new Command();
-	p.getInput(s);
-	p.parse();
-	std::cout.rdbuf(fileBuffer);				//write to file buffer instead of cout
-	
-	std::cout << "hello world";
-	
-	c->runAll(p.getSize(), &p);
-	std::cout.rdbuf(coutBuffer);				//return to cout buffer
-	
-	for(int i = 0; i < file.gcount(); i++)
-		output += file.get();
-	
-	
-	std::cout << std::endl << "File length: " << file.gcount() << std::endl;
+	std::ifstream file;
+	file.open("data-file");      // open input file
+	if(!file)	
+		std::cout << std::endl << "error "  << std::endl;
+	std::getline(file, output);
+	file.close();
+    EXPECT_EQ(output, "hello world");
+}
+
+TEST(Test1, multiple_command_test) {
+	system("./integration_tests/single_command_tests.sh");
+	std::string output;
+	std::ifstream file;
+	file.open("data-file");      // open input file
+	if(!file)	
+		std::cout << std::endl << "error "  << std::endl;
+	std::getline(file, output);
 	file.close();
     EXPECT_EQ(output, "hello world");
 }
