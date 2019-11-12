@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
 			input += " ";
 		}
 	}
-	std::cout << "input: " << p.command;
+	
 	while(input != "exit"){
 		
 		while(input == "\n" || input == ""){
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]){
 	}
 	//p.getInput(test);
 	p.parse();				//
+	//std::cout << "input: " << p.command;
 	input = "";
 	//p.parseFileNames();		//could probably combine all 3 into 1 because they all need to be run
 	//p.parseArguments();		//
