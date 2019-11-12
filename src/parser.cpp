@@ -129,7 +129,7 @@ const char* Parser::formatFileName(int location){
 
 char** Parser::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
-		return nullptr;
+		return NULL;
 	int index = 0;
 	int countQ = 0;
 	int commandCount = 0;

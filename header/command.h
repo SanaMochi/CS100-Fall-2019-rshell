@@ -9,6 +9,9 @@
 #include <unistd.h>
 
 class Command : public Component{
+	protected:
+	char** command;
+	Component* nextCommand;			//makes this class a composite
 	
 	public:
 	Command();

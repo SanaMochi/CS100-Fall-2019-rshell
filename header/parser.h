@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-class Parser{
+class Parser: public Component{
 	public:
 	int numOfCommands;
 	bool exit = false;
