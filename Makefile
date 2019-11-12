@@ -170,17 +170,17 @@ test/fast:
 .PHONY : test/fast
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named rshell
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+rshell: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rshell
+.PHONY : rshell
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+rshell/fast:
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/build
+.PHONY : rshell/fast
 
 #=============================================================================
 # Target rules for targets named gmock_main
@@ -241,7 +241,7 @@ src/command.o: src/command.cpp.o
 # target to build an object file
 src/command.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/command.cpp.o
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/command.cpp.o
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/command.cpp.o
 .PHONY : src/command.cpp.o
 
 src/command.i: src/command.cpp.i
@@ -251,7 +251,7 @@ src/command.i: src/command.cpp.i
 # target to preprocess a source file
 src/command.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/command.cpp.i
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/command.cpp.i
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/command.cpp.i
 .PHONY : src/command.cpp.i
 
 src/command.s: src/command.cpp.s
@@ -261,7 +261,7 @@ src/command.s: src/command.cpp.s
 # target to generate assembly for a file
 src/command.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/command.cpp.s
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/command.cpp.s
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/command.cpp.s
 .PHONY : src/command.cpp.s
 
 src/parser.o: src/parser.cpp.o
@@ -271,7 +271,7 @@ src/parser.o: src/parser.cpp.o
 # target to build an object file
 src/parser.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/parser.cpp.o
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/parser.cpp.o
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/parser.cpp.o
 .PHONY : src/parser.cpp.o
 
 src/parser.i: src/parser.cpp.i
@@ -281,7 +281,7 @@ src/parser.i: src/parser.cpp.i
 # target to preprocess a source file
 src/parser.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/parser.cpp.i
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/parser.cpp.i
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/parser.cpp.i
 .PHONY : src/parser.cpp.i
 
 src/parser.s: src/parser.cpp.s
@@ -291,7 +291,7 @@ src/parser.s: src/parser.cpp.s
 # target to generate assembly for a file
 src/parser.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/parser.cpp.s
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/parser.cpp.s
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/parser.cpp.s
 .PHONY : src/parser.cpp.s
 
 src/rshell.o: src/rshell.cpp.o
@@ -300,7 +300,7 @@ src/rshell.o: src/rshell.cpp.o
 
 # target to build an object file
 src/rshell.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/rshell.cpp.o
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/rshell.cpp.o
 .PHONY : src/rshell.cpp.o
 
 src/rshell.i: src/rshell.cpp.i
@@ -309,7 +309,7 @@ src/rshell.i: src/rshell.cpp.i
 
 # target to preprocess a source file
 src/rshell.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/rshell.cpp.i
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/rshell.cpp.i
 .PHONY : src/rshell.cpp.i
 
 src/rshell.s: src/rshell.cpp.s
@@ -318,7 +318,7 @@ src/rshell.s: src/rshell.cpp.s
 
 # target to generate assembly for a file
 src/rshell.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/rshell.cpp.s
+	$(MAKE) -f CMakeFiles/rshell.dir/build.make CMakeFiles/rshell.dir/src/rshell.cpp.s
 .PHONY : src/rshell.cpp.s
 
 unit_tests/test.o: unit_tests/test.cpp.o
@@ -358,7 +358,7 @@ help:
 	@echo "... install/local"
 	@echo "... test"
 	@echo "... list_install_components"
-	@echo "... main"
+	@echo "... rshell"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... install"

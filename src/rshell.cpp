@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
 			input += " ";
 		}
 	}
-	//std::cout << "input: " << input;
+	std::cout << "input: " << p.command;
 	while(input != "exit"){
 		
 		while(input == "\n" || input == ""){
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 			std::getline(std::cin, input);
 		}
 	p.getInput(input);
-	std::cout << "\nInput: " << input <<"\n";
+	//std::cout << "\nInput: " << input <<"\n";
 	if(input == "exit" || p.shouldIExit()){
 		return 0;
 	}
@@ -53,8 +53,9 @@ int main(int argc, char *argv[]){
 	std::cout << "\nPrint args: "; p.printArguments();
 	* */
 	//std::cout << "input: " << input;
-	std::cout << std::endl;
-	
+	//std::cout << std::endl;
+	if(argc > 1)
+		return 0;
 }
 	return 0;
 }
