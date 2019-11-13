@@ -29,10 +29,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 			
 			if(pid == 0){
 				
-				if(err != 0 && parser->pattern.at(i) == "&&"){	//for &&
+				if(err != 0 && parser->getPattern(i) == "&&"){	//for &&
 					parser->removeNextCommand(i);
 																//for ||
-				}else if(err == 0  && parser->pattern.at(i) == "||"){
+				}else if(err == 0  && parser->getPattern(i) == "||"){
 					parser->removeNextCommand(i);
 				}
 		

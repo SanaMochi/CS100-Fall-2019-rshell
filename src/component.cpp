@@ -1,4 +1,12 @@
 #include "../header/component.h"
+#include <string>
+
+std::string Component::getPattern(int i) {
+	if (i > pattern.size()) {
+		throw "out of range";
+	}
+	return pattern.at(i);
+}
 
 void Component::printArguments(){
 	for(int i = 0; i < argv.size(); i++){

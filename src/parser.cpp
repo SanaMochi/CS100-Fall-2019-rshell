@@ -4,8 +4,19 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <signal.h>
-Parser::Parser(){ command = "";}
-Parser::Parser(std::string s){ command = s; }
+Parser::Parser(){
+	command = "";
+	status = 0;
+	err = 0;
+	numOfCommands = 0;
+	exit = false;
+}
+Parser::Parser(std::string s){
+	command = s;
+	status = 0;
+	err = 0;
+	exit = false;
+}
 
 void Parser::getInput(std::string s){ command = s; }
 

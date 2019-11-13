@@ -8,6 +8,7 @@
 //#include "command.h"
 
 class Component{
+//	std::vector<std::string> pattern;
 	protected:
 //	Component* nextCommand;
 //	char** command;				//moved to command class so composite pattern (idk how much it changes things, I'll see if it works
@@ -20,7 +21,11 @@ class Component{
 										//e.g argv.print == -a , ../ , ??? , file1.txt , ??? -r , folder1
 										//					^^^^^^^          ^^^^^^^^^			^^^^^^^^
 										//				run with ls			run with geany		run with mkdir
+
+	char ** pointer;			//stores the pointer to the arguments to run, should probably delete dynamically allocate pointers?
+	int pointerSize;				//stores how many pointers deep the 2d array is, help with deleting?
 	public:
+	std::string getPattern(int i);
 	void printArguments();
 	void printFileNames();
 	void printPattern();
