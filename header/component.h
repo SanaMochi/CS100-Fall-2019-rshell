@@ -25,6 +25,8 @@ class Component{
 	char ** pointer;			//stores the pointer to the arguments to run, should probably delete dynamically allocate pointers?
 	int pointerSize;				//stores how many pointers deep the 2d array is, help with deleting?
 
+	int status;
+	int err;
 	public:
 	int numOfCommands;
 	bool exit = false;
