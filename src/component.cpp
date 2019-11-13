@@ -31,7 +31,7 @@ void Component::printPattern(){
 const char* Component::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
-*/
+
 char** Component::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -69,7 +69,7 @@ char** Component::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-/*
+
 void Component::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
