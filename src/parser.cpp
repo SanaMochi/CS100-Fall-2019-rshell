@@ -139,6 +139,7 @@ const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
 
+/*
 char** Parser::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -176,7 +177,7 @@ char** Parser::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-
+*/
 void Parser::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
@@ -201,6 +202,7 @@ void Parser::preParse(){
 	//std::cout << std::endl << command << std::endl;
 }
 
+/*
 void Parser::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -232,6 +234,7 @@ void Parser::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
+*/
 
 bool Parser::shouldIExit(){
 	return exit;
