@@ -7,7 +7,7 @@ std::string Component::getPattern(int i) {
 	}
 	return pattern.at(i);
 }
-
+/*
 void Component::printArguments(){
 	for(int i = 0; i < argv.size(); i++){
 		std::cout << argv.at(i) << " , ";
@@ -135,3 +135,4 @@ bool Component::shouldIExit(){
 void Component::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
+*/
