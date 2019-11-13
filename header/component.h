@@ -39,8 +39,8 @@ class Component{
 /*
 	void resetVectors();
 	void preParse();
-*/	void removeNextCommand(int location);
-/*	bool shouldIExit();
+	void removeNextCommand(int location);
+	bool shouldIExit();
 	void shouldIExit(bool shouldI);
 */
 	virtual int getSize();
