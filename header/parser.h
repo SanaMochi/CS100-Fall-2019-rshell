@@ -48,7 +48,7 @@ class Parser: public Component {
 	void printPattern();
 	
 	const char* formatFileName(int location);	//get the file name at a location and return it to be run with execvp
-	char ** formatArguments(int location);		//get the argument(s) that go with the file name at a location and retrun them to be run with execvp
+//	char ** formatArguments(int location);		//get the argument(s) that go with the file name at a location and retrun them to be run with execvp
 								//was thinking we could make a loop with execvp()
 								//when we figure out how to implement the logic of
 								//the seperators '||' , '&&' , ';'
@@ -57,7 +57,7 @@ class Parser: public Component {
 	
 	void resetVectors();		//resets all vectors to empty, incase multiple lines of commands are typed
 	void preParse(); 			//look for comments or exit
-	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
+//	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
 
