@@ -24,13 +24,14 @@ class Component{
 
 	char ** pointer;			//stores the pointer to the arguments to run, should probably delete dynamically allocate pointers?
 	int pointerSize;				//stores how many pointers deep the 2d array is, help with deleting?
+
 	public:
 	int numOfCommands;
 	bool exit = false;
 	std::string command;				//used to store the whole command entered as a string
 
 	std::string getPattern(int i);
-	void printArguments();
+/*	void printArguments();
 	void printFileNames();
 	void printPattern();
 	const char* formatFileName(int location);
@@ -42,6 +43,7 @@ class Component{
 	void removeNextCommand(int location);
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
+*/
 	virtual void runCommand(char ** argv) = 0;
 	virtual void runAll(int numOfCommands, Component* parser) = 0;
 };
