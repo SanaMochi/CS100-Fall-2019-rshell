@@ -27,9 +27,9 @@ class Parser: public Component {
 										//e.g argv.print == -a , ../ , ??? , file1.txt , ??? -r , folder1
 										//					^^^^^^^          ^^^^^^^^^			^^^^^^^^
 										//				run with ls			run with geany		run with mkdir
-*/	char ** pointer;					//stores the pointer to the arguments to run, should probably delete dynamically alocated pointers?
+	char ** pointer;					//stores the pointer to the arguments to run, should probably delete dynamically alocated pointers?
 	int pointerSize;					//stores how many pointers deep the 2d array is, help with deleting?
-	
+*/	
 	//public:
 	Parser();
 	Parser(std::string s);
