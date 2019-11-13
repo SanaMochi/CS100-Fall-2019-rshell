@@ -35,15 +35,16 @@ class Component{
 	void printFileNames();
 	void printPattern();
 	const char* formatFileName(int location);
-	char** formatArguments(int location);
-	int getSize();
-
+*/	char** formatArguments(int location);
+/*
 	void resetVectors();
 	void preParse();
-	void removeNextCommand(int location);
-	bool shouldIExit();
+*/	void removeNextCommand(int location);
+/*	bool shouldIExit();
 	void shouldIExit(bool shouldI);
 */
+	int getSize();
+	
 	virtual void runCommand(char ** argv) = 0;
 	virtual void runAll(int numOfCommands, Component* parser) = 0;
 };
