@@ -137,7 +137,7 @@ void Parser::printPattern(){
 }
 */
 
-/*
+
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
@@ -180,7 +180,7 @@ char** Parser::formatArguments(int location){
 	return c;
 }
 
-int Parser::getSize(){return fileNames.size();}
+//int Parser::getSize(){return fileNames.size();}
 
 void Parser::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
@@ -245,7 +245,6 @@ bool Parser::shouldIExit(){
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
-*/
 
 void Parser::runCommand(char ** argv){
 	err = 0;
