@@ -7,32 +7,6 @@ std::string Component::getPattern(int i) {
 	}
 	return pattern.at(i);
 }
-/*
-void Component::printArguments(){
-	for(int i = 0; i < argv.size(); i++){
-		std::cout << argv.at(i) << " , ";
-	}
-	std::cout << std::endl;
-}
-
-void Component::printFileNames(){
-	for(int i = 0; i < fileNames.size(); i++){
-		std::cout << fileNames.at(i) << " , ";
-	}
-	std::cout << std::endl;
-}
-
-void Component::printPattern(){
-	for(int i = 0; i < pattern.size(); i++){
-		std::cout << pattern.at(i) << " , ";
-	}
-	std::cout << std::endl;
-}
-const char* Component::formatFileName(int location){
-	return fileNames.at(location).c_str();
-}
-
-*/
 char** Component::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -70,30 +44,6 @@ char** Component::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-/*
-void Component::resetVectors(){
-	pattern.erase(pattern.begin(), pattern.end());
-	commands.erase(commands.begin(), commands.end());
-	to_run.erase(to_run.begin(), to_run.end());
-	fileNames.erase(fileNames.begin(), fileNames.end());
-	argv.erase(argv.begin(), argv.end());
-	numOfCommands = 0;
-	//deletePointer();
-}
-
-void Component::preParse(){
-	//command.erase(command.find_first_of("\""));			Fix this
-	//command.erase(command.find_last_of("\""));
-											//look for comments
-	int commentLocation = command.find("#");
-	if(commentLocation != -1){
-		command.erase(commentLocation, (command.size() - commentLocation));
-	}
-											//trim and unwanted spaces
-	command.erase(command.find_last_not_of(" ")+1);
-	
-	//std::cout << std::endl << command << std::endl;
-}
 void Component::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -125,13 +75,4 @@ void Component::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-
-bool Component::shouldIExit(){
-	return exit;
-}
-
-void Component::shouldIExit(bool shouldI){
-	exit = shouldI;
-}
-*/
 int Component::getSize(){return fileNames.size();}
