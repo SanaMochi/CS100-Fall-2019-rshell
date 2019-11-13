@@ -2,11 +2,10 @@
 #define _COMMAND_H_
 
 #include <string>
-#include <iostream>
-#include "parser.h"
 #include <vector>
-#include "component.h"
 #include <unistd.h>
+#include "parser.h"
+#include "component.h"
 
 class Command : public Component{
 	protected:
@@ -17,7 +16,7 @@ class Command : public Component{
 	Command();
 	virtual void runCommand(char ** argv);
 	
-	virtual void runAll(int numOfCommands, Parser* parser);
+	virtual void runAll(int numOfCommands, Component* parser);
 	//void makeList(int numOfCommands, Parser* parser);
 	
 };

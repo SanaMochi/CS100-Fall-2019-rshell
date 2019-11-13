@@ -1,6 +1,9 @@
 #include "../header/parser.h"
 #include <stdio.h>
-
+#include <unistd.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <signal.h>
 Parser::Parser(){ command = "";}
 Parser::Parser(std::string s){ command = s; }
 
@@ -100,6 +103,7 @@ void Parser::parseArguments(){
 	}
 }
 
+/*
 void Parser::printArguments(){
 	for(int i = 0; i < argv.size(); i++){
 		std::cout << argv.at(i) << " , ";
@@ -120,9 +124,9 @@ void Parser::printPattern(){
 	}
 	std::cout << std::endl;
 }
+*/
 
-
-
+/*
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
@@ -229,6 +233,46 @@ bool Parser::shouldIExit(){
 
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
+}
+*/
+
+void Parser::runCommand(char ** argv){
+	err = 0;
+
+	execvp(*argv, argv);		//hijacks child process to return to parent
+	perror("Error");
+	err = errno;
+}
+
+void Parser::runAll(int numOfCommands, Component* parser){
+/*	err = 0;
+	std::string exit = "";
+		for(int i = 0; i < numOfCommands; i++){
+			exit = "";
+			/*
+			exit = parser->formatArguments(i)[0];
+				if(exit == "exit"){
+					parser->shouldIExit(true);
+					parser->resetVectors();
+					std::exit(0);
+				}*/
+/*			int pid = fork();						//make a child process
+			//perror("Error with fork");
+			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
+			
+			if(pid == 0){
+				
+				if(err != 0 && parser->pattern.at(i) == "&&"){	//for &&
+					parser->removeNextCommand(i);
+																//for ||
+				}else if(err == 0  && parser->pattern.at(i) == "||"){
+					parser->removeNextCommand(i);
+				}
+		
+				Command::runCommand(parser->formatArguments(i));
+			}
+		}
+		*/
 }
 
 void Parser::deletePointer(){

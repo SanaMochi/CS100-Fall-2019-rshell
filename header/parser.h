@@ -4,9 +4,12 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "component.h"
 
 
-class Parser: public Component{
+class Parser: public Component {
+	int status = 0;
+	int err = 0;
 	public:
 	int numOfCommands;
 	bool exit = false;
@@ -15,7 +18,7 @@ class Parser: public Component{
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
 	const std::string or_symbol = "||";		//	hard coded values
 	const std::string end_symbol = ";";		//
-	std::vector<std::string> pattern; 	//stores the seperators in order
+/*	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
 	std::vector<std::string> to_run;	//stores and combines the strings from commands, but broken up by '||' , '&&' , ';'
 	std::vector<std::string> fileNames; //stores only the file name of each program to be run
@@ -24,7 +27,7 @@ class Parser: public Component{
 										//e.g argv.print == -a , ../ , ??? , file1.txt , ??? -r , folder1
 										//					^^^^^^^          ^^^^^^^^^			^^^^^^^^
 										//				run with ls			run with geany		run with mkdir
-	char ** pointer;					//stores the pointer to the arguments to run, should probably delete dynamically alocated pointers?
+*/	char ** pointer;					//stores the pointer to the arguments to run, should probably delete dynamically alocated pointers?
 	int pointerSize;					//stores how many pointers deep the 2d array is, help with deleting?
 	
 	//public:
@@ -40,10 +43,11 @@ class Parser: public Component{
 	
 	void parseFileNames();				//seperates out the file names from to_run and stores them in fileNames
 	void parseArguments();				//seperates out the arguments from to_run and stores them in argv
-	void printArguments();				//print the arguments, mainly used for testing
+/*	void printArguments();				//print the arguments, mainly used for testing
 	void printFileNames();
 	void printPattern();
-	
+	*/
+/*	
 	const char* formatFileName(int location);	//get the file name at a location and return it to be run with execvp
 	char ** formatArguments(int location);		//get the argument(s) that go with the file name at a location and retrun them to be run with execvp
 								//was thinking we could make a loop with execvp()
@@ -58,6 +62,10 @@ class Parser: public Component{
 	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
+*/
+	virtual void runCommand(char ** argv);
+	virtual void runAll(int numOfCommands, Component* parser);
+	
 	void deletePointer();		//TO-DO
 };
 #endif
