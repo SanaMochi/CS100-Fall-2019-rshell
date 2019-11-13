@@ -43,12 +43,11 @@ class Parser: public Component {
 	
 	void parseFileNames();				//seperates out the file names from to_run and stores them in fileNames
 	void parseArguments();				//seperates out the arguments from to_run and stores them in argv
-/*	void printArguments();				//print the arguments, mainly used for testing
+	void printArguments();				//print the arguments, mainly used for testing
 	void printFileNames();
 	void printPattern();
-	*/
 	
-/*	const char* formatFileName(int location);	//get the file name at a location and return it to be run with execvp
+	const char* formatFileName(int location);	//get the file name at a location and return it to be run with execvp
 	char ** formatArguments(int location);		//get the argument(s) that go with the file name at a location and retrun them to be run with execvp
 								//was thinking we could make a loop with execvp()
 								//when we figure out how to implement the logic of
@@ -61,7 +60,7 @@ class Parser: public Component {
 	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
-*/
+
 	int getSize(); 				//get total number of commands to execute
 	
 	virtual void runCommand(char ** argv);
