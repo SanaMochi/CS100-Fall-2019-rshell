@@ -114,7 +114,6 @@ void Parser::parseArguments(){
 	}
 }
 
-/*
 void Parser::printArguments(){
 	for(int i = 0; i < argv.size(); i++){
 		std::cout << argv.at(i) << " , ";
@@ -135,9 +134,7 @@ void Parser::printPattern(){
 	}
 	std::cout << std::endl;
 }
-*/
 
-/*
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
@@ -243,7 +240,6 @@ bool Parser::shouldIExit(){
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
-*/
 
 int Parser::getSize(){
 	return Component::getSize();
