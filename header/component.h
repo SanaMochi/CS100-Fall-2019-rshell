@@ -39,11 +39,11 @@ class Component{
 /*
 	void resetVectors();
 	void preParse();
-*/	void removeNextCommand(int location);
-/*	bool shouldIExit();
+	void removeNextCommand(int location);
+	bool shouldIExit();
 	void shouldIExit(bool shouldI);
 */
-	int getSize();
+	virtual int getSize();
 	
 	virtual void runCommand(char ** argv) = 0;
 	virtual void runAll(int numOfCommands, Component* parser) = 0;
