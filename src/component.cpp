@@ -32,6 +32,7 @@ const char* Component::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
 
+*/
 char** Component::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -69,7 +70,7 @@ char** Component::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-
+/*
 void Component::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
@@ -93,7 +94,6 @@ void Component::preParse(){
 	
 	//std::cout << std::endl << command << std::endl;
 }
-*/
 void Component::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -125,7 +125,7 @@ void Component::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-/*
+
 bool Component::shouldIExit(){
 	return exit;
 }
