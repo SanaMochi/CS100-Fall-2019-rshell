@@ -14,6 +14,8 @@ class Command : public Component{
 	
 	public:
 	Command();
+	void removeNextCommand(int location);
+	
 	virtual void runCommand(char ** argv);
 	
 	virtual void runAll(int numOfCommands, Component* parser);
