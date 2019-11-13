@@ -32,7 +32,7 @@ class Component{
 	bool exit = false;
 	std::string command;				//used to store the whole command entered as a string
 
-	std::string getPattern(int i);
+//	std::string getPattern(int i);
 /*	void printArguments();
 	void printFileNames();
 	void printPattern();
