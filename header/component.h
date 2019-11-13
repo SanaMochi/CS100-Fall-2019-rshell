@@ -36,13 +36,8 @@ class Component{
 	void printPattern();
 	const char* formatFileName(int location);
 */	char** formatArguments(int location);
-/*
-	void resetVectors();
-	void preParse();
-	void removeNextCommand(int location);
-	bool shouldIExit();
-	void shouldIExit(bool shouldI);
-*/
+	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
+	
 	virtual int getSize();
 	
 	virtual void runCommand(char ** argv) = 0;
