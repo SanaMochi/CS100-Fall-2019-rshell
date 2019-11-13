@@ -1,12 +1,12 @@
 #include "../header/component.h"
 #include <string>
 
-std::string Component::getPattern(int i) {
-	if (i > pattern.size()) {
-		throw "out of range";
-	}
-	return pattern.at(i);
-}
+// std::string Component::getPattern(int i) {
+// 	if (i > pattern.size()) {
+// 		throw "out of range";
+// 	}
+// 	return pattern.at(i);
+// }
 char** Component::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
