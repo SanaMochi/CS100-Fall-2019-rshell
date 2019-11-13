@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <signal.h>
 
-Command::Command(){}
-int status = 0;
-int err = 0;
-
+Command::Command(){
+	status = 0;
+	err = 0;
+}
 
 void Command::removeNextCommand(int location){
 	if(location > numOfCommands)
