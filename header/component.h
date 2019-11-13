@@ -12,6 +12,10 @@ class Component{
 	protected:
 //	Component* nextCommand;
 //	char** command;				//moved to command class so composite pattern (idk how much it changes things, I'll see if it works
+	int numOfCommands;
+	bool exit = false;
+	std::string command;				//used to store the whole command entered as a string
+
 	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
 	std::vector<std::string> to_run;	//stores and combines the strings from commands, but broken up by '||' , '&&' , ';'
