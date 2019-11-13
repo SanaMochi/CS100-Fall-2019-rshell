@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <signal.h>
 
-Command::Command(){}
+
 int status = 0;
 int err = 0;
-
-
+Component *c;
+Command::Command(){}
 
 void Command::runCommand(char ** argv){
 	err = 0;

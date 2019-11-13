@@ -49,8 +49,9 @@ TEST(Test1, multiple_command_test) {
     }
 	//std::getline(file, output);
 	std::fclose(file);
-    EXPECT_EQ(output, "hello\nError: No such file or directory\n");
+    EXPECT_EQ(output, "hello\nyes\nit works\n");
 }
+
 
 TEST(Test1, commented_command_test) {
 	//remove("data-file");
