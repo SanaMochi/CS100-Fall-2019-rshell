@@ -1,2 +1,0 @@
-echo hello || echo no && echo yes && eecho no || echo works
-echo hello && eecho fail && echo no && echo yes
