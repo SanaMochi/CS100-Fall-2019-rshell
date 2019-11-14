@@ -112,7 +112,25 @@ TEST(Test3, reset_vectors) {
 //	EXPECT_EQ(c->Component::to_run.size(), 0);
 
 	EXPECT_EQ(c->numOfCommands, 0);
-// }
+}
+
+TEST(Test5, single_command_test) {
+	system("./integration_tests/single_command_tests.sh");
+	std::string output;
+	int c;
+	FILE* file = std::fopen("data-file", "r");
+	if(!file)	
+		std::cout << std::endl << "error "  << std::endl;
+		
+    while ((c = std::fgetc(file)) != EOF) { 
+       std::putchar(c);
+       if (c == "&&" || c == "||" || c == ";")
+		output += c;
+    }
+	std::fclose(file);
+    EXPECT_EQ(output, "");
+}
+
 // TEST(Test4, removeNextCommand) {
 // 	system("./integration_tests/single_command_tests.sh");
 // 	std::string output;
