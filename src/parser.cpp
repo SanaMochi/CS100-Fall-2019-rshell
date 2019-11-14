@@ -189,9 +189,12 @@ void Parser::resetVectors(){
 }
 
 void Parser::preParse(){
-	//command.erase(command.find_first_of("\""));			Fix this
+	//std::cout << "\nShould delete \" at: " << command.find_first_of("\"") << " and " << command.find_last_of("\"") << std::endl;
+	//std::cout << "\nOld String: " << command;
+	//command.erase(command.find_first_of("\""));			//Fix this
 	//command.erase(command.find_last_of("\""));
-											//look for comments
+	//std::cout << "\nNew String: " << command;
+												//look for comments
 	int commentLocation = command.find("#");
 	if(commentLocation != -1){
 		command.erase(commentLocation, (command.size() - commentLocation));
