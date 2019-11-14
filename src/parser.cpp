@@ -248,7 +248,7 @@ void Parser::shouldIExit(bool shouldI){
 */
 
 int Parser::getSize(){
-	return Component::getSize();
+	return fileNames.size();
 }
 
 void Parser::runCommand(char ** argv){
