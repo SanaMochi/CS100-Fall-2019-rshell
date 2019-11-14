@@ -22,7 +22,7 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 <h1> Diagram </h1>
 
-![OMTDiagram:] (https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.png)
+![OMTDiagram: ](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.png)
 <h1> Classes </h1>
 
 Composite
