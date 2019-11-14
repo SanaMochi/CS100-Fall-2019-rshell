@@ -73,5 +73,3 @@ void Command::runAll(int numOfCommands, Component* parser){
 			}
 		}
 }
-
-
