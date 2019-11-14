@@ -259,19 +259,21 @@ void Parser::runCommand(char ** argv){
 	err = errno;
 }
 
+
 void Parser::runAll(int numOfCommands, Component* parser){
-/*	err = 0;
+/*
+	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
 			exit = "";
-			/*
-			exit = parser->formatArguments(i)[0];
+
+/*			exit = parser->formatArguments(i)[0];
 				if(exit == "exit"){
 					parser->shouldIExit(true);
 					parser->resetVectors();
 					std::exit(0);
-				}*/
-/*			int pid = fork();						//make a child process
+				}
+			int pid = fork();						//make a child process
 			//perror("Error with fork");
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
@@ -287,7 +289,8 @@ void Parser::runAll(int numOfCommands, Component* parser){
 				Command::runCommand(parser->formatArguments(i));
 			}
 		}
-		*/
+
+*/		
 }
 
 void Parser::deletePointer(){
@@ -295,7 +298,6 @@ void Parser::deletePointer(){
 		delete[] pointer[i];
 	delete[] pointer;
 }
-
 
 
 

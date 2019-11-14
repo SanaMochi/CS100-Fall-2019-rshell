@@ -66,6 +66,6 @@ class Parser: public Component {
 	virtual void runCommand(char ** argv);
 	virtual void runAll(int numOfCommands, Component* parser);
 	
-	void deletePointer();		//TO-DO
+	void deletePointer();		//We don't dynamically allocate memory, so I don't think we need it
 };
 #endif

@@ -1,6 +1,13 @@
 #include "../header/component.h"
 #include <string>
 
+Component::~Component() {
+	for (int i = 0; i < pointerSize; i++) {
+		delete[] pointer[i];
+	}
+	delete[] pointer;
+}
+
 char** Component::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -79,6 +86,7 @@ void Component::resetVectors(){
 	numOfCommands = 0;
 	//deletePointer();
 }
+
 bool Component::shouldIExit(){
 	return exit;
 }
@@ -86,3 +94,4 @@ bool Component::shouldIExit(){
 void Component::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
+
