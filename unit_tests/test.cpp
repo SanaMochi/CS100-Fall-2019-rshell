@@ -90,4 +90,9 @@ TEST(Test1, exit_command_test) {
 	std::fclose(file);
     EXPECT_EQ(output, "it should work\n");
 }
+TEST(Test2, exit_command_test) {
+	exit = false;
+	shouldIExit();
+	EXPECT_EQ(output, false);
+}
 #endif
