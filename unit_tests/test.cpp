@@ -114,6 +114,11 @@ TEST(Test3, reset_vectors) {
 	EXPECT_EQ(c->numOfCommands, 0);
 }
 
+TEST(Test4, getSize()) {
+	Parser* p = new Parser();
+	EXPECT_EQ(p->getSize, 0);
+}
+
 TEST(Test5, single_command_test) {
 	system("./integration_tests/single_command_tests.sh");
 	std::string output;
