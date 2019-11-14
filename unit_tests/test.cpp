@@ -90,4 +90,38 @@ TEST(Test1, exit_command_test) {
 	std::fclose(file);
     EXPECT_EQ(output, "it should work\n");
 }
+TEST(Test2, exit_test_1) {
+	Component* parser = new Command();
+	parser->exit = true;
+
+	EXPECT_TRUE(parser->shouldIExit()== true);
+}
+TEST(Test2, exit_test_2) {
+	Component* parser = new Command();
+	parser->exit = false;
+
+	EXPECT_FALSE(parser->shouldIExit());
+}
+TEST(Test3, reset_vectors) {
+	Component* c = new Command();
+
+	c->resetVectors();
+
+	ASSERT_EQ(c->pattern.size(), 0);
+//	EXPECT_EQ(c->Component::commands(), 0);
+//	EXPECT_EQ(c->Component::to_run.size(), 0);
+
+	EXPECT_EQ(c->numOfCommands, 0);
+}
+//TEST(Test4, removeNextCommand) {
+//	Component* c = new Command();
+//	c->numOfCommands = 1;
+//	c->fileNames.at(0) = "x";
+//	c->fileNames.at(1) = "y";
+//	c->pattern.at(0) = "||";
+//	c->pattern.at(1) = "&&";
+//	c->removeNextCommand(0);
+//	EXPECT_EQ(c->pattern.size(),0);
+//}
+
 #endif
