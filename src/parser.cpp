@@ -177,7 +177,7 @@ char** Parser::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-*/
+
 void Parser::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
@@ -187,7 +187,7 @@ void Parser::resetVectors(){
 	numOfCommands = 0;
 	//deletePointer();
 }
-
+*/
 void Parser::preParse(){
 	//std::cout << "\nShould delete \" at: " << command.find_first_of("\"") << " and " << command.find_last_of("\"") << std::endl;
 	//std::cout << "\nOld String: " << command;
@@ -237,7 +237,6 @@ void Parser::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-*/
 
 bool Parser::shouldIExit(){
 	return exit;
@@ -246,6 +245,7 @@ bool Parser::shouldIExit(){
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
+*/
 
 int Parser::getSize(){
 	return Component::getSize();

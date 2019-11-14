@@ -70,3 +70,20 @@ void Component::removeNextCommand(int location){
 	argv.erase(v_start, v_end);
 }
 int Component::getSize(){return fileNames.size();}
+
+void Component::resetVectors(){
+	pattern.erase(pattern.begin(), pattern.end());
+	commands.erase(commands.begin(), commands.end());
+	to_run.erase(to_run.begin(), to_run.end());
+	fileNames.erase(fileNames.begin(), fileNames.end());
+	argv.erase(argv.begin(), argv.end());
+	numOfCommands = 0;
+	//deletePointer();
+}
+bool Component::shouldIExit(){
+	return exit;
+}
+
+void Component::shouldIExit(bool shouldI){
+	exit = shouldI;
+}
