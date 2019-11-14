@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include <stdlib.h>
 #include "parser.h"
 #include "component.h"
 

@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 
 Command::Command(){
@@ -50,7 +51,7 @@ void Command::runCommand(char ** argv){
 	perror("Error");
 	//err = errno;
 	err = 1;
-	exit(EXIT_FAILURE);
+	std::exit(EXIT_FAILURE);
 }
 
 void Command::runAll(int numOfCommands, Component* parser){
