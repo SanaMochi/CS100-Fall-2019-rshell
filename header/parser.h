@@ -55,17 +55,17 @@ class Parser: public Component {
 								//eg for(int i = 0; i < fileNames.size(); i++)
 								//		execvp(formatFileName(i), formatArguments(i))
 	
-	void resetVectors();		//resets all vectors to empty, incase multiple lines of commands are typed
+//	void resetVectors();		//resets all vectors to empty, incase multiple lines of commands are typed
 	void preParse(); 			//look for comments or exit
 //	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
-	bool shouldIExit();
-	void shouldIExit(bool shouldI);
+//	bool shouldIExit();
+//	void shouldIExit(bool shouldI);
 
 	int getSize(); 				//get total number of commands to execute
 	
 	virtual void runCommand(char ** argv);
 	virtual void runAll(int numOfCommands, Component* parser);
 	
-	void deletePointer();		//TO-DO
+	void deletePointer();		//We don't dynamically allocate memory, so I don't think we need it
 };
 #endif

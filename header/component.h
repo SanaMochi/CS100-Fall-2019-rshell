@@ -30,17 +30,18 @@ class Component{
 	int status;
 	int err;
 	public:
-	std::vector<std::string> pattern; 	//stores the seperators in order
-
-	
+	std::vector<std::string> pattern; 	//stores the seperators in order	
 	int numOfCommands;
 	bool exit = false;
 	std::string command;				//used to store the whole command entered as a string
 
+	~Component();					// deallocates dynamially made pointers 
 	virtual char** formatArguments(int location);
 	virtual void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	
-	virtual int getSize();
+	void resetVectors();
+	bool shouldIExit();
+	void shouldIExit(bool shouldI);
 	
 	virtual void runCommand(char ** argv) = 0;
 	virtual void runAll(int numOfCommands, Component* parser) = 0;

@@ -177,7 +177,7 @@ char** Parser::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-*/
+
 void Parser::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
@@ -187,7 +187,7 @@ void Parser::resetVectors(){
 	numOfCommands = 0;
 	//deletePointer();
 }
-
+*/
 void Parser::preParse(){
 	//std::cout << "\nShould delete \" at: " << command.find_first_of("\"") << " and " << command.find_last_of("\"") << std::endl;
 	//std::cout << "\nOld String: " << command;
@@ -237,7 +237,6 @@ void Parser::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-*/
 
 bool Parser::shouldIExit(){
 	return exit;
@@ -246,9 +245,10 @@ bool Parser::shouldIExit(){
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
+*/
 
 int Parser::getSize(){
-	return Component::getSize();
+	return fileNames.size();
 }
 
 void Parser::runCommand(char ** argv){
@@ -259,19 +259,21 @@ void Parser::runCommand(char ** argv){
 	err = errno;
 }
 
+
 void Parser::runAll(int numOfCommands, Component* parser){
-/*	err = 0;
+/*
+	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
 			exit = "";
-			/*
-			exit = parser->formatArguments(i)[0];
+
+/*			exit = parser->formatArguments(i)[0];
 				if(exit == "exit"){
 					parser->shouldIExit(true);
 					parser->resetVectors();
 					std::exit(0);
-				}*/
-/*			int pid = fork();						//make a child process
+				}
+			int pid = fork();						//make a child process
 			//perror("Error with fork");
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
@@ -287,7 +289,8 @@ void Parser::runAll(int numOfCommands, Component* parser){
 				Command::runCommand(parser->formatArguments(i));
 			}
 		}
-		*/
+
+*/		
 }
 
 void Parser::deletePointer(){
@@ -295,7 +298,6 @@ void Parser::deletePointer(){
 		delete[] pointer[i];
 	delete[] pointer;
 }
-
 
 
 
