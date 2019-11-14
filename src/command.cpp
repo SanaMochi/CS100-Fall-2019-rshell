@@ -1,3 +1,4 @@
+#include "../header/component.h"
 #include "../header/command.h"
 #include <unistd.h>
 #include <sys/wait.h>
@@ -5,23 +6,54 @@
 #include <stdio.h>
 #include <signal.h>
 
+Command::Command(){
+	status = 0;
+	err = 0;
+}
 
-int status = 0;
-int err = 0;
-Component *c;
-Command::Command(){}
+void Command::removeNextCommand(int location){
+	if(location > numOfCommands)
+		return;
+	std::vector<std::string>::iterator loc = fileNames.begin() + location;
+	fileNames.erase(loc);
+	pattern.erase(loc);
+	numOfCommands == fileNames.size();
+	int start = 0;
+	int end = 0;
+	int countQ = 0;
+	while(countQ != location){
+		for(int i = start; i < argv.size(); i++){
+			start++;
+			if(argv.at(i) == "???"){
+				countQ++;
+				break;
+			}
+			
+		}
+	}
+	//count how many commands are in between that ??? and the next one
+	for(int i = start; i < argv.size();i++){
+		if(argv.at(i) == "???")
+			break;
+		end++;
+	}
+	std::vector<std::string>::iterator v_start, v_end;
+	v_start = argv.begin() + start;
+	v_end = argv.begin() + start + end + 1;
+	argv.erase(v_start, v_end);
+}
 
 void Command::runCommand(char ** argv){
 	err = 0;
 
-	execvp(*argv, argv);		//hijacks child process to retun to parent
+	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
 	err = 1;
 	exit(EXIT_FAILURE);
 }
 
-void Command::runAll(int numOfCommands, Parser* parser){
+void Command::runAll(int numOfCommands, Component* parser){
 	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
@@ -34,10 +66,10 @@ void Command::runAll(int numOfCommands, Parser* parser){
 					std::exit(0);
 				}
 			int pid = fork();						//make a child process
-			//perror("Error with fork");
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
 			if(pid == 0){
+
 				//std::cout << "\nError: " << err;
 				//std::cout << "\nsymbol: " << parser->pattern.at(i);
 				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();

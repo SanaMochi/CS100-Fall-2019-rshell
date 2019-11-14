@@ -1,8 +1,22 @@
 #include "../header/parser.h"
 #include <stdio.h>
-
-Parser::Parser(){ command = "";}
-Parser::Parser(std::string s){ command = s; }
+#include <unistd.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <signal.h>
+Parser::Parser(){
+	command = "";
+	status = 0;
+	err = 0;
+	numOfCommands = 0;
+	exit = false;
+}
+Parser::Parser(std::string s){
+	command = s;
+	status = 0;
+	err = 0;
+	exit = false;
+}
 
 void Parser::getInput(std::string s){ command = s; }
 
@@ -121,12 +135,11 @@ void Parser::printPattern(){
 	std::cout << std::endl;
 }
 
-
-
 const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
 
+/*
 char** Parser::formatArguments(int location){
 	if(location >= argv.size() || location >= fileNames.size())
 		return NULL;
@@ -164,9 +177,7 @@ char** Parser::formatArguments(int location){
 	pointer = c;
 	return c;
 }
-
-int Parser::getSize(){return fileNames.size();}
-
+*/
 void Parser::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
 	commands.erase(commands.begin(), commands.end());
@@ -194,6 +205,7 @@ void Parser::preParse(){
 	//std::cout << std::endl << command << std::endl;
 }
 
+/*
 void Parser::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -225,6 +237,7 @@ void Parser::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
+*/
 
 bool Parser::shouldIExit(){
 	return exit;
@@ -232,6 +245,49 @@ bool Parser::shouldIExit(){
 
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
+}
+
+int Parser::getSize(){
+	return Component::getSize();
+}
+
+void Parser::runCommand(char ** argv){
+	err = 0;
+
+	execvp(*argv, argv);		//hijacks child process to return to parent
+	perror("Error");
+	err = errno;
+}
+
+void Parser::runAll(int numOfCommands, Component* parser){
+/*	err = 0;
+	std::string exit = "";
+		for(int i = 0; i < numOfCommands; i++){
+			exit = "";
+			/*
+			exit = parser->formatArguments(i)[0];
+				if(exit == "exit"){
+					parser->shouldIExit(true);
+					parser->resetVectors();
+					std::exit(0);
+				}*/
+/*			int pid = fork();						//make a child process
+			//perror("Error with fork");
+			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
+			
+			if(pid == 0){
+				
+				if(err != 0 && parser->pattern.at(i) == "&&"){	//for &&
+					parser->removeNextCommand(i);
+																//for ||
+				}else if(err == 0  && parser->pattern.at(i) == "||"){
+					parser->removeNextCommand(i);
+				}
+		
+				Command::runCommand(parser->formatArguments(i));
+			}
+		}
+		*/
 }
 
 void Parser::deletePointer(){

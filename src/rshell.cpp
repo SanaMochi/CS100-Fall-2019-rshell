@@ -2,6 +2,9 @@
 #include <string>
 #include "../header/parser.h"
 #include "../header/command.h"
+#include "../header/component.h"
+//#include "../src/parser.cpp"
+//#include "../src/command.cpp"
 
 
 int main(int argc, char *argv[]){
