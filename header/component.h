@@ -8,11 +8,13 @@
 //#include "command.h"
 
 class Component{
-//	std::vector<std::string> pattern;
 	protected:
-//	Component* nextCommand;
-//	char** command;				//moved to command class so composite pattern (idk how much it changes things, I'll see if it works
-	std::vector<std::string> pattern; 	//stores the seperators in order
+	const std::string space = " ";			//
+	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
+	const std::string or_symbol = "||";		//	hard coded values
+	const std::string end_symbol = ";";		//
+
+//	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
 	std::vector<std::string> to_run;	//stores and combines the strings from commands, but broken up by '||' , '&&' , ';'
 	std::vector<std::string> fileNames; //stores only the file name of each program to be run
@@ -28,17 +30,15 @@ class Component{
 	int status;
 	int err;
 	public:
+	std::vector<std::string> pattern; 	//stores the seperators in order
+
+	
 	int numOfCommands;
 	bool exit = false;
 	std::string command;				//used to store the whole command entered as a string
 
-//	std::string getPattern(int i);
-/*	void printArguments();
-	void printFileNames();
-	void printPattern();
-	const char* formatFileName(int location);
-*/	char** formatArguments(int location);
-	void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
+	virtual char** formatArguments(int location);
+	virtual void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	
 	virtual int getSize();
 	

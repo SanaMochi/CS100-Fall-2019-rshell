@@ -8,17 +8,17 @@
 
 
 class Parser: public Component {
-	int status = 0;
-	int err = 0;
+//	int status = 0;
+//	int err = 0;
 	public:
 	//int numOfCommands;
 	//bool exit = false;
 	//std::string command;				//used to store the whole command entered as a string
-	const std::string space = " ";			//
+/*	const std::string space = " ";			//
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
 	const std::string or_symbol = "||";		//	hard coded values
 	const std::string end_symbol = ";";		//
-/*	std::vector<std::string> pattern; 	//stores the seperators in order
+	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
 	std::vector<std::string> to_run;	//stores and combines the strings from commands, but broken up by '||' , '&&' , ';'
 	std::vector<std::string> fileNames; //stores only the file name of each program to be run

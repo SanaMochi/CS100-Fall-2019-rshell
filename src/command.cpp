@@ -11,6 +11,7 @@ Command::Command(){
 	err = 0;
 }
 
+
 void Command::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -61,10 +62,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 			
 			if(pid == 0){
 				
-				if(err != 0 && parser->getPattern(i) == "&&"){	//for &&
+				if(err != 0 && parser->Component::pattern.at(i) == "&&"){	//for &&
 					parser->removeNextCommand(i);
 																//for ||
-				}else if(err == 0  && parser->getPattern(i) == "||"){
+				}else if(err == 0  && parser->Component::pattern.at(i) == "||"){
 					parser->removeNextCommand(i);
 				}
 		

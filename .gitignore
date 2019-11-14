@@ -1,8 +1,8 @@
 main
 test
-
+rshell
 CMakeCache.txt
 CMakeFiles/
+lib/
 cmake_install.cmake
 Makefile
-
