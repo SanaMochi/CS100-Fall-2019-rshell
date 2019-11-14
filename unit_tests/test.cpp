@@ -112,30 +112,30 @@ TEST(Test3, reset_vectors) {
 //	EXPECT_EQ(c->Component::to_run.size(), 0);
 
 	EXPECT_EQ(c->numOfCommands, 0);
-}
-TEST(Test4, removeNextCommand) {
-	system("./integration_tests/single_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
+// }
+// TEST(Test4, removeNextCommand) {
+// 	system("./integration_tests/single_command_tests.sh");
+// 	std::string output;
+// 	int c;
+// 	FILE* file = std::fopen("data-file", "r");
+// 	//file.open("data-file");      // open input file
+// 	if(!file)	
+// 		std::cout << std::endl << "error "  << std::endl;
 		
- 		while ((c = std::fgetc(file)) != EOF) { 
-			std::putchar(c);
-    		numOfCommands++;
-    	}
-	std::fclose(file);
-// 	Component* c = new Command();
-// 	c->numOfCommands = 1;
-// 	c->fileNames.at(0) = "x";
-// 	c->fileNames.at(1) = "y";
-// 	c->pattern.at(0) = "||";
-// 	c->pattern.at(1) = "&&";
-// 	c->removeNextCommand(0);
-// 	EXPECT_EQ(c->pattern.size(),0);
-	EXPECT_EQ(c->numOfCommands, 0);
-}
+//  		while ((c = std::fgetc(file)) != EOF) { 
+// 			std::putchar(c);
+//     		numOfCommands++;
+//     	}
+// 	std::fclose(file);
+// // 	Component* c = new Command();
+// // 	c->numOfCommands = 1;
+// // 	c->fileNames.at(0) = "x";
+// // 	c->fileNames.at(1) = "y";
+// // 	c->pattern.at(0) = "||";
+// // 	c->pattern.at(1) = "&&";
+// // 	c->removeNextCommand(0);
+// // 	EXPECT_EQ(c->pattern.size(),0);
+// 	EXPECT_EQ(c->numOfCommands, 0);
+// }
 
 #endif
