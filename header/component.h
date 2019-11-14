@@ -40,8 +40,6 @@ class Component{
 	virtual char** formatArguments(int location);
 	virtual void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
 	
-	virtual int getSize();
-	
 	void resetVectors();
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
