@@ -69,7 +69,6 @@ void Component::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-int Component::getSize(){return fileNames.size();}
 
 void Component::resetVectors(){
 	pattern.erase(pattern.begin(), pattern.end());
