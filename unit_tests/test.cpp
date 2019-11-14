@@ -113,20 +113,29 @@ TEST(Test3, reset_vectors) {
 
 	EXPECT_EQ(c->numOfCommands, 0);
 }
-TEST(Test4, removeNextCommand) {
-	system("./integration_tests/single_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
- 		while ((c = std::fgetc(file)) != EOF) { 
-			std::putchar(c);
-    		numOfCommands++;
-    	}
-	std::fclose(file);
+TEST(Test4, getSize) {
+	Parser* c = new Parser();
+
+//	c->getSize();
+	EXPECT_EQ(c->getSize(), 0);
+}
+
+//TEST(Test4, removeNextCommand) {
+//	system("./integration_tests/single_command_tests.sh");
+//	std::string output;
+//	int c;
+//	int count = 0;
+//	FILE* file = std::fopen("data-file", "r");
+//	//file.open("data-file");      // open input file
+//	if(!file)	
+//		std::cout << std::endl << "error "  << std::endl;
+//		
+ //		while ((c = std::fgetc(file)) != EOF) { 
+//			std::putchar(c);
+//    			count++;
+//  		}
+//	std::fclose(file);
+//	count--;
 // 	Component* c = new Command();
 // 	c->numOfCommands = 1;
 // 	c->fileNames.at(0) = "x";
@@ -135,7 +144,7 @@ TEST(Test4, removeNextCommand) {
 // 	c->pattern.at(1) = "&&";
 // 	c->removeNextCommand(0);
 // 	EXPECT_EQ(c->pattern.size(),0);
-	EXPECT_EQ(c->numOfCommands, 0);
-}
+//	EXPECT_EQ(count, 0);
+//}
 
 #endif
