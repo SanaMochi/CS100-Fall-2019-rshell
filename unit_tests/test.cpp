@@ -114,11 +114,12 @@ TEST(Test3, reset_vectors) {
 	EXPECT_EQ(c->numOfCommands, 0);
 }
 
-TEST(Test4, getSize()) {
+TEST(Test4, getSize) {
 	Parser* p = new Parser();
-	EXPECT_EQ(p->getSize, 0);
+	EXPECT_EQ(p->getSize(), 0);
 }
 
+/*
 TEST(Test5, single_command_test) {
 	system("./integration_tests/single_command_tests.sh");
 	std::string output;
@@ -129,13 +130,18 @@ TEST(Test5, single_command_test) {
 		
     while ((c = std::fgetc(file)) != EOF) { 
        std::putchar(c);
-       if (c == "&&" || c == "||" || c == ";")
 		output += c;
     }
+	std::string output1;
+	for (int i = 0; i < output.size(); i++) {
+	if (output.at(i) == '&; || output.at(i) == '|' ) {//|| output.at(i) == ';' ) {
+		output1 += output.at(i);
+	}
+	}
 	std::fclose(file);
     EXPECT_EQ(output, "");
 }
-
+*/
 // TEST(Test4, removeNextCommand) {
 // 	system("./integration_tests/single_command_tests.sh");
 // 	std::string output;
