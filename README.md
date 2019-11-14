@@ -22,93 +22,26 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 <h1> Diagram </h1>
 
-![OMT Diagram:](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
-
+![OMTDiagram:] (https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.png)
 <h1> Classes </h1>
 
-* Commands - will take in all of the executables and connectors into a vector (using std::cin)
+Composite
+Inteface class that doesn't do much except hold onto variables needed by inherited classes and some important functions.
 
-                class Commands {
-                  vector <Commands*> comm;
-                  void getCommands() {
-                    string command;
-                    while (cin >> command) {
-                      comm.push_back(command);
-                    }
-                  }
-                };
-        
-* Connector - inherits from Commands; will have subclasses to run each command based on the connector
+Command
+Composite class that runs the commands given
 
-                class Connector : public Commands {
-                  vector <Command*> conn
-                  public:
-                  void getConnectors() {
-                    for (int i = 0; comm.at(i) != " " && comm.at(i) != "\n"; i++) {
-                      conn.push_back(comm.at(i));
-                    }
-                  }
-                  virtual void runCommands() {...}
-                };
-
-* SemicolonConnector - will run the next command (no matter what)
-
-                class SemicolonConnector : public Connector {
-                  public:
-                  bool isSemicolon() {
-                    //check if semicolon (or not && and not ||)
-                  }
-                  void runCommand() {
-                    //always execute next command
-                  }
-                };
-    
-* ANDConnector - will execute the next command if the previous one was successful
-
-                class ADDConnector : public Connector {
-                  public:
-                  bool isADD() {
-                    //check if ADD (or not ; and not ||)
-                  }
-                  void runCommand() {
-                    //execute next command is prev passed
-                  }
-                };
-
-* ORConnector - will execute if the first one fails
-
-                class ORConnector : public Connector {
-                  public:
-                  bool isOR() {
-                    //check if OR (or not ; and not &&)
-                  }
-                  void runCommand() {
-                    //execute next command is prev failed
-                  }
-                };
-
-* ExecutableExpression - inherits from Commands; will run the executables
-
-                class ExecutableExpression : public Command {
-                  vector <Executable*> commandList;
-                  Executable()
-                  void parse(const string&) {...}
-                  void runExeCommand() {
-                    //runs the command
-                    //executes next command based on connector
-                  }
-                }
+Parser
+Leaf class that parses the command and executes based on the connector
 
 <h1> Prototypes / Reaserch </h1>
 
 We have created basic prototypes that test and show basic functionality of `fork()` , `execvp()` , `waitpid()`, and parse function.
-
-
+We have also now created a funtional parse class.
 
 <h1> Development and Testing Roadmap </h1>
 
-* Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
-* Figure out a parser to use and the functionality of other relevant functions that work with it
-* Make unit tests using the `googletest` framework
-* Make integration tests using the `googletest` framework
-* Add more items as they become necessary
+* We have created relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
+* We have figures out a parser to use and the functionality of other relevant functions that work with it
+* We made unit and integrationtests using the `googletest` framework
+* Add more items as they become necessary such as special cases (parenthesis, etc)
