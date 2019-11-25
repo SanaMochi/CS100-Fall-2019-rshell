@@ -139,55 +139,6 @@ const char* Parser::formatFileName(int location){
 	return fileNames.at(location).c_str();
 }
 
-/*
-char** Parser::formatArguments(int location){
-	if(location >= argv.size() || location >= fileNames.size())
-		return NULL;
-	int index = 0;
-	int countQ = 0;
-	int commandCount = 0;
-	while(countQ != location){
-		for(int i = index; i < argv.size(); i++){
-			index++;
-			if(argv.at(i) == "???"){
-				countQ++;
-				break;
-			}
-			
-		}
-	}
-	//count how many commands are in between that ??? and the next one
-	for(int i = index; i < argv.size();i++){
-		if(argv.at(i) == "???")
-			break;
-		commandCount++;
-	}
-	pointerSize = commandCount;//argv.size();
-	pointerSize += 2;		// for some reson execvp ignores the first argument and there needs to be room for a null char at the end
-	char** c = new char *[pointerSize];
-	int num = 0;
-	c[num] = const_cast<char*> (fileNames.at(location).c_str());	//make the first argument the name of the file, get ignored by ececvp
-	num++;
-	for(int i = index; commandCount > 0; i++){
-		commandCount--;
-		c[num] = const_cast<char*> (argv.at(i).c_str()); 
-		num++;
-	}
-	c[num] = NULL;
-	pointer = c;
-	return c;
-}
-
-void Parser::resetVectors(){
-	pattern.erase(pattern.begin(), pattern.end());
-	commands.erase(commands.begin(), commands.end());
-	to_run.erase(to_run.begin(), to_run.end());
-	fileNames.erase(fileNames.begin(), fileNames.end());
-	argv.erase(argv.begin(), argv.end());
-	numOfCommands = 0;
-	//deletePointer();
-}
-*/
 void Parser::preParse(){
 	//std::cout << "\nShould delete \" at: " << command.find_first_of("\"") << " and " << command.find_last_of("\"") << std::endl;
 	//std::cout << "\nOld String: " << command;
@@ -206,38 +157,6 @@ void Parser::preParse(){
 }
 
 /*
-void Parser::removeNextCommand(int location){
-	if(location > numOfCommands)
-		return;
-	std::vector<std::string>::iterator loc = fileNames.begin() + location;
-	fileNames.erase(loc);
-	pattern.erase(loc);
-	numOfCommands == fileNames.size();
-	int start = 0;
-	int end = 0;
-	int countQ = 0;
-	while(countQ != location){
-		for(int i = start; i < argv.size(); i++){
-			start++;
-			if(argv.at(i) == "???"){
-				countQ++;
-				break;
-			}
-			
-		}
-	}
-	//count how many commands are in between that ??? and the next one
-	for(int i = start; i < argv.size();i++){
-		if(argv.at(i) == "???")
-			break;
-		end++;
-	}
-	std::vector<std::string>::iterator v_start, v_end;
-	v_start = argv.begin() + start;
-	v_end = argv.begin() + start + end + 1;
-	argv.erase(v_start, v_end);
-}
-
 bool Parser::shouldIExit(){
 	return exit;
 }
@@ -261,13 +180,12 @@ void Parser::runCommand(char ** argv){
 
 
 void Parser::runAll(int numOfCommands, Component* parser){
-/*
 	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
 			exit = "";
 
-/*			exit = parser->formatArguments(i)[0];
+			exit = parser->formatArguments(i)[0];
 				if(exit == "exit"){
 					parser->shouldIExit(true);
 					parser->resetVectors();
@@ -286,11 +204,11 @@ void Parser::runAll(int numOfCommands, Component* parser){
 					parser->removeNextCommand(i);
 				}
 		
-				Command::runCommand(parser->formatArguments(i));
+				Parser::runCommand(parser->formatArguments(i));
 			}
 		}
 
-*/		
+	
 }
 
 void Parser::deletePointer(){
@@ -298,30 +216,3 @@ void Parser::deletePointer(){
 		delete[] pointer[i];
 	delete[] pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -12,10 +12,12 @@ class Command : public Component{
 	protected:
 	char** command;
 	Component* nextCommand;			//makes this class a composite
+	int status;
+	int err;
 	
 	public:
 	Command();
-	void removeNextCommand(int location);
+//	void removeNextCommand(int location);
 	
 	virtual void runCommand(char ** argv);
 	
