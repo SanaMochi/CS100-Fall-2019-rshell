@@ -46,12 +46,12 @@ void Command::removeNextCommand(int location){
 }
 */
 void Command::runCommand(char ** argv){
-	err = 0;
+	Command::err = 0;
 
 	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
-	err = 1;
+	Command::err = 1;
 	std::exit(EXIT_FAILURE);
 }
 
