@@ -12,6 +12,7 @@ Command::Command(){
 	err = 0;
 }
 
+/*
 void Command::removeNextCommand(int location){
 	if(location > numOfCommands)
 		return;
@@ -43,14 +44,14 @@ void Command::removeNextCommand(int location){
 	v_end = argv.begin() + start + end + 1;
 	argv.erase(v_start, v_end);
 }
-
+*/
 void Command::runCommand(char ** argv){
-	err = 0;
+	Command::err = 0;
 
 	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
-	err = 1;
+	Command::err = 1;
 	std::exit(EXIT_FAILURE);
 }
 
@@ -66,7 +67,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 					parser->resetVectors();
 					std::exit(0);
 				}
-			int pid = fork();						//make a child process
+			int pid = fork();				//make a child process
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
 			if(pid == 0){
@@ -76,8 +77,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
 				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){	//for &&
 					parser->removeNextCommand(i);
-																//for ||
-				}else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||"){
+
+				}else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||"){ //for ||
 					parser->removeNextCommand(i);
 				}
 				//std::cout << "\nargs2: "  << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
@@ -86,6 +87,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 				}
 				Command::runCommand(parser->formatArguments(i));
 				
+			}else if (pid < 0) {
+				quick_exit(EXIT_FAILURE);
+			}else if (pid > 0) {
+				waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			}
 		}
 }
