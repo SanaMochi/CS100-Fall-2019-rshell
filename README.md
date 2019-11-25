@@ -1,5 +1,8 @@
 # CS 100 Programming Project
 
+[Link](https://docs.google.com/document/d/1s2KtW2oBfghC4v9x3tm3DPjYiKK5R0QllsNlExJ0rt4/edit) to specs so I dont have to keep on signing into ilearn
+compile with `g++ rshell.cpp parser.cpp command.cpp -o main -std=c++11` in src directory
+
 <h1> Project Information </h1>
 Fall 2019
 
@@ -7,16 +10,19 @@ Fall 2019
 * Sana Mohiuddin, 862075288, smohi002@ucr.edu
 
 <h1> Introduction </h1>
-We have created a shell in C++ called rshell, which is able to do the following: 
+We have created a shell in C++ called rshell using a composite pattern to do the following: 
 
 1. Print a command prompt (e.g. `$`)
 2. Read in a line of command(s) (and connector(s)) from standard input
-3. Execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
+3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
+4. The connector class inherits from and references the command class (making connecto a composite) If the commands are connected by:
+    * ";" : execute both
+    * "&&" :  execute the next command if the previous one passed
+    * "||" : execute the next command if the previous one falied
 
 <h1> Diagram </h1>
 
-![OMT Diagram:]
-(https://raw.githubusercontent.com/cs100/assignment-michael_sana/master/images/RShell_OMT_Diagram.jpeg?token=AKW57KA6HNI7NO6LOBYDJZC5YJYVY)
+![OMT Diagram:](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
 
 <h1> Classes </h1>
 
@@ -95,14 +101,14 @@ We have created a shell in C++ called rshell, which is able to do the following:
 
 <h1> Prototypes / Reaserch </h1>
 
-Insert relavant prototypes that we have made that using `fork()` , `execvp()` , and `waitpid()`, and figure out a parser to use to get input from the console (maybe `std::cin' ?)
+We have created basic prototypes that test and show basic functionality of `fork()` , `execvp()` , `waitpid()`, and parse function.
 
 
 
 <h1> Development and Testing Roadmap </h1>
 
-* Figure out a parser to use
 * Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
+* Figure out a parser to use and the functionality of other relevant functions that work with it
+* Make unit tests using the `googletest` framework
 * Make integration tests using the `googletest` framework
-* Create [Github issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) for each partner to work on
 * Add more items as they become necessary
