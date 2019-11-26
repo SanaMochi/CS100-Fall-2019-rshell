@@ -225,7 +225,7 @@ int Parser::getSize(){
 }
 
 void Parser::runCommand(char ** argv){
-
+/*
 	int i = 0;
 	while (argv[i] != NULL) {
 		status = system(argv[i]);
@@ -233,11 +233,12 @@ void Parser::runCommand(char ** argv){
 			break;
 	i++;
 	}
-//	err = 0;
+*/
+	err = 0;
 
-//	execvp(*argv, argv);		//hijacks child process to return to parent
-//	perror("Error");
-//	err = errno;
+	execvp(*argv, argv);		//hijacks child process to return to parent
+	perror("Error");
+	err = errno;
 }
 
 
