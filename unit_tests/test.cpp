@@ -4,6 +4,7 @@
 #include "../header/command.h"
 #include "../header/component.h"
 #include "../header/parser.h"
+#include <string>
 #include <fstream>
 #include <iostream> 
 #include <stdio.h>
@@ -130,14 +131,9 @@ TEST(Test5, single_command_test) {
 		
     while ((c = std::fgetc(file)) != EOF) { 
        std::putchar(c);
+       if (c == "&&" || c == "||" || c == ";")
 		output += c;
     }
-	std::string output1;
-	for (int i = 0; i < output.size(); i++) {
-	if (output.at(i) == '&; || output.at(i) == '|' ) {//|| output.at(i) == ';' ) {
-		output1 += output.at(i);
-	}
-	}
 	std::fclose(file);
     EXPECT_EQ(output, "");
 }
@@ -168,3 +164,4 @@ TEST(Test5, single_command_test) {
 // }
 
 #endif
+
