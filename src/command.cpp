@@ -46,7 +46,13 @@ void Command::removeNextCommand(int location){
 }
 */
 void Command::runCommand(char ** argv){
-//	Command::err = 0;
+	Command::err = 0;
+
+	execvp(*argv, argv);		//hijacks child process to return to parent
+	perror("Error");
+	//err = errno;
+	Command::err = 1;
+	std::exit(EXIT_FAILURE);
 
 	int i = 0;
 	while (argv[i] != NULL) {
@@ -57,11 +63,6 @@ void Command::runCommand(char ** argv){
 //	status = -1;
 	i++;
 	}
-//	execvp(*argv, argv);		//hijacks child process to return to parent
-//	perror("Error");
-	//err = errno;
-//	Command::err = 1;
-//	std::exit(EXIT_FAILURE);
 }
 
 void Command::runAll(int numOfCommands, Component* parser){
