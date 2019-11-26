@@ -1,5 +1,4 @@
 #include "../header/parser.h"
-#include <vector>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -32,8 +31,11 @@ void Parser::parse(){
 	Parser::preParse();
 	pattern.push_back("");
 	while(command.find(space, pos_start) != -1){	
-		if (command.at(pos_start) == quotation_mark) {			//if starts with quotation mark
-			pos_end = command.find(quotation_mark, pos_start + 1) + 1;
+		if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
+			if (command.find(quotation_mark, pos_start + 1 == -1) {
+				//error not even number of parens
+			}
+			pos_end = command.find(quotation_mark, pos_start + 1);
 //			pos_start++;
 		}
 //		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
@@ -46,17 +48,20 @@ void Parser::parse(){
 		else {
 			pos_end = command.find(space, pos_start);
 		}
-
-		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+		
+		if (pos_start + (pos_end - pos_start) < command.size()) {
+			commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+		}
 		pos_end++;
 		pos_start = pos_end;
 		
 		
 	}
 	//assume there is always a last command ofter the last space
-	if (command.find(space, pos_start) == 1) 
-		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
-
+//	if (command.find(space, pos_start) == 1) {
+//		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
+//	}
+//	if (pos_start + (command.size() - pos_start) < command.size())
 	commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	
 	for(int i = 0; i < commands.size(); i++){
@@ -82,7 +87,6 @@ void Parser::parse(){
 			to_run.push_back(temp_str);
 			commands.erase(commands.begin() + i);
 //			std::cout << temp_str << std::endl;
-
 //need to implement for pattern and if quotes and parens
 //getting vector out of range  error when run with parens
 			while (commands.at(i).find(closing_parens, 0) == -1 && i < commands.size()) {
@@ -112,7 +116,7 @@ void Parser::parse(){
 			temp_str += " ";
 			i++;
 		}
-	std::cout << "command: " << temp_str << std::endl;
+//	std::cout << "command: " << temp_str << std::endl;
 		to_run.push_back(temp_str);
 	}
 	Parser::parseFileNames();
@@ -123,7 +127,7 @@ void Parser::parse(){
 
 void Parser::printCommands(){
 	if(commands.empty())
-		std::cout << "No commads" << std::endl;
+		std::cout << "No commands" << std::endl;
 	else{
 		for(int i = 0; i < commands.size(); i++){
 			std::cout << commands.at(i) << " , ";
@@ -158,8 +162,7 @@ void Parser::parseArguments(){
 		pos_start = to_run.at(x).find(" ", pos_start) + 1;		//ignore the firsr word (its the file name)
 		while(to_run.at(x).find(space, pos_start) != -1){	
 			pos_end = to_run.at(x).find(space, pos_start);
-			argv.push_back(to_run.at(x));
-//			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
+			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
 			pos_end++;
 			pos_start = pos_end;
 	}
@@ -214,7 +217,6 @@ void Parser::preParse(){
 bool Parser::shouldIExit(){
 	return exit;
 }
-
 void Parser::shouldIExit(bool shouldI){
 	exit = shouldI;
 }
@@ -225,15 +227,6 @@ int Parser::getSize(){
 }
 
 void Parser::runCommand(char ** argv){
-/*
-	int i = 0;
-	while (argv[i] != NULL) {
-		status = system(argv[i]);
-		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT))
-			break;
-	i++;
-	}
-*/
 	err = 0;
 
 	execvp(*argv, argv);		//hijacks child process to return to parent

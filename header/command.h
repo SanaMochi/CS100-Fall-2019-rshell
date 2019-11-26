@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "parser.h"
 #include "component.h"
+#include "test.h"
 
 class Command : public Component{
 	protected:

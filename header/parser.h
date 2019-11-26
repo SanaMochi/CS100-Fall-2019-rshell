@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 #include "component.h"
+#include "command.h"
+#include "test.h"
 
 
 class Parser: public Component {
