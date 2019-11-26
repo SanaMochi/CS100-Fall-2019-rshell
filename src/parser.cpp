@@ -33,19 +33,20 @@ void Parser::parse(){
 	pattern.push_back("");
 	while(command.find(space, pos_start) != -1){	
 		if (command.at(pos_start) == quotation_mark) {			//if starts with quotation mark
-			pos_end = command.find(quotation_mark, pos_start + 1);
-			pos_start++;
+			pos_end = command.find(quotation_mark, pos_start + 1) + 1;
+//			pos_start++;
 		}
-		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
-			pos_end = command.find(quotation_mark, pos_start + 2);
-			if (command.at(pos_end + 1) == closing_parens) {
-				pos_end++;
-			}
+//		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
+//			pos_end = command.find(quotation_mark, pos_start + 2);
+//			if (command.at(pos_end + 1) == closing_parens) {
+//				pos_end++;
+//			}
 			//figure out how to keep parenthesis with not quotation mark
-		}
+//		}
 		else {
 			pos_end = command.find(space, pos_start);
 		}
+
 		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
 		pos_end++;
 		pos_start = pos_end;
@@ -53,6 +54,7 @@ void Parser::parse(){
 		
 	}
 	//assume there is always a last command ofter the last space
+
 	commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	
 	for(int i = 0; i < commands.size(); i++){
@@ -67,13 +69,14 @@ void Parser::parse(){
 	}
 	
 	//find parenthesese first and save it into to_run
-	int index_pos_start = 0;
+/*	int index_pos_start = 0;
 	for (int i = 0; i < commands.size(); i++) {
 		std::string temp_str = "";
-		
+	std::cout << "Commands.size()1: " << commands.size() << std::endl;	
 		if (commands.at(i).find(opening_parens, 0) != -1) {
 			pos_start = commands.at(i).find(opening_parens, 0) + 1;
 			temp_str = commands.at(i).substr(pos_start, commands.at(i).size() - 1);
+	std::cout << "i: " << i << std::endl;
 			to_run.push_back(temp_str);
 			commands.erase(commands.begin() + i);
 //			std::cout << temp_str << std::endl;
@@ -81,7 +84,7 @@ void Parser::parse(){
 //need to implement for pattern and if quotes and parens
 //getting vector out of range  error when run with parens
 			while (commands.at(i).find(closing_parens, 0) == -1 && i < commands.size()) {
-				std::cout << temp_str << std::endl;
+//				std::cout << temp_str << std::endl;
 				temp_str = commands.at(i);
 				to_run.push_back(temp_str);
 				commands.erase(commands.begin() + i);
@@ -91,21 +94,23 @@ void Parser::parse(){
 		if (commands.at(i).find(closing_parens, 0) != -1) { 
 			pos_end = commands.at(i).find(closing_parens, 0);
 			temp_str = commands.at(i).substr(0 , pos_end);
+	std::cout << "Commands.size()2: " << commands.size() << "\n i: " << i << std::endl;
 			to_run.push_back(temp_str);
 			commands.erase(commands.begin() + i);
 		}
 //		std::cout << temp_str << std::endl;
 		
 	}
-
+*/
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
 		
-		while(commands.size() != (i) && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
+		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
 			temp_str += commands.at(i);
 			temp_str += " ";
 			i++;
 		}
+	std::cout << "command: " << temp_str << std::endl;
 		to_run.push_back(temp_str);
 	}
 	Parser::parseFileNames();
@@ -151,7 +156,8 @@ void Parser::parseArguments(){
 		pos_start = to_run.at(x).find(" ", pos_start) + 1;		//ignore the firsr word (its the file name)
 		while(to_run.at(x).find(space, pos_start) != -1){	
 			pos_end = to_run.at(x).find(space, pos_start);
-			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
+			argv.push_back(to_run.at(x));
+//			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
 			pos_end++;
 			pos_start = pos_end;
 	}
@@ -217,11 +223,19 @@ int Parser::getSize(){
 }
 
 void Parser::runCommand(char ** argv){
-	err = 0;
 
-	execvp(*argv, argv);		//hijacks child process to return to parent
-	perror("Error");
-	err = errno;
+	int i = 0;
+	while (argv[i] != NULL) {
+		status = system(argv[i]);
+		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT))
+			break;
+	i++;
+	}
+//	err = 0;
+
+//	execvp(*argv, argv);		//hijacks child process to return to parent
+//	perror("Error");
+//	err = errno;
 }
 
 
