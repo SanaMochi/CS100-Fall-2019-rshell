@@ -54,6 +54,8 @@ void Parser::parse(){
 		
 	}
 	//assume there is always a last command ofter the last space
+	if (command.find(space, pos_start) == 1) 
+		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
 
 	commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	
