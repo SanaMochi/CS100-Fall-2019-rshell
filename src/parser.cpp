@@ -1,4 +1,5 @@
 #include "../header/parser.h"
+#include <vector>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -37,7 +38,10 @@ void Parser::parse(){
 		}
 		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
 			pos_end = command.find(quotation_mark, pos_start + 2);
-			pos_start++;
+			if (command.at(pos_end + 1) == closing_parens) {
+				pos_end++;
+			}
+			//figure out how to keep parenthesis with not quotation mark
 		}
 		else {
 			pos_end = command.find(space, pos_start);
@@ -62,16 +66,47 @@ void Parser::parse(){
 			pattern.push_back(end_symbol);
 	}
 	
-	for(int i = 0; i < commands.size(); i++){
-	std::string temp_str = "";
-	
+	//find parenthesese first and save it into to_run
+	int index_pos_start = 0;
+	for (int i = 0; i < commands.size(); i++) {
+		std::string temp_str = "";
 		
-	while(commands.size() != (i) && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
-		temp_str += commands.at(i);
-		temp_str += " ";
-		i++;
+		if (commands.at(i).find(opening_parens, 0) != -1) {
+			pos_start = commands.at(i).find(opening_parens, 0) + 1;
+			temp_str = commands.at(i).substr(pos_start, commands.at(i).size() - 1);
+			to_run.push_back(temp_str);
+			commands.erase(commands.begin() + i);
+//			std::cout << temp_str << std::endl;
+
+//need to implement for pattern and if quotes and parens
+//getting vector out of range  error when run with parens
+			while (commands.at(i).find(closing_parens, 0) == -1 && i < commands.size()) {
+				std::cout << temp_str << std::endl;
+				temp_str = commands.at(i);
+				to_run.push_back(temp_str);
+				commands.erase(commands.begin() + i);
+			}
+		}
+		
+		if (commands.at(i).find(closing_parens, 0) != -1) { 
+			pos_end = commands.at(i).find(closing_parens, 0);
+			temp_str = commands.at(i).substr(0 , pos_end);
+			to_run.push_back(temp_str);
+			commands.erase(commands.begin() + i);
+		}
+//		std::cout << temp_str << std::endl;
+		
 	}
-	to_run.push_back(temp_str);
+
+	for(int i = 0; i < commands.size(); i++){
+		std::string temp_str = "";
+		
+		while(commands.size() != (i) && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
+			temp_str += commands.at(i);
+			temp_str += " ";
+			i++;
+		}
+		to_run.push_back(temp_str);
 	}
 	Parser::parseFileNames();
 	Parser::parseArguments();

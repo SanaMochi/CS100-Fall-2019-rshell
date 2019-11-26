@@ -14,6 +14,9 @@ class Component{
 	const std::string or_symbol = "||";		//	hard coded values
 	const std::string end_symbol = ";";		//
 	char quotation_mark = '\"';
+	char opening_parens = '(';
+	char closing_parens = ')';
+
 
 //	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
