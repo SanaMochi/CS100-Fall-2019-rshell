@@ -13,6 +13,7 @@ class Component{
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
 	const std::string or_symbol = "||";		//	hard coded values
 	const std::string end_symbol = ";";		//
+	char quotation_mark = '\"';
 
 //	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters

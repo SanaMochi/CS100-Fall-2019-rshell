@@ -31,7 +31,17 @@ void Parser::parse(){
 	Parser::preParse();
 	pattern.push_back("");
 	while(command.find(space, pos_start) != -1){	
-		pos_end = command.find(space, pos_start);
+		if (command.at(pos_start) == quotation_mark) {			//if starts with quotation mark
+			pos_end = command.find(quotation_mark, pos_start + 1);
+			pos_start++;
+		}
+		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
+			pos_end = command.find(quotation_mark, pos_start + 2);
+			pos_start++;
+		}
+		else {
+			pos_end = command.find(space, pos_start);
+		}
 		commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
 		pos_end++;
 		pos_start = pos_end;
@@ -45,6 +55,7 @@ void Parser::parse(){
 		//std::cout << "\ncomparing: " << commands.at(i) << " and &&";
 		if(commands.at(i) == and_symbol)
 			pattern.push_back(and_symbol);
+
 		else if(commands.at(i) == or_symbol)
 			pattern.push_back(or_symbol);
 		else if(commands.at(i) == end_symbol)
