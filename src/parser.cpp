@@ -32,11 +32,9 @@ void Parser::parse(){
 	pattern.push_back("");
 	while(command.find(space, pos_start) != -1){	
 		if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
-			if (command.find(quotation_mark, pos_start + 1 == -1) {
+		//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
 				//error not even number of parens
-			}
 			pos_end = command.find(quotation_mark, pos_start + 1);
-//			pos_start++;
 		}
 //		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
 //			pos_end = command.find(quotation_mark, pos_start + 2);
@@ -115,9 +113,10 @@ void Parser::parse(){
 			temp_str += commands.at(i);
 			temp_str += " ";
 			i++;
+			std::cout << temp_str << std::endl;
 		}
-//	std::cout << "command: " << temp_str << std::endl;
-		to_run.push_back(temp_str);
+			to_run.push_back(temp_str);
+	std::cout << "command: " << temp_str << std::endl;
 	}
 	Parser::parseFileNames();
 	Parser::parseArguments();

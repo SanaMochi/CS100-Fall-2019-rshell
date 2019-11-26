@@ -53,17 +53,6 @@ void Command::runCommand(char ** argv){
 	//err = errno;
 	Command::err = 1;
 	std::exit(EXIT_FAILURE);
-
-/*	int i = 0;
-	while (argv[i] != NULL) {
-		status = system(argv[i]);
-		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)) {
-			break;
-		}
-//	status = -1;
-	i++;
-	}
-*/
 }
 
 void Command::runAll(int numOfCommands, Component* parser){
