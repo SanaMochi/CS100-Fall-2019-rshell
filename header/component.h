@@ -16,8 +16,8 @@ class Component{
 	const std::string open_bracket = "[";
 	const std::string closed_bracket = "]";
 	char quotation_mark = '\"';
-	char opening_parens = '(';
-	char closing_parens = ')';
+	const std::string opening_parens = "(";
+	const std::string closing_parens = ")";
 
 
 //	std::vector<std::string> pattern; 	//stores the seperators in order
