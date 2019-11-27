@@ -5,9 +5,10 @@
 #include <vector>
 #include <iostream>
 #include "component.h"
-#include "command.h"
-#include "test.h"
+//#include "command.h"
+//#include "test.h"
 
+class Component;
 
 class Parser: public Component {
 	int status = 0;

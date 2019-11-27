@@ -1,4 +1,4 @@
-#include "../header/component.h"
+//#include "../header/component.h"
 #include "../header/command.h"
 #include <unistd.h>
 #include <sys/wait.h>

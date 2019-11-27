@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "../header/test.h"
 #include "../header/parser.h"
 #include "../header/command.h"
 #include "../header/component.h"
