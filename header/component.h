@@ -13,6 +13,8 @@ class Component{
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
 	const std::string or_symbol = "||";		//	hard coded values
 	const std::string end_symbol = ";";		//
+	const std::string open_bracket = '[';
+	const std::string closed_bracket = ']';
 	char quotation_mark = '\"';
 	char opening_parens = '(';
 	char closing_parens = ')';
