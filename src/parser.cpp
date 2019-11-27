@@ -133,11 +133,11 @@ void Parser::parse(){
 				temp_str += commands.at(i);
 				temp_str += " ";
 				i++;
-				std::cout << temp_str << std::endl;
+//				std::cout << temp_str << std::endl;
 			}
 		}
 			to_run.push_back(temp_str);
-	std::cout << "command: " << temp_str << std::endl;
+//	std::cout << "command: " << temp_str << std::endl;
 	}
 	Parser::parseFileNames();
 	Parser::parseArguments();
