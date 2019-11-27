@@ -156,7 +156,7 @@ void Parser::parse(){
 					}else 
 						pos_end++;
 				std::cout << "f";
-					//if (pos_end < command.size())
+					if (pos_end != command.size())
 						pos_start = pos_end;
 				std::cout << " start/end " << pos_start << " " << pos_end << std::endl;
 					if (pos_start == command.size() - 1 && opened_parens.size() != 0)
@@ -167,7 +167,16 @@ void Parser::parse(){
 
 			std::cout << "a"; 
 				}
-			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+				std::cout << "b";
+
+			int paren_count = 0;
+			std::string temporary = command;
+			while (command.at(temporary.size() - 1) == ')') {
+				paren_count++;
+				temporary.pop_back();
+			}
+
+			commands.push_back(command.substr(pos_start, (command.size() - paren_count - pos_start)));
 			std::cout << " command_substr: " << commands.back() << std::endl;
 
 		std::cout << "b";
