@@ -50,7 +50,7 @@ int isDirectory(std::string directoryName) {
 void Test::runCommand(char ** argv) {
 int i = 0;
 	//assuming ONLY test executables
-	while (argv[i] != NULL) {
+	if (argv[i] != NULL) {
 //		status = system(argv[i]);
 	
 //		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)) {
@@ -76,7 +76,7 @@ int i = 0;
 			}else {
 				std::cout << "(False)" << std::endl;
 //		}
-	i++;
+//	i++;
 	}
 }
 /*
