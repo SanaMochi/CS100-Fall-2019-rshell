@@ -15,7 +15,7 @@
 
 class Command;
 class Test : public Parser {
-	Test();
+//	Test();
 
 	int exists(std::string fileName);
 	int isRegularFile(std::string fileName);

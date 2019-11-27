@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string>
-
+/*
 Test::Test() {
 	command = "";
 	err = 0;
@@ -21,9 +21,12 @@ Test::Test(std::string s) {
 	numOfCommands = 0;
 	exit = false;
 }
-
+*/
 int exists(std::string fileName) {
-
+	if (isRegularFile(fileName) == 0 || isDirectory(fileName) == 0) {
+		return 0;
+	}
+	return 1;
 }
 
 int isRegularFile(std::string fileName) {
