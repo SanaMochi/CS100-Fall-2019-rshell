@@ -3,7 +3,7 @@
 
 #include "component.h"
 #include "parser.h"
-#include <string>
+//#include <string>
 //#include <vector>
 #include <stdio.h>
 #include <sys/types.h>
@@ -16,7 +16,9 @@
 class Command;
 class Test : public Parser {
 //	Test();
-
+	std::vector<std::string> flags;
+	int isTrue;
+	
 	int exists(std::string fileName);
 	int isRegularFile(std::string fileName);
 	int isdirectory(std::string directoryName);
