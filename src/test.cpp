@@ -49,16 +49,37 @@ int isDirectory(std::string directoryName) {
 
 void Test::runCommand(char ** argv) {
 int i = 0;
+	//assuming ONLY test executables
 	while (argv[i] != NULL) {
-		status = system(argv[i]);
-		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)) {
-			break;
+//		status = system(argv[i]);
+	
+//		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)) {
+//			break;
+//		}
+		i++;
+		if (argv[i] == "-e" || argv[i] == "-f" || argv[i] == "-d") {
+			flags.push_back(argv[i];
+			i++;
 		}
-//	status = -1;
+		else if (flags.size() == 0)
+			flags.push_back("-e");
+//		for (int j = 0; j < flags.size(); j++) {
+			if (flag.at(j) == "-e") {
+				isTrue = exists(argv[i]);
+			}else if (flag.at(j) == "-f") {
+				isTrue = isRegularFile(argv[i]);
+			}else if (flag.at(j) == "-d") {
+				isTrue = isDirectory(argv[i]);
+			}
+			if (isTrue == 0) {
+				std::cout << "(True)" << std::endl;
+			}else {
+				std::cout << "(False)" << std::endl;
+//		}
 	i++;
 	}
 }
-
+/*
 void Test::runAll(int numOfCommands, Component* parser) {
 	err = 0;
 	std::string exit = "";
@@ -98,3 +119,4 @@ void Test::runAll(int numOfCommands, Component* parser) {
 			}
 		}
 }
+*/
