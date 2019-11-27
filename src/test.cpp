@@ -44,8 +44,12 @@ int isDirectory(std::string directoryName) {
 }
 */
 void Test::runCommand(char ** argv) {
-
 	struct stat buf;
+
+	if (stat(argv[1], &sb) == -1) {
+        	perror("stat");
+        	exit(EXIT_FAILURE);
+    	}
 	if (stat(file_path, &buf) != -1) { // Check the return value of stat
     		if (S_ISREG(buf.st_mode) != 0) {
         		printf("(True)"); //, file_path) ;
