@@ -91,8 +91,8 @@ void Parser::parse(){
 			if (command.at(k) == ')')
 			    	closed_parens.push_back(k);
 		}
-		for int j = 0; j < closed_parens.size(); j++) {
-			ink k = opened_parens.size() - 1;
+		for (int j = 0; j < closed_parens.size(); j++) {
+			int k = opened_parens.size() - 1;
 			while (j < k)
 				k--;
 			
@@ -117,7 +117,7 @@ void Parser::parse(){
 		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	}
 			
-			opened_parens.erase(open_parens.begin() + 1);
+		opened_parens.erase(opened_parens.begin() + 1);
 		}
 	}
 	
