@@ -5,9 +5,9 @@
 #include "parser.h"
 //#include <string>
 //#include <vector>
-#include <stdio.h>
 #include <sys/types.h>
-#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <stdlib.h>
 //#include "parser.h"
 //#include "component.h"
@@ -16,13 +16,13 @@
 class Command;
 class Test : public Parser {
 //	Test();
-	std::vector<std::string> flags;
+/*	std::vector<std::string> flags;
 	int isTrue;
 	
 	int exists(std::string fileName);
 	int isRegularFile(std::string fileName);
 	int isdirectory(std::string directoryName);
-	void runCommand(char ** argv);
+*/	void runCommand(char ** argv);
 	void runAll(int numOfCommands, Component* parser);
 };
 
