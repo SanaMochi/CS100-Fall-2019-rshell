@@ -1,10 +1,6 @@
 #include "../header/component.h"
 #include "../header/parser.h"
 #include "../header/test.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <string>
 /*
 Test::Test() {
 	command = "";
@@ -21,7 +17,7 @@ Test::Test(std::string s) {
 	numOfCommands = 0;
 	exit = false;
 }
-*/
+
 int exists(std::string fileName) {
 	if (isRegularFile(fileName) == 0 || isDirectory(fileName) == 0) {
 		return 0;
@@ -46,9 +42,22 @@ int isDirectory(std::string directoryName) {
 	}
 	return 0;
 }
-
+*/
 void Test::runCommand(char ** argv) {
-int i = 0;
+
+	struct stat buf;
+	if (stat(file_path, &buf) != -1) { // Check the return value of stat
+    		if (S_ISREG(buf.st_mode) != 0) {
+        		printf("(True)"); //, file_path) ;
+		else if (S_ISDIR(buf.st_mode) != 0) {
+        		printf("(True)"); //, file_path) ;
+    	}
+    	else {
+        	printf("(False)"); //, file_path) ;
+    	}
+	
+}
+/*int i = 0;
 	//assuming ONLY test executables
 	if (argv[i] != NULL) {
 //		status = system(argv[i]);
@@ -79,6 +88,7 @@ int i = 0;
 //	i++;
 	}
 }
+*/
 /*
 void Test::runAll(int numOfCommands, Component* parser) {
 	err = 0;
