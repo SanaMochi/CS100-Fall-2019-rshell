@@ -29,7 +29,7 @@ void Parser::parse(){
 	int pos_start = 0;
 	int pos_end = 0;
 	resetVectors();
-	Parser::preParse();
+ 	Parser::preParse();
 	pattern.push_back("");
 
 	int curr_max = 0; 
@@ -46,17 +46,16 @@ void Parser::parse(){
             		if (curr_max > 0)
                 	curr_max--; 
 		}
-		else {
-                	perror("Error: ");
-			return;
-        	} 
+//		else {
+//                	perror("Error: Uneven parens ");
+//			return;
+ //       	} 
  	}
     	if (curr_max != 0) {
-		perror("Error: ");
+		perror("Error: Odd parens");
 		return;
 	}
 	//max is how many pairs of parens 
-	
 	if (max == 0) {
 		while(command.find(space, pos_start) != -1) {		
 			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
@@ -91,38 +90,48 @@ void Parser::parse(){
 			if (command.at(k) == ')')
 			    	closed_parens.push_back(k);
 		}
+		int k = 0;
 		for (int j = 0; j < closed_parens.size(); j++) {
-			int k = opened_parens.size() - 1;
-			while (j < k)
+//			int k = 0;
+		while (command.find(space, pos_start != -1)) {
+			if (opened_parens.size() > 0) {
+				k = opened_parens.size() - 1;
+			}
+			if (closed_parens.at(j) > opened_parens.at(k))
 				k--;
-			
-					while(command.find(space, pos_start) != -1) {		
-			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
-			//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
-					//error not even number of parens
-				pos_end = command.find(quotation_mark, pos_start + 1);
+			pos_start = k;
+	//		while(command.find(space, pos_start) != -1) {	
+				if (command.at(pos_start) == '(') { 
+					pos_start++;	
+				}
+				if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
+				//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
+						//error not even number of parens
+					pos_end = command.find(quotation_mark, pos_start + 1);
+				}
+				else {
+					pos_end = command.find(space, pos_start);
+				}
+				if (command.at(pos_end) == ')') {
+					pos_end--;
+				}
+				if (pos_start + (pos_end - pos_start) < command.size()) {
+					commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+				}
+				if (pos_end < command.size() - 2 && command.at(pos_end + 1) == ')') {
+					pos_end += 2;
+				}else {
+					pos_end++;
+				}pos_start = pos_end;
 			}
-			else {
-				pos_end = command.find(space, pos_start);
-			}
-
-			if (pos_start + (pos_end - pos_start) < command.size()) {
-				commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-			}
-			pos_end++;
-			pos_start = pos_end;
-
-
+			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 		}
-		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
-	}
 			
-		opened_parens.erase(opened_parens.begin() + 1);
-		}
+		opened_parens.erase(opened_parens.begin() + k);
 	}
 	
-	for(int i = 0; i < commands.size(); i++){
-		//std::cout << "\ncomparing: " << commands.at(i) << " and &&";
+	for (int i = 0; i < commands.size(); i++){
+		std::cout << "comparing: " << commands.at(i) << " and &&\n";
 		if(commands.at(i) == and_symbol)
 			pattern.push_back(and_symbol);
 
