@@ -31,19 +31,38 @@ void Parser::parse(){
 	resetVectors();
 	Parser::preParse();
 	pattern.push_back("");
-	while(command.find(space, pos_start) != -1){	
+
+	int curr_max = 0; 
+    	int max = 0;
+ 	
+    for (int i = 0; i < command.size(); i++) { 
+        if (command.at(i) == '(') {
+            curr_max++;
+		if (curr_max > max) 
+                max = curr_max; 
+        } 
+        else if (command.at(i) == ')') { 
+            if (curr_max > 0)
+                curr_max--; 
+            else {
+                perror("Error: ");
+		return;
+	    }
+        } 
+    }
+  
+    	if (current_max != 0) {
+		perror("Error: ");
+		return;
+	}
+	}//max is how many nested parens 
+	
+	while(command.find(space, pos_start) != -1){			
 		if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
 		//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
 				//error not even number of parens
 			pos_end = command.find(quotation_mark, pos_start + 1);
 		}
-//		else if (command.at(pos_start + 1) == quotation_mark) {		//if starts with parenthesis and then quotation mark
-//			pos_end = command.find(quotation_mark, pos_start + 2);
-//			if (command.at(pos_end + 1) == closing_parens) {
-//				pos_end++;
-//			}
-			//figure out how to keep parenthesis with not quotation mark
-//		}
 		else {
 			pos_end = command.find(space, pos_start);
 		}
