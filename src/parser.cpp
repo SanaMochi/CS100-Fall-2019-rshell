@@ -51,11 +51,11 @@ void Parser::parse(){
         } 
     }
   
-    	if (current_max != 0) {
+    	if (curr_max != 0) {
 		perror("Error: ");
 		return;
 	}
-	}//max is how many nested parens 
+	//max is how many nested parens 
 	
 	while(command.find(space, pos_start) != -1){			
 		if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
