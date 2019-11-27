@@ -72,6 +72,14 @@ void Parser::parse(){
 			pattern.push_back(or_symbol);
 		else if(commands.at(i) == end_symbol)
 			pattern.push_back(end_symbol);
+//start
+//		else if (commands.at(i) == "test")
+//			pattern.push_back("test");
+//		else if (commands.at(i) == open_bracket)
+//			pattern.push_back(open_bracket);
+//		else if (commands.at(i) == closed_bracket)
+//			patter.push_back(closed_bracket);
+//end
 	}
 	
 	//find parenthesese first and save it into to_run
@@ -111,10 +119,22 @@ void Parser::parse(){
 		std::string temp_str = "";
 		
 		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
-			temp_str += commands.at(i);
-			temp_str += " ";
-			i++;
-			std::cout << temp_str << std::endl;
+//start
+			if (commands.at(i) == open_bracket) {
+				temp_str += "test ";
+				while (commands.at(i) != closed_bracket) {
+					temp_str += commands.at(i);
+					temp_str += " ";
+					i++;
+				}
+			}
+//end
+			else {
+				temp_str += commands.at(i);
+				temp_str += " ";
+				i++;
+				std::cout << temp_str << std::endl;
+			}
 		}
 			to_run.push_back(temp_str);
 	std::cout << "command: " << temp_str << std::endl;
@@ -255,11 +275,20 @@ void Parser::runAll(int numOfCommands, Component* parser){
 				
 				if(err != 0 && parser->pattern.at(i) == "&&"){	//for &&
 					parser->removeNextCommand(i);
-																//for ||
-				}else if(err == 0  && parser->pattern.at(i) == "||"){
+
+				}else if(err == 0  && parser->pattern.at(i) == "||"){ //for ||
 					parser->removeNextCommand(i);
 				}
+//start				
+//				else if (parser.pattern.at(i) == "test")
+//					parser->Test::runCommand();
+//				else if (parser.pattern.at(i) == open_bracket)
+//					parser->removeNextCommand(i);
+//					parser->test::runCommand();
+//				else if (parser.pattern.at(i) == closed_bracket) 
+//					parser->removeNextCommand(i);
 		
+//end
 				Parser::runCommand(parser->formatArguments(i));
 			}
 		}
