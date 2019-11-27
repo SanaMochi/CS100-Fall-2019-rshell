@@ -75,10 +75,10 @@ void Parser::parse(){
 //start
 //		else if (commands.at(i) == "test")
 //			pattern.push_back("test");
-//		else if (commands.at(i) == open_bracket)
-//			pattern.push_back(open_bracket);
-//		else if (commands.at(i) == closed_bracket)
-//			patter.push_back(closed_bracket);
+		else if (commands.at(i) == open_bracket)
+			pattern.push_back(open_bracket);
+		else if (commands.at(i) == closed_bracket)
+			pattern.push_back(closed_bracket);
 //end
 	}
 	
@@ -121,12 +121,14 @@ void Parser::parse(){
 		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
 //start
 			if (commands.at(i) == open_bracket) {
-				temp_str += "test ";
+//				temp_str += "test ";
+				commands.at(i) = "test";
 				while (commands.at(i) != closed_bracket) {
 					temp_str += commands.at(i);
 					temp_str += " ";
 					i++;
 				}
+				commands.erase(commands.begin() + 1);
 			}
 //end
 			else {
@@ -137,7 +139,7 @@ void Parser::parse(){
 			}
 		}
 			to_run.push_back(temp_str);
-//	std::cout << "command: " << temp_str << std::endl;
+//	std::cout << "Command: " << temp_str << std::endl;
 	}
 	Parser::parseFileNames();
 	Parser::parseArguments();
@@ -282,11 +284,11 @@ void Parser::runAll(int numOfCommands, Component* parser){
 //start				
 //				else if (parser.pattern.at(i) == "test")
 //					parser->Test::runCommand();
-//				else if (parser.pattern.at(i) == open_bracket)
-//					parser->removeNextCommand(i);
+				else if (parser->pattern.at(i) == "[")
+					parser->removeNextCommand(i);
 //					parser->test::runCommand();
-//				else if (parser.pattern.at(i) == closed_bracket) 
-//					parser->removeNextCommand(i);
+				else if (parser->pattern.at(i) == "]") 
+					parser->removeNextCommand(i);
 		
 //end
 				Parser::runCommand(parser->formatArguments(i));
