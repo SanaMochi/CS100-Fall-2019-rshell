@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <stdio.h>
 #include "component.h"
 //#include "command.h"
 //#include "test.h"
