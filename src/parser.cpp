@@ -83,17 +83,13 @@ void Parser::parse(){
 			}
 		}
 		//assume there is always a last command ofter the last space
-	//	if (command.find(space, pos_start) == 1) {
-	//		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
-	//	}
-	
-	//	if (pos_start + (command.size() - pos_start) < command.size())
 		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	}
 	else if (max > 0) {
- 			std::string temp;
-                        temp += "(" + command + ")";
-                        command = temp;
+		std::string temp;
+		temp += "(" + command + ")";
+		command = temp;
+		std::cout << command << std::endl;	
 		for (int n = 0; n < command.size(); n++) { //while(command.find(opening_parens, pos_start) != -1) {
 			if (command.at(n) == '(') {
 				std::cout << " open" << n << std::endl;
@@ -105,85 +101,87 @@ void Parser::parse(){
 			    	closed_parens.push_back(n);
 			}
 		}
-		int k = opened_parens.back();
-//		int o = opened_parens.size() - 1;
-//		pos_start = k;
-		for (int j = 0; j < closed_parens.size(); j++) {
-			std::cout << "blah" << std::endl;
-//			int k = opened_parens.back();
-	                int o = opened_parens.size() - 1;
+			int k = opened_parens.back();
+			int o = opened_parens.size() - 1;
+//			int k = opened_parens.at(opened_parens.size() - 1 - j);
+//			pos_start = k;
+			for (int j = 0; j < closed_parens.size(); j++) {
+//				int k = opened_parens.at(opened_parens.size() - 1 - j);
+//				int o = opened_parens.size() - 1;
+				std::cout << "blah" << std::endl;
+				std::cout << opened_parens.back();
+//          	int o = opened_parens.size() - 1;
 
+				std::cout << " Size & at(open): " << opened_parens.size() << " " << k;
+				pos_start = opened_parens.back();
+				while (closed_parens.at(j) < opened_parens.at(o) && o > 0) {
+					o--;
+					pos_start = opened_parens.at(o);
+				}
+				bool isk = false;
+				while(command.find(space, pos_start) != -1 && isk == false) { // || opened_parens.size() != 0) {	
+					while (command.at(pos_start) == '(') { 
+						pos_start++;	
+					}
+					if ((command.find(quotation_mark, pos_start) != -1)) {			//if starts with quotation mark
+						pos_end = command.find(quotation_mark, pos_start + 1);
+					}
+					else {
+						pos_end = command.find(space, pos_start);
+					}
+		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
+					int end_paren_num = 0;
+					while (command.at(pos_end) == ')') {
+						end_paren_num++;
+						pos_end--;
+						std::cout << " end " << pos_end << std::endl;
+					}
+		std::cout << " end " << pos_end;
+					if (pos_start + (pos_end - pos_start) < command.size()) {
+						commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+		std::cout << " command_substr: " << commands.back() << std::endl;
+					}
+		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
+		std::cout << " command: " << command << std::endl;
+					if (pos_end < (command.size() - end_paren_num - 1) && command.at(pos_end + 1) == ')') {
+				std::cout << "c";
 
-			std::cout << " Size & at(open): " << opened_parens.size() << " " << k;
-			pos_start = opened_parens.back();
-			int m = 1;
-			while (closed_parens.at(j) < opened_parens.at(o) && m < opened_parens.size()) {
-				m++;
-				pos_start = opened_parens.at(opened_parens.size() - m);
-			}
-//			pos_start = opened_parens.back();
-			bool isk = false;
-			while(command.find(space, pos_start) != -1 && isk == false) { // || opened_parens.size() != 0) {	
-//				k = pos_start;
-//				if (pos_start != k) {
-				if (command.at(pos_start) == '(') { 
-					pos_start++;	
-				}
-				if ((command.find(quotation_mark, pos_start) != -1)) {			//if starts with quotation mark
-					pos_end = command.find(quotation_mark, pos_start + 1);
-	//	std::cout << "start " << pos_start << " end " << pos_end << std::endl;
-				}
-				else {
-					pos_end = command.find(space, pos_start);
-				}
-	//	std::cout << " start " << pos_start << " end " << pos_end << std::endl;
-				int end_paren_num = 0;
-				while (command.at(pos_end) == ')') {
-					end_paren_num++;
-					pos_end--;
-				}
-				if (pos_start + (pos_end - pos_start) < command.size()) {
-					commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-		std::cout << " command substr :" << commands.back();
-				}
-//				if (command.at(pos_end) == ')') 
-//					pos_end--;
-				if (pos_end < (command.size() - end_paren_num - 1) && command.at(pos_end + 1) == ')') {
-					pos_end += end_paren_num + 1;
-					opened_parens.erase(opened_parens.begin() + o);
-				}else {
-					pos_end++;
-				}pos_start = pos_end;
-//				std::cout << "b";
-//	               		pos_end = command.size() - 1;
-//      	      		int paren_count = 0;
-//      		      	while (command.back() == ')') {
-//	          	              paren_count++;
-//      	        	      pos_end--;
-//           			}
-//      }
-//				commands.push_back(command.substr(pos_start, (pos_end - pos_start + 1)));
-//                            	std::cout << "command substr: " << commands.back() << std::endl;
-                                             
+						pos_end += end_paren_num + 1;
+				std::cout << "d";
 
-				if (pos_start == k) {
-					isk = true;
-				}
+						if (opened_parens.size() > 0)
+							opened_parens.erase(opened_parens.begin() + o);
+		std::cout << "open_parens: " << opened_parens.size() << std::endl;
+		std::cout << "e";
+					}else 
+						pos_end++;
+				std::cout << "f";
+					//if (pos_end < command.size())
+						pos_start = pos_end;
+				std::cout << " start/end " << pos_start << " " << pos_end << std::endl;
+					if (pos_start == command.size() - 1 && opened_parens.size() != 0)
+						pos_start = k;
+					std::cout << "g"; 
+					if (pos_start == k)
+						isk = true;
 
-		std::cout << "a"; 
-			}
-//			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
-			
-//		}
+			std::cout << "a"; 
+				}
+			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+			std::cout << " command_substr: " << commands.back() << std::endl;
+
 		std::cout << "b";
-		pos_end = command.size() - 1;
-		int paren_count = 0;
-		while (command.back() == ')') {
-			paren_count++;
-			pos_end--;
-		}
-		commands.push_back(command.substr(pos_start, (pos_end - pos_start + 1)));
-		std::cout << "command substr: " << commands.back() << std::endl;
+/*			pos_end = command.size() - 1;
+			int paren_count = 0;
+			while (command.at(command.size() - 1) == ')') {
+				paren_count++;
+				pos_end--;
+			}
+			commands.push_back(command.substr(pos_start, (pos_end - pos_start + 1)));
+			std::cout << "command substr: " << commands.back() << std::endl;
+	*/		//				if (opened_parens.size() > 0)
+//					opened_parens.erase(opened_parens.begin() + o);
+
 		}
 	}
 	
