@@ -35,52 +35,91 @@ void Parser::parse(){
 	int curr_max = 0; 
     	int max = 0;
  	
-    for (int i = 0; i < command.size(); i++) { 
-        if (command.at(i) == '(') {
-            curr_max++;
-		if (curr_max > max) 
-                max = curr_max; 
-        } 
-        else if (command.at(i) == ')') { 
-            if (curr_max > 0)
-                curr_max--; 
-            else {
-                perror("Error: ");
-		return;
-	    }
-        } 
-    }
-  
+	//find how many pairs of parens
+	for (int i = 0; i < command.size(); i++) { 
+        	if (command.at(i) == '(') {
+            		curr_max++;
+			if (curr_max > max) 
+               			max = curr_max; 
+        	} 
+       		else if (command.at(i) == ')') { 
+            		if (curr_max > 0)
+                	curr_max--; 
+		}
+		else {
+                	perror("Error: ");
+			return;
+        	} 
+ 	}
     	if (curr_max != 0) {
 		perror("Error: ");
 		return;
 	}
-	//max is how many nested parens 
+	//max is how many pairs of parens 
 	
-	while(command.find(space, pos_start) != -1){			
-		if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
-		//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
-				//error not even number of parens
-			pos_end = command.find(quotation_mark, pos_start + 1);
+	if (max == 0) {
+		while(command.find(space, pos_start) != -1) {		
+			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
+			//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
+					//error not even number of parens
+				pos_end = command.find(quotation_mark, pos_start + 1);
+			}
+			else {
+				pos_end = command.find(space, pos_start);
+			}
+
+			if (pos_start + (pos_end - pos_start) < command.size()) {
+				commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+			}
+			pos_end++;
+			pos_start = pos_end;
+
+
 		}
-		else {
-			pos_end = command.find(space, pos_start);
-		}
-		
-		if (pos_start + (pos_end - pos_start) < command.size()) {
-			commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-		}
-		pos_end++;
-		pos_start = pos_end;
-		
-		
+		//assume there is always a last command ofter the last space
+	//	if (command.find(space, pos_start) == 1) {
+	//		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
+	//	}
+
+	//	if (pos_start + (command.size() - pos_start) < command.size())
+		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	}
-	//assume there is always a last command ofter the last space
-//	if (command.find(space, pos_start) == 1) {
-//		commands.push_back(command.substr(pos_start, (command.size() - 1 - pos_start)));
-//	}
-//	if (pos_start + (command.size() - pos_start) < command.size())
-	commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+	else if (max > 0) {
+		for (int k = 0; k < command.size(); k++) { //while(command.find(opening_parens, pos_start) != -1) {
+			if (command.at(k) == '(') 
+				opened_parens.push_back(k);
+			if (command.at(k) == ')')
+			    	closed_parens.push_back(k);
+		}
+		for int j = 0; j < closed_parens.size(); j++) {
+			ink k = opened_parens.size() - 1;
+			while (j < k)
+				k--;
+			
+					while(command.find(space, pos_start) != -1) {		
+			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
+			//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
+					//error not even number of parens
+				pos_end = command.find(quotation_mark, pos_start + 1);
+			}
+			else {
+				pos_end = command.find(space, pos_start);
+			}
+
+			if (pos_start + (pos_end - pos_start) < command.size()) {
+				commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+			}
+			pos_end++;
+			pos_start = pos_end;
+
+
+		}
+		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+	}
+			
+			opened_parens.erase(open_parens.begin() + 1);
+		}
+	}
 	
 	for(int i = 0; i < commands.size(); i++){
 		//std::cout << "\ncomparing: " << commands.at(i) << " and &&";
