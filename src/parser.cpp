@@ -39,7 +39,7 @@ void Parser::parse(){
  	Parser::preParse();
 	pattern.push_back("");
 
-	int curr_max = 0; 
+/*	int curr_max = 0; 
     	int max = 0;
  //	std::string temp;
 //	temp += "(" + command + ")";
@@ -66,10 +66,9 @@ void Parser::parse(){
 	}
 	//max is how many pairs of parens 
 	if (max == 0) {
+		*/
 		while(command.find(space, pos_start) != -1) {		
 			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
-			//	if (command.find(quotation_mark, pos_start + 1 == -1)) {
-					//error not even number of parens
 				pos_end = command.find(quotation_mark, pos_start + 1);
 			}
 			else {
@@ -81,13 +80,12 @@ void Parser::parse(){
 			
 			pos_end++;
 			pos_start = pos_end;
-
 			}
 		}
 		//assume there is always a last command ofter the last space
 		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	}
-	else if (max > 0) {
+/*	else if (max > 0) {
 		std::string command_og = command;
 		if (command.at(0) != '(') {
 			
@@ -192,6 +190,7 @@ void Parser::parse(){
 
 		}
 	}
+	*/
 	
 	for (int i = 0; i < commands.size(); i++){
 		//std::cout << "comparing: " << commands.at(i) << " and &&\n";
@@ -288,7 +287,7 @@ void Parser::parseArguments(){
 			pos_start = pos_end;
 	}
 	//assume there is always a last command ofter the last space
-	argv.push_back("???");
+	argv.push_back(NULL);
 	}
 }
 
