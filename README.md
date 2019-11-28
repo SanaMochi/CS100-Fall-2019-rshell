@@ -1,7 +1,7 @@
 # CS 100 Programming Project
 
 [Link](https://docs.google.com/document/d/1rIrPz5glX_SOD-Oi87J7bxxZykglxa-xB84qcXeUTc8/edit) to specs so I dont have to keep on signing into ilearn
-compile with `g++ rshell.cpp parser.cpp command.cpp -o main -std=c++11` in src directory
+compile with `g++ rshell.cpp parser.cpp command.cpp test.cpp -o main -std=c++11` in src directory
 
 <h1> Project Information </h1>
 Fall 2019
@@ -22,17 +22,23 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 <h1> Diagram </h1>
 
-![OMTDiagram: ](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.png)
+![OMTDiagram: ](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
 <h1> Classes </h1>
 
-Composite
+Composite:
 Inteface class that doesn't do much except hold onto variables needed by inherited classes and some important functions.
 
-Command
-Composite class that runs the commands given
+Command:
+Composite class that runs the commands given using  `execvp()`
+Now has functionality to call Test class when test is invoked for added functionality.
 
-Parser
+Parser:
 Leaf class that parses the command and executes based on the connector
+If surrounded by quotes, arguments are treated as a single argument, no matter what they contain.
+Parentheses can be used in order to change the order of precedence of operators in the rshell. Includes multiple and nested parenthesis.
+
+Test:
+Runs test through the `test` operator and square brackets, `[ ]`. This is done through `stat()` and can now print "(True)" or "(False)" for the flags -e, -f, and -d.
 
 <h1> Prototypes / Reaserch </h1>
 
@@ -43,5 +49,5 @@ We have also now created a funtional parse class.
 
 * We have created relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
 * We have figures out a parser to use and the functionality of other relevant functions that work with it
-* We made unit and integrationtests using the `googletest` framework
+* We made unit and integration tests using the `googletest` framework
 * Add more items as they become necessary such as special cases (parenthesis, etc)
