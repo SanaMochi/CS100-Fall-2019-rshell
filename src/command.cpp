@@ -57,7 +57,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 				//std::cout << "\nsymbol: " << parser->pattern.at(i);
 				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
 				
-				if (execvp(argv[0], argv) != 0) {
+				if (execvp(arga[0], arga) != 0) {
 					perror("exec");
 					exit(1);
 				} else {
@@ -108,7 +108,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 				if (commands.at(0) == "test") {
 					if (commands.at(1) == "-e") { 
 						struct stat buf;
-						if (stat(argv[2], &buf) == 0) {
+						if (stat(arga[2], &buf) == 0) {
 							cout << "(True)" << endl;
 							return 0;
 						}
@@ -119,7 +119,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 					}
 					else if (commands.at(1) == "-f") { 
 						struct stat buf;
-						if (stat(argv[2], &buf) == 0) {
+						if (stat(arga[2], &buf) == 0) {
 							cout << "(True)" << endl;
 							return 0;
 						}
@@ -130,7 +130,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 					}
 					else if (commands.at(1) == "-d") { 
 						struct stat buf;
-						if (stat(argv[2], &buf) == 0) {
+						if (stat(arga[2], &buf) == 0) {
 							cout << "(True)" << endl;
 							return 0;
 						}
@@ -141,7 +141,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 					}
 					else {
 						struct stat buf;
-						if (stat(argv[1], &buf) == 0) {
+						if (stat(arga[1], &buf) == 0) {
 							cout << "(True)" << endl;
 							return 0;
 						}
