@@ -88,10 +88,10 @@ void Component::resetVectors(){
 }
 
 bool Component::shouldIExit(){
-	return exit;
+	return exit_bool;
 }
 
 void Component::shouldIExit(bool shouldI){
-	exit = shouldI;
+	exit_bool = shouldI;
 }
 
