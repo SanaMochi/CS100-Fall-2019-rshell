@@ -12,6 +12,8 @@
 #include <iostream>
 #include <iterator>
 
+using namespace std;
+
 Command::Command(){
 	status = 0;
 	err = 0;
