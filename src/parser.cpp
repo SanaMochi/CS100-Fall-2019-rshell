@@ -86,10 +86,14 @@ void Parser::parse(){
 		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
 	}
 	else if (max > 0) {
-		std::string temp;
-		temp += "(" + command + ")";
-		command = temp;
-		std::cout << command << std::endl;	
+		std::string command_og = command;
+		if (command.at(0) != '(') {
+			
+			std::string temp;
+			temp += "(" + command + ")";
+			command = temp;
+	//		std::cout << command << std::endl;
+		}	
 		for (int n = 0; n < command.size(); n++) { //while(command.find(opening_parens, pos_start) != -1) {
 			if (command.at(n) == '(') {
 				std::cout << " open" << n << std::endl;
@@ -119,7 +123,7 @@ void Parser::parse(){
 					pos_start = opened_parens.at(o);
 				}
 				bool isk = false;
-				while(command.find(space, pos_start) != -1 && isk == false) { // || opened_parens.size() != 0) {	
+				while(command.find(space, pos_start) != -1 && isk == false && command.at() { // || opened_parens.size() != 0) {	
 					while (command.at(pos_start) == '(') { 
 						pos_start++;	
 					}
@@ -131,22 +135,23 @@ void Parser::parse(){
 					}
 		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
 					int end_paren_num = 0;
-					while (command.at(pos_end) == ')') {
-						end_paren_num++;
+//					int temp_end = pos_end;
+					if (command.at(pos_end - 1) == ')') {	//bc end == ' '
+//						end_paren_num++;
 						pos_end--;
 						std::cout << " end " << pos_end << std::endl;
 					}
-		std::cout << " end " << pos_end;
-					if (pos_start + (pos_end - pos_start) < command.size()) {
+//					pos_end -=  end_paren_num;
+	//	std::cout << " end " << pos_end;
+				if (pos_start + (pos_end - pos_start) < command.size())
 						commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
 		std::cout << " command_substr: " << commands.back() << std::endl;
-					}
+	//				}
 		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
 		std::cout << " command: " << command << std::endl;
-					if (pos_end < (command.size() - end_paren_num - 1) && command.at(pos_end + 1) == ')') {
+					if (command.at(pos_end + end_paren_num) == ')') {		//pos_end < (command.size() - end_paren_num - 1) && 
 				std::cout << "c";
-
-						pos_end += end_paren_num + 1;
+						pos_end += 2;
 				std::cout << "d";
 
 						if (opened_parens.size() > 0)
@@ -159,7 +164,7 @@ void Parser::parse(){
 					if (pos_end != command.size())
 						pos_start = pos_end;
 				std::cout << " start/end " << pos_start << " " << pos_end << std::endl;
-					if (pos_start == command.size() - 1 && opened_parens.size() != 0)
+					if ((pos_start == command.size() - 1) && (command_og.at(0) !=  '('))
 						pos_start = k;
 					std::cout << "g"; 
 					if (pos_start == k)
@@ -180,16 +185,8 @@ void Parser::parse(){
 			std::cout << " command_substr: " << commands.back() << std::endl;
 
 		std::cout << "b";
-/*			pos_end = command.size() - 1;
-			int paren_count = 0;
-			while (command.at(command.size() - 1) == ')') {
-				paren_count++;
-				pos_end--;
-			}
-			commands.push_back(command.substr(pos_start, (pos_end - pos_start + 1)));
-			std::cout << "command substr: " << commands.back() << std::endl;
-	*/		//				if (opened_parens.size() > 0)
-//					opened_parens.erase(opened_parens.begin() + o);
+//		if (opened_parens.size() > 0)
+//			opened_parens.erase(opened_parens.begin() + o);
 
 		}
 	}

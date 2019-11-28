@@ -15,6 +15,7 @@ class Command : public Component{
 	Component* nextCommand;			//makes this class a composite
 	int status;
 	int err;
+	Test* test;
 	
 	public:
 	Command();

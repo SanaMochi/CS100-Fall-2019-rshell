@@ -12,42 +12,9 @@ Command::Command(){
 	err = 0;
 }
 
-/*
-void Command::removeNextCommand(int location){
-	if(location > numOfCommands)
-		return;
-	std::vector<std::string>::iterator loc = fileNames.begin() + location;
-	fileNames.erase(loc);
-	pattern.erase(loc);
-	numOfCommands == fileNames.size();
-	int start = 0;
-	int end = 0;
-	int countQ = 0;
-	while(countQ != location){
-		for(int i = start; i < argv.size(); i++){
-			start++;
-			if(argv.at(i) == "???"){
-				countQ++;
-				break;
-			}
-			
-		}
-	}
-	//count how many commands are in between that ??? and the next one
-	for(int i = start; i < argv.size();i++){
-		if(argv.at(i) == "???")
-			break;
-		end++;
-	}
-	std::vector<std::string>::iterator v_start, v_end;
-	v_start = argv.begin() + start;
-	v_end = argv.begin() + start + end + 1;
-	argv.erase(v_start, v_end);
-}
-*/
 void Command::runCommand(char ** argv){
 	Command::err = 0;
-
+	
 	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
@@ -85,6 +52,11 @@ void Command::runAll(int numOfCommands, Component* parser){
 				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
 					quick_exit(EXIT_FAILURE);
 				}
+				//if .find("test", 0)
+					//skip execvp
+					//run test::runCommand
+				//else
+					//run execvp
 				Command::runCommand(parser->formatArguments(i));
 				
 			}else if (pid < 0) {
