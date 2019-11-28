@@ -83,7 +83,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 				else {
 					Command::runCommand(parser->formatArguments(i));
 				}
-		*/	}else if (pid < 0) {
+		*/	else if (pid < 0) {
 				perror(failed fork);
 				exit(1);
 			}else if (pid > 0) {
