@@ -10,7 +10,7 @@
 //#include "test.h"
 
 class Component;
-
+class Command;
 class Parser: public Component {
 	int status = 0;
 	int err = 0;

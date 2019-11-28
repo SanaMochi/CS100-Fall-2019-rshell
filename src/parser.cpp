@@ -348,7 +348,11 @@ void Parser::runCommand(char ** argv){
 
 
 int Parser::runAll(int numOfCommands, Component* parser){
-	err = 0;	
+return 0;
+
+//Command::runAll(numOfCommands, parser);
+
+/*	err = 0;	
 			char* arga[commands.size() + 1];
 			for (int i = 0; i < commands.size() + 1; i++)
 				arga[i] = (char*)commands.at(i).c_str();
@@ -397,7 +401,7 @@ int Parser::runAll(int numOfCommands, Component* parser){
 				else {
 					Command::runCommand(parser->formatArguments(i));
 				}
-		*/	else if (pid < 0) {
+			else if (pid < 0) {
 				perror("failed fork");
 				//return 1;
 				exit(1)
@@ -482,6 +486,7 @@ int Parser::runAll(int numOfCommands, Component* parser){
 				}
 		}
 	return 0;
+*/
 }
 void Parser::deletePointer(){
 	for(int i = 0; i < pointerSize; i++)
