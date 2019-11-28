@@ -8,7 +8,7 @@
 //#include "command.h"
 
 class Component{
-	protected:
+	public:
 	const std::string space = " ";			//
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
 	const std::string or_symbol = "||";		//	hard coded values
@@ -36,7 +36,6 @@ class Component{
 //	int status;
 //	int err;
 	
-	public:
 	std::vector<std::string> pattern; 	//stores the seperators in order	
 	int numOfCommands;
 	bool exit = false;
@@ -51,6 +50,6 @@ class Component{
 	void shouldIExit(bool shouldI);
 	
 	virtual void runCommand(char ** argv) = 0;
-	virtual void runAll(int numOfCommands, Component* parser) = 0;
+	virtual int runAll(int numOfCommands, Component* parser) = 0;
 };
 #endif
