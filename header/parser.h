@@ -16,7 +16,7 @@ class Parser: public Component {
 	int err = 0;
 	std::vector<int> opened_parens;
 	std::vector<int> closed_parens;
-	
+
 	public:
 	Parser();
 	Parser(std::string s);

@@ -333,7 +333,6 @@ void Parser::preParse(){
 	//std::cout << std::endl << command << std::endl;
 }
 
-
 int Parser::getSize(){
 	return fileNames.size();
 }
@@ -360,6 +359,7 @@ return 0;
 			arga[commands.size() + 1] = NULL;
 			
 			pid_t pid = fork();				//make a child process
+
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
 			if(pid == 0){
@@ -392,7 +392,7 @@ return 0;
 		//						
 		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
 		//			test->runCommand(parser->formatArguments(i));
-		
+	
 				test_str = "";
                        		test_str = parser->formatArguments(i)[0];
                                 if(test_.find("test") == -1){
@@ -487,6 +487,7 @@ return 0;
 		}
 	return 0;
 */
+
 }
 void Parser::deletePointer(){
 	for(int i = 0; i < pointerSize; i++)

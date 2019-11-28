@@ -35,7 +35,7 @@ class Component{
 
 //	int status;
 //	int err;
-	
+  
 	std::vector<std::string> pattern; 	//stores the seperators in order	
 	int numOfCommands;
 	bool exit_bool = false;

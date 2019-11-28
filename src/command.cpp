@@ -21,7 +21,7 @@ Command::Command(){
 
 void Command::runCommand(char ** argv){
 	Command::err = 0;
-	
+
 	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
