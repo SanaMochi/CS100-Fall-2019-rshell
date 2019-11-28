@@ -41,6 +41,13 @@ int Command::runAll(int numOfCommands, Component* parser){
 					parser->resetVectors();
 					std::exit(0);
 				}
+			
+			char* arga[commands.size() + 1];
+			for (int i = 0 i < commands.size() + 1; i++)
+				arga[i] = (char*)commands.at(i).c_str();
+				
+			arga[commands.size() + 1] = NULL;
+			
 			pid_t pid = fork();				//make a child process
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
