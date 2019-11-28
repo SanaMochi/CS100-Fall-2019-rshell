@@ -354,7 +354,7 @@ void Parser::runCommand(char ** argv){
 }
 
 
-void Parser::runAll(int numOfCommands, Component* parser){
+int Parser::runAll(int numOfCommands, Component* parser){
 	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
@@ -391,7 +391,7 @@ void Parser::runAll(int numOfCommands, Component* parser){
 				Parser::runCommand(parser->formatArguments(i));
 			}
 		}
-
+	return 0;
 	
 }
 
