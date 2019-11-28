@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
 	}
 	p.parse();				//
 	input = "";
-	c->runAll(p.getSize(), &p);<< input;
+	c->runAll(p.getSize(), &p);
 	if(argc > 1)
 		return 0;
 }
