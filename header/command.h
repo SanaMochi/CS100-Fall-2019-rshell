@@ -7,8 +7,9 @@
 #include <stdlib.h>
 //#include "parser.h"
 #include "component.h"
-#include "test.h"
+//#include "test.h"
 
+class Test;
 class Parser;
 class Command : public Component{
 	protected:

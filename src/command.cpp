@@ -1,4 +1,5 @@
 //#include "../header/component.h"
+#include "../header/component.h"
 #include "../header/command.h"
 #include "../header/test.h"
 #include <unistd.h>
@@ -7,6 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <string>
+#include <iostream>
+#include <iterator>
 
 Command::Command(){
 	status = 0;
@@ -53,10 +57,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
 					quick_exit(EXIT_FAILURE);
 				}
-				if .find("test", 0) {
-					Test::runCommand(parser->formatArgumants(i));
-					//skip execvp
-					//run test::runCommand
+				if (parser->formatArgumants(i)[0] == test_obj)	
+					test->runCommand(parser->formatArguments(i));
 				else
 					Command::runCommand(parser->formatArguments(i));
 				

@@ -1,12 +1,16 @@
 #include "../header/component.h"
-#include "../header/command.h"
+#include "../header/parser.h"
 #include "../header/test.h"
+#include <stdlib.h>
+//#include <stdio.h>
 
-Test::Test() {
-	err = 0;
-	status = 0;
+/*Test::Test() {
+	command = "";
+        err = 0;
+        status = 0;
+        numOfCommands = 0;
+        exit = false;
 }
-/*
 Test::Test(std::string s) {
 	command = s;
 	err = 0;
@@ -14,7 +18,7 @@ Test::Test(std::string s) {
 	numOfCommands = 0;
 	exit = false;
 }
-
+/*
 int exists(std::string fileName) {
 	if (isRegularFile(fileName) == 0 || isDirectory(fileName) == 0) {
 		return 0;
@@ -43,14 +47,14 @@ int isDirectory(std::string directoryName) {
 void Test::runCommand(char ** argv) {
 	struct stat buf;
 
-	if (stat(argv[1], &sb) == -1) {
+	if (stat(argv[1], &buf) == -1) {
         	perror("stat");
-        	exit(EXIT_FAILURE);
+        	return;
     	}
-	if (stat(file_path, &buf) != -1) { // Check the return value of stat
-    		if (S_ISREG(buf.st_mode) != 0) {
+	if (stat(argv[1], &buf) != -1) { // Check the return value of stat
+    		if (S_ISREG(buf.st_mode) != 0) 
         		printf("(True)"); //, file_path) ;
-		else if (S_ISDIR(buf.st_mode) != 0) {
+		else if (S_ISDIR(buf.st_mode) != 0)
         		printf("(True)"); //, file_path) ;
     	}
     	else {

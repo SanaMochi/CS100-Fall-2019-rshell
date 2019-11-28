@@ -123,7 +123,7 @@ void Parser::parse(){
 					pos_start = opened_parens.at(o);
 				}
 				bool isk = false;
-				while(command.find(space, pos_start) != -1 && isk == false && command.at() { // || opened_parens.size() != 0) {	
+			while(command.find(space, pos_start) != -1 && isk == false && command.at(pos_end) != command.at(closed_parens.at(j))) { // || opened_parens.size() != 0) {	
 					while (command.at(pos_start) == '(') { 
 						pos_start++;	
 					}

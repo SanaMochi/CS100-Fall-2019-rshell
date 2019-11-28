@@ -18,7 +18,7 @@ class Component{
 	char quotation_mark = '\"';
 	const std::string opening_parens = "(";
 	const std::string closing_parens = ")";
-
+	const std::string test_obj = "test";
 
 //	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
