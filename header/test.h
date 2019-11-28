@@ -2,7 +2,7 @@
 #define _TEST_H_
 
 #include "component.h"
-#include "parser.h"
+#include "command.h"
 //#include <string>
 //#include <vector>
 #include <sys/types.h>
@@ -14,8 +14,8 @@
 //#include "command.h"
 
 class Command;
-class Test : public Parser {
-//	Test();
+class Test : public Command {
+	Test();
 /*	std::vector<std::string> flags;
 	int isTrue;
 	

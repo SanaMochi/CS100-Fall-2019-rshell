@@ -1,5 +1,6 @@
 //#include "../header/component.h"
 #include "../header/command.h"
+#include "../header/test.h"
 #include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -52,12 +53,12 @@ void Command::runAll(int numOfCommands, Component* parser){
 				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
 					quick_exit(EXIT_FAILURE);
 				}
-				//if .find("test", 0)
+				if .find("test", 0) {
+					Test::runCommand(parser->formatArgumants(i));
 					//skip execvp
 					//run test::runCommand
-				//else
-					//run execvp
-				Command::runCommand(parser->formatArguments(i));
+				else
+					Command::runCommand(parser->formatArguments(i));
 				
 			}else if (pid < 0) {
 				quick_exit(EXIT_FAILURE);

@@ -1,15 +1,12 @@
 #include "../header/component.h"
-#include "../header/parser.h"
+#include "../header/command.h"
 #include "../header/test.h"
-/*
+
 Test::Test() {
-	command = "";
 	err = 0;
 	status = 0;
-	numOfCommands = 0;
-	exit = false;
 }
-
+/*
 Test::Test(std::string s) {
 	command = s;
 	err = 0;
