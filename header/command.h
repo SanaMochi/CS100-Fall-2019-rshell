@@ -12,6 +12,7 @@
 class Test;
 class Parser;
 class Command : public Component{
+	int test_return;
 	protected:
 	char** command;
 	Component* nextCommand;			//makes this class a composite
@@ -25,7 +26,7 @@ class Command : public Component{
 	
 	virtual void runCommand(char ** argv);
 	
-	virtual void runAll(int numOfCommands, Component* parser);
+	virtual int runAll(int numOfCommands, Component* parser);
 	//void makeList(int numOfCommands, Parser* parser);
 	
 };
