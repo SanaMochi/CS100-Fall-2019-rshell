@@ -30,20 +30,9 @@ void Command::runCommand(char ** argv){
 }
 
 int Command::runAll(int numOfCommands, Component* parser){
-	err = 0;
-	std::string exit = "";
-		for(int i = 0; i < numOfCommands; i++){
-			exit = "";
-			
-			exit = parser->formatArguments(i)[0];
-				if(exit == "exit"){
-					parser->shouldIExit(true);
-					parser->resetVectors();
-					std::exit(0);
-				}
-			
+	err = 0;	
 			char* arga[commands.size() + 1];
-			for (int i = 0 i < commands.size() + 1; i++)
+			for (int i = 0; i < commands.size() + 1; i++)
 				arga[i] = (char*)commands.at(i).c_str();
 				
 			arga[commands.size() + 1] = NULL;
@@ -59,9 +48,9 @@ int Command::runAll(int numOfCommands, Component* parser){
 				
 				if (execvp(arga[0], arga) != 0) {
 					perror("exec");
-					exit(1);
+					return 1;	//should exit(1)
 				} else {
-					exit(1);
+					return 1;	//should exit(1)
 				}
 			}
 				
@@ -91,11 +80,11 @@ int Command::runAll(int numOfCommands, Component* parser){
 					Command::runCommand(parser->formatArguments(i));
 				}
 		*/	else if (pid < 0) {
-				perror(failed fork);
-				exit(1);
+				perror("failed fork");
+				return 1; 	//should exit(1)
 			}else if (pid > 0) {
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
-					perror("waitchild");
+					perror("wait on child");
 				if (WIFEXITED(status)) {
 					return WEXITSTATUS(status);
 			}
@@ -149,6 +138,7 @@ int Command::runAll(int numOfCommands, Component* parser){
 							cout << "(False)" << endl;
 							return 1;
 						}
+					}
 				}
 		
 		//		test_str = "";
@@ -158,7 +148,18 @@ int Command::runAll(int numOfCommands, Component* parser){
 		//			 test->runCommand(parser->formatArguments(i));
 				}	
 				else {
+					std::string exit_str = "";
+               				for(int i = 0; i < numOfCommands; i++){
+                       				 exit_str = "";
+
+                       				exit_str = parser->formatArguments(i)[0];
+                               			if(exit_str == "exit"){
+                                        	parser->shouldIExit(true);
+                                        	parser->resetVectors();
+                                        	std::exit(0);
+                                		}	
 					Command::runCommand(parser->formatArguments(i));
+					}
 				}
 		}
 	return 0;

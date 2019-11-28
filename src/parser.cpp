@@ -84,7 +84,7 @@ void Parser::parse(){
 		}
 		//assume there is always a last command ofter the last space
 		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
-	}
+//	}
 /*	else if (max > 0) {
 		std::string command_og = command;
 		if (command.at(0) != '(') {
