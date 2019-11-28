@@ -95,7 +95,7 @@ void Test::runCommand(char ** argv) {
 }
 */
 
-void Test::runAll(int numOfCommands, Component* parser) {
+int Test::runAll(int numOfCommands, Component* parser) {
 /*	err = 0;
 	std::string exit = "";
 		for(int i = 0; i < numOfCommands; i++){
