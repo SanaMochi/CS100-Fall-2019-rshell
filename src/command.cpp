@@ -152,4 +152,5 @@ int Command::runAll(int numOfCommands, Component* parser){
 					Command::runCommand(parser->formatArguments(i));
 				}
 		}
+	return 0;
 }
