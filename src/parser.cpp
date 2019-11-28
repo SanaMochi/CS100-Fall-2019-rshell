@@ -5,6 +5,8 @@
 #include <errno.h>
 #include <signal.h>
 
+using namespace std;
+
 Parser::Parser(){
 	command = "";
 	status = 0;
