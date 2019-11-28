@@ -48,9 +48,11 @@ int Command::runAll(int numOfCommands, Component* parser){
 				
 				if (execvp(arga[0], arga) != 0) {
 					perror("exec");
-					return 1;	//should exit(1)
+					//return 1;	
+					exit(1)
 				} else {
-					return 1;	//should exit(1)
+					//return 1;
+					exit(1)
 				}
 			}
 				
@@ -81,7 +83,8 @@ int Command::runAll(int numOfCommands, Component* parser){
 				}
 		*/	else if (pid < 0) {
 				perror("failed fork");
-				return 1; 	//should exit(1)
+				//return 1;
+				exit(1)
 			}else if (pid > 0) {
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
 					perror("wait on child");
