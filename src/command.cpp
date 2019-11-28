@@ -57,11 +57,21 @@ void Command::runAll(int numOfCommands, Component* parser){
 				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
 					quick_exit(EXIT_FAILURE);
 				}
-				if (parser->formatArgumants(i)[0] == test_obj)	
-					test->runCommand(parser->formatArguments(i));
-				else
+				std::string test_ = "test";
+		//		test_str.c_str();
+		//						
+		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
+		//			test->runCommand(parser->formatArguments(i));
+		
+				test_ = "";
+
+                       		test_ = parser->formatArguments(i)[0];
+                                if(test_.find("test") == -1){
+					 test->runCommand(parser->formatArguments(i));
+				}	
+				else {
 					Command::runCommand(parser->formatArguments(i));
-				
+				}
 			}else if (pid < 0) {
 				quick_exit(EXIT_FAILURE);
 			}else if (pid > 0) {
