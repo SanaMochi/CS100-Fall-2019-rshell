@@ -26,7 +26,7 @@ class Command : public Component{
 	
 	virtual void runCommand(char ** argv);
 	
-	virtual int runAll(int numOfCommands, Component* parser);
+	virtual void runAll(int numOfCommands, Component* parser);
 	//void makeList(int numOfCommands, Parser* parser);
 	
 };
