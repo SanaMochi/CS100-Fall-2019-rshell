@@ -16,7 +16,6 @@ class Command : public Component{
 	void outputRedirection(std::string str);
 	void outputRedirectionAppend(std::string str);
 	void inputRedirection(std::string str);
-	void inputRedirectionAppend(std::string str);
 	void pipe(std::string str);
 	int countArgs(char ** argv);
 	int getLenght(char ** argv, int i);

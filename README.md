@@ -1,6 +1,6 @@
 # CS 100 Programming Project
 
-[Link](https://docs.google.com/document/d/1s2KtW2oBfghC4v9x3tm3DPjYiKK5R0QllsNlExJ0rt4/edit) to specs so I dont have to keep on signing into ilearn
+[Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to specs so I dont have to keep on signing into ilearn
 compile with `g++ rshell.cpp parser.cpp command.cpp -o main -std=c++11` in src directory
 
 <h1> Project Information </h1>

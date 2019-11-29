@@ -25,14 +25,14 @@ void Command::runCommand(char ** argv){
 
 void Command::outputRedirection(std::string str){\
 	//int out_backup = dup(1);
-	int pos = str.find("<");
+	int pos = str.find(">");
 	std::string f_name = str.substr(pos + 2, -1);
 	f_name.erase(f_name.size()-1, -1);
 	std::cout << "\nFile name: " << f_name << "/";
 	//f_name = "file.txt";
-	int fd = open(f_name.c_str(), O_RDWR);
+	int fd = open(f_name.c_str(), O_RDWR|O_CREAT, S_IRUSR|S_IWUSR);
 	int start = str.find(" ");
-	pos = str.find("<");
+	pos = str.find(">");
 	str = str.substr(start+1, pos - start - 2);
 	const char * buf = str.c_str();
 	//std::cout << "\nout: " << out_backup << "\nfd: " << fd;
@@ -44,14 +44,14 @@ void Command::outputRedirection(std::string str){\
 }
 void Command::outputRedirectionAppend(std::string str){\
 	//int out_backup = dup(1);
-	int pos = str.find("<<") +1;
+	int pos = str.find(">>") +1;
 	std::string f_name = str.substr(pos + 2, -1);
 	f_name.erase(f_name.size()-1, -1);
 	std::cout << "\nFile name: " << f_name << "/";
 	//f_name = "file.txt";
-	int fd = open(f_name.c_str(), O_RDWR|O_APPEND);
+	int fd = open(f_name.c_str(), O_RDWR|O_APPEND|O_CREAT, S_IRUSR|S_IWUSR);
 	int start = str.find(" ");
-	pos = str.find("<<");
+	pos = str.find(">>");
 	str = str.substr(start+1, pos - start - 2);
 	std::cout << "\nstr " << str;
 	const char * buf = str.c_str();
@@ -64,12 +64,10 @@ void Command::outputRedirectionAppend(std::string str){\
 }
 
 void Command::inputRedirection(std::string str){
-	//to do
+	int input_backup = dup(0);
+	int pos = str.find("<") + 1;
 }
 
-void Command::inputRedirectionAppend(std::string str){
-	//to do 
-}
 void Command::pipe(std::string str){
 	//to do
 
@@ -126,21 +124,20 @@ void Command::runAll(int numOfCommands, Parser* parser){
 				int number = Command::countArgs(parser->formatArguments(i));
 				for(int x = 0; x < number; x++)
 				arg += parser->formatArguments(i)[x];
-				if(arg.find("<<") != -1){
+				if(arg.find(">>") != -1){
 					Command::outputRedirectionAppend(parser->to_run.at(i));
-				}if(arg.find(">>") != -1){
-					Command::inputRedirectionAppend(parser->to_run.at(i));
 				}if(arg.find("|") != -1){
 					Command::pipe(parser->to_run.at(i));
-				}else if(arg.find(">") != -1){
-					Command::inputRedirection(parser->to_run.at(i));
 				}else if(arg.find("<") != -1){
+					Command::inputRedirection(parser->to_run.at(i));
+				}else if(arg.find(">") != -1){
 					//std::cout << "\nyes <\n";
 					Command::outputRedirection(parser->to_run.at(i));
 				}else{
 					//std::cout << "\nno <\n";
 					Command::runCommand(parser->formatArguments(i));
 				}
+				quick_exit(EXIT_SUCCESS);
 			}
 		}
 }
