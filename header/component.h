@@ -50,6 +50,6 @@ class Component{
 	void shouldIExit(bool shouldI);
 	
 	virtual void runCommand(char ** argv) = 0;
-	virtual int runAll(int numOfCommands, Component* parser) = 0;
+	virtual void runAll(int numOfCommands, Component* parser) = 0;
 };
 #endif
