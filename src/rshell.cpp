@@ -47,6 +47,7 @@ int main(int argc, char *argv[]){
 	//c->runCommand(p.formatArguments(0));
 	//std::cout << "\nPrint commands: "; p.printCommands();
 	//std::cout << "\nPrint pattern: "; p.printPattern();
+	
 	c->runAll(p.getSize(), &p);
 	/*
 	std::cout << "\nPrint args: "; p.printArguments();

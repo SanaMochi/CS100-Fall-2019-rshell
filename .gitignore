@@ -41,6 +41,7 @@ main
 output.txt
 ./src/main
 data-file
+file.txt
 
 # CMake Temp Files
 CMakeCache.txt

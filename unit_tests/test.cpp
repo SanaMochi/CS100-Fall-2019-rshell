@@ -90,4 +90,19 @@ TEST(Test1, exit_command_test) {
 	std::fclose(file);
     EXPECT_EQ(output, "it should work\n");
 }
+
+TEST(Test1, input_redirection_tests) {
+	system("./integration_tests/input_redirection_tests.sh");
+	//to do
+}
+
+TEST(Test1, output_redirection_tests) {
+	system("./integration_tests/output_redirection_tests.sh");
+	//to do
+}
+
+TEST(Test1, pipe_operator_tests) {
+	system("./integration_tests/pipe_operator_tests.sh");
+	//to do
+}
 #endif
