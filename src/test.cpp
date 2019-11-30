@@ -15,31 +15,34 @@
 
 void Test::runCommand(char ** argv) {
 	struct stat buf;
-	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
-        	perror("stat");
-		std::exit(1);
-    	}
-	else if (stat(argv[1], &buf) == 0) {
+//	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
+//        	perror("stat");
+//		std::exit(1);
+	if (stat(argv[1], &buf) != -1) {
+		std::cout << "no flag" << std::endl;
 		stat(argv[1], &buf);
 		if (S_ISREG(buf.st_mode) != 0) 
-			printf("(True)"); //, file_path) ;
+			std::cout << "(True)" << std::endl;
 		else if (S_ISDIR(buf.st_mode) != 0)
-			printf("(True)"); //, file_path) ;
+			std::cout << "(True)" << std::endl;
 		else
-			printf("(False)"); //, file_path) ;
+			std::cout << "(False)" << std::endl;
 	}
-	else if (stat(argv[2], &buf) == 0) {
-		if (argv[1] == "-e") { 		// if file exists
+	else if (stat(argv[2], &buf) != -1) {
+		std::cout << "Flag: \"" << argv[1] << "\"" << std::endl;
+		if (std::string(argv[1]) == "-e") { 			// if file exists
+			std::cout << "e flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
 			if (S_ISREG(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
-			if (S_ISDIR(buf.st_mode) != 0)
+			else if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
-			else
+			else if (S_ISREG(buf.st_mode) == 0 && S_ISDIR(buf.st_mode) == 0)
 				std::cout << "(False)" << std::endl;
 		}
-		else if (argv[1] == "-f") { 		// if is a regular file
+		else if (std::string(argv[1]) == "-f") { 		// if is a regular file
+			std::cout << "f flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
 			if (S_ISREG(buf.st_mode) != 0) 
@@ -48,13 +51,21 @@ void Test::runCommand(char ** argv) {
 				std::cout << "(False)" << std::endl;
 
 		}
-		else if (argv[1] == "-d") {		//if is a directory
+		else if (std::string(argv[1]) == "-d") {		//if is a directory
+			std::cout << "d flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
 			if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
 			else
 				std::cout << "(False)" << std::endl;
+		}
+		else {
+			std::cout << "Nothing" << std::endl;
+			if (stat(argv[1], &buf) == -1) {        // if no arguments for test
+				perror("stat");
+				std::exit(1);
+			}
 		}
 	}
 }

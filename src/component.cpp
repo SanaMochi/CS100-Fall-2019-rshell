@@ -17,6 +17,7 @@ char** Component::formatArguments(int location){
 	while(countQ != location){
 		for(int i = index; i < argv.size(); i++){
 			index++;
+	//		std::cout << "argv: " << argv.at(i) << std::endl;
 			if(argv.at(i) == "???"){
 				countQ++;
 				break;
@@ -26,6 +27,7 @@ char** Component::formatArguments(int location){
 	}
 	//count how many commands are in between that ??? and the next one
 	for(int i = index; i < argv.size();i++){
+	//	 std::cout << "argv: " << argv.at(i) << std::endl;
 		if(argv.at(i) == "???")
 			break;
 		commandCount++;

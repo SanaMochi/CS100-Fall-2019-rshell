@@ -47,23 +47,24 @@ void Command::runAll(int numOfCommands, Component* parser){
 		//	waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 
 			char ** arga = parser->formatArguments(i);	
+		//	std::cout << "argv: " << argv.at(0) << std::endl;
 			std::cout << "*arga: " << *arga << std::endl;
-			std::cout << "arga: " << arga << std::endl;
+		//	std::cout << "arga: " << arga << std::endl;
 
-			if(pid == 0){
-				if (execvp(*arga, arga) != 0) {
-					perror("exec");
-					//return 1;	
-					std::exit(1);
-				}
-			std::cout << "fork works" << std::endl;
-		//		else {
-		//			//return 1;
-		//			std::exit(1);
-		//		}
-			}
-				
-			/*	std::string test_str.c_str() = "test";
+			if(pid == 0) {
+				std::string test_str = "test";                          //check if test
+        	         //       test_str.c_str();
+	
+	                        std::cout << "checking test" << std::endl;
+	                        if (*arga == test_str) {
+	                                std::cout << "running test -- " << std::endl;
+	                                test->Test::runCommand(parser->formatArguments(i));
+	                        }
+	                        else {
+	 				std::cout << "running non-test: " << std::endl;
+	                                Command::runCommand(parser->formatArguments(i));
+	                        }
+		/*		std::string test_str.c_str() = "test";
 		//		test_str.c_str();
 		//						
 		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
@@ -77,34 +78,30 @@ void Command::runAll(int numOfCommands, Component* parser){
 				}	
 				else {
 					Command::runCommand(parser->formatArguments(i));
-				}
-		*/	else if (pid < 0) {
+		*/
+			}else if (pid < 0) {
 				perror("failed fork");
 				//return 1;
 				std::exit(1);
 			}else if (pid > 0) {
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
 					perror("wait on child");
-				if (WIFEXITED(status)) {
+				if (WIFEXITED(status)) 
 					WEXITSTATUS(status);
 			}
-			std::string test_str = "test";				//check if test
+/*			std::string test_str = "test";				//check if test
 			test_str.c_str();
 							
 			std::cout << "checking test" << std::endl;
-			if (arga[0] == test_str.c_str())	
-				std::cout << "test -- " << std::endl;
-				test->runCommand(arga);
-		//		test->runCommand(parser->Parser::formatArguments(i));
-		//		if(parser->formatArguments(i)[1] == 
-					
-               //      		test_str = parser->formatArguments(i)[0];
-               //               if(test_str.find("test") == -1){
-		//			 test->runCommand(parser->formatArguments(i));
+			if (*arga == test_str.c_str())	
+				std::cout << "running test -- " << std::endl;
+				test->Test::runCommand(parser->formatArguments(i));
 				}	
-				else
-					Command::runCommand(parser->formatArguments(i));
+			else
+				std::cout << "running non-test: " << std::endl;
+				Command::runCommand(parser->formatArguments(i));
 			}
-
-//	return 0;
+*
+*/
+	}
 }
