@@ -201,39 +201,37 @@ void Parser::parse(){
 			pattern.push_back(or_symbol);
 		else if(commands.at(i) == end_symbol)
 			pattern.push_back(end_symbol);
-//start
+
 		else if (commands.at(i) == open_bracket)
 			pattern.push_back(open_bracket);
 		else if (commands.at(i) == closed_bracket)
 			pattern.push_back(closed_bracket);
-//end
+
 	}
 	
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
 		
 		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
-//start
 			if (commands.at(i) == open_bracket) {
 				commands.at(i) = "test";
 				while (commands.at(i) != closed_bracket) {
 					temp_str += commands.at(i);
-//					if (commands.at(i).back() == ')')
-//						commands.at(i).pop_back();
+					if (commands.at(i).back() == ')')
+						commands.at(i).pop_back();
 					temp_str += " ";
 					i++;
 				}
 				commands.erase(commands.begin() + 1);
 			}
-//end
 			else {
 				temp_str += commands.at(i);
 
-//				if (commands.at(i).back() == ')')
-//					commands.at(i).pop_back();
+				if (commands.at(i).back() == ')')
+					commands.at(i).pop_back();
 				temp_str += " ";
 				i++;
-//				std::cout << temp_str << std::endl;
+				std::cout << temp_str << std::endl;
 			}
 		}
 			to_run.push_back(temp_str);
