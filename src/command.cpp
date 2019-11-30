@@ -55,7 +55,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 					perror("exec");
 					//return 1;	
 					std::exit(1);
-		//		} else {
+				}
+		//		else {
 		//			//return 1;
 		//			std::exit(1);
 		//		}
