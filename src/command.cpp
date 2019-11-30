@@ -30,13 +30,7 @@ void Command::runCommand(char ** argv){
 }
 
 void Command::runAll(int numOfCommands, Component* parser){
-	err = 0;	
-		/*	char* arga[commands.size() + 1];
-			for (int i = 0; i < commands.size() + 1; i++)
-				arga[i] = (char*)commands.at(i).c_str();
-				
-			arga[commands.size() + 1] = "???";
-		*/
+	err = 0;
 	std::string exit_str = "";
 		for(int i = 0; i < numOfCommands; i++){
 			exit_str = "";
@@ -52,8 +46,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 		//	waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 
 			char ** arga = parser->formatArguments(i);	
+			std::cout << "*arga: " << *arga << std::endl;
+			std::cout << "arga: " << arga << std::endl;
+
 			if(pid == 0){
-		//		char ** arga[] = parser->formatArguments(i);
 				if (execvp(*arga, arga) != 0) {
 					perror("exec");
 					//return 1;	
