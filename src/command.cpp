@@ -45,6 +45,16 @@ void Command::runAll(int numOfCommands, Component* parser){
 	
 			int pid = fork();				//make a child process
 		//	waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
+		
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//for &&
+				parser->removeNextCommand(i);
+
+			else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||") //for ||
+				parser->removeNextCommand(i);
+			
+			//std::cout << "\nargs2: "  << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
+				quick_exit(EXIT_FAILURE);
 
 			char ** arga = parser->formatArguments(i);	
 		//	std::cout << "argv: " << argv.at(0) << std::endl;
