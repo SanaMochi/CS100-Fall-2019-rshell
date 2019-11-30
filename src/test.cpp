@@ -21,7 +21,7 @@ void Test::runCommand(char ** argv) {
 		std::exit(1);
     	}
 	else if (stat(argv[1], &buf) != -1) {
-		else if (argv[1] == "-e") { 		// if file exists
+		if (argv[1] == "-e") { 		// if file exists
 		//	struct stat buf;
 			stat(argv[2], &buf);
 			if (S_ISREG(buf.st_mode) != 0) 
