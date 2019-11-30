@@ -32,7 +32,7 @@ void Command::runCommand(char ** argv){
 void Command::runAll(int numOfCommands, Component* parser){
 	err = 0;
 	std::string exit_str = "";
-	std::cout << "numOfCommands: " << numOfCommands << std::endl;
+//	std::cout << "numOfCommands: " << numOfCommands << std::endl;
 		for(int i = 0; i < numOfCommands; i++){
 			exit_str = "";
 			
@@ -48,20 +48,20 @@ void Command::runAll(int numOfCommands, Component* parser){
 
 			char ** arga = parser->formatArguments(i);	
 		//	std::cout << "argv: " << argv.at(0) << std::endl;
-			std::cout << "*arga: " << *arga << std::endl;
+		//	std::cout << "*arga: " << *arga << std::endl;
 		//	std::cout << "arga: " << arga << std::endl;
 
 			if(pid == 0) {
 				std::string test_str = "test";                          //check if test
         	         //       test_str.c_str();
 	
-	                        std::cout << "checking test" << std::endl;
+	        //              std::cout << "checking test" << std::endl;
 	                        if (*arga == test_str) {
-	                                std::cout << "running test -- " << std::endl;
+	        //                       std::cout << "running test -- " << std::endl;
 	                                test->Test::runCommand(parser->formatArguments(i));
 	                        }
 	                        else {
-	 				std::cout << "running non-test: " << std::endl;
+	 	//			std::cout << "running non-test: " << std::endl;
 	                                Command::runCommand(parser->formatArguments(i));
 	                        }
 		/*		std::string test_str.c_str() = "test";
