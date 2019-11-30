@@ -50,9 +50,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 	
 			pid_t pid = fork();				//make a child process
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-			
+
+			char ** arga[] = parser->formatArguments(i);	
 			if(pid == 0){
-				char ** arga[] = parser->formatArguments(i)[0];
+		//		char ** arga[] = parser->formatArguments(i);
 				if (execvp(*arga, arga) != 0) {
 					perror("exec");
 					//return 1;	
@@ -92,7 +93,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 			test_str.c_str();
 								
 			if (parser->formatArgumants(i)[0] == test_str.c_str())	
-				test->runCommand(parser->Parser::formatArguments(i));
+				test->runCommand(arga);
+		//		test->runCommand(parser->Parser::formatArguments(i));
 		//		if(parser->formatArguments(i)[1] == 
 					
                //      		test_str = parser->formatArguments(i)[0];
