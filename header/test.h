@@ -24,7 +24,7 @@ class Test : public Parser {
 	int isRegularFile(std::string fileName);
 	int isdirectory(std::string directoryName);
 */	void runCommand(char ** argv);
-	int runAll(int numOfCommands, Component* parser);
+	void runAll(int numOfCommands, Component* parser);
 };
 
 #endif //_TEST_H_
