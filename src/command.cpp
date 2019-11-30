@@ -48,7 +48,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 					std::exit(0);
 				}
 	
-			pid_t pid = fork();				//make a child process
+			int pid = fork();				//make a child process
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 
 			char ** arga = parser->formatArguments(i);	
