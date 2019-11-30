@@ -60,12 +60,12 @@ void Test::runCommand(char ** argv) {
     		else
         		printf("(False)"); //, file_path) ;
 	//	if (stat(argv[2], &buf) == 0) {
-	//		cout << "(True)" << endl;
+	//		std::cout << "(True)" << std::endl;
 			//return 0;
 	//		std::exit(0);
 	//	}
 	//	else {
-	//		cout << "(False)" << endl;
+	//		std::cout << "(False)" << std::endl;
 			//return 1;
 	//		std::exit(1);
 	//	}
@@ -77,12 +77,12 @@ void Test::runCommand(char ** argv) {
     		else
         		printf("(False)"); //, file_path) ;
 	//	if (stat(argv[2], &buf) == 0) {
-	//		cout << "(True)" << endl;
+	//		std::cout << "(True)" << std::endl;
 			//return 0;
 	//		std::exit(0);
 	//	}
 	//	else {
-	//		cout << "(False)" << endl;
+	//		std::cout << "(False)" << std::endl;
 			//return 1;
 	//		std::exit(1);
 	//	}
@@ -180,45 +180,45 @@ void Test::runAll(int numOfCommands, Component* parser) {
 	if (commands.at(1) == "-e") { 
 		struct stat buf;
 		if (stat(arga[2], &buf) == 0) {
-			cout << "(True)" << endl;
-			return 0;
+			std::cout << "(True)" << std::endl;
+			return;
 		}
 		else {
-			cout << "(False)" << endl;
-			return 1;
+			std::cout << "(False)" << std::endl;
+			return;
 		}
 	}
 	else if (commands.at(1) == "-f") { 
 		struct stat buf;
 		if (stat(arga[2], &buf) == 0) {
-			cout << "(True)" << endl;
-			return 0;
+			std::cout << "(True)" << std::endl;
+			return;
 		}
 		else {
-			cout << "(False)" << endl;
-			return 1;
+			std::cout << "(False)" << std::endl;
+			return;
 		}
 	}
 	else if (commands.at(1) == "-d") { 
 		struct stat buf;
 		if (stat(arga[2], &buf) == 0) {
-			cout << "(True)" << endl;
-			return 0;
+			std::cout << "(True)" << std::endl;
+			return;
 		}
 		else {
-			cout << "(False)" << endl;
-			return 1;
+			std::cout << "(False)" << std::endl;
+			return;
 		}
 	}
 	else {
 		struct stat buf;
 		if (stat(arga[1], &buf) == 0) {
-			cout << "(True)" << endl;
-			return 0;
+			std::cout << "(True)" << std::endl;
+			return;
 		}
 		else {
-			cout << "(False)" << endl;
-			return 1;
+			std::cout << "(False)" << std::endl;
+			return;
 		}
 	}
 }
