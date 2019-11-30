@@ -52,7 +52,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
 			if(pid == 0){
-				if (execvp(*argv, argv) != 0) {
+				char ** arga[] = parser->formatArguments(i)[0];
+				if (execvp(*arga, arga) != 0) {
 					perror("exec");
 					//return 1;	
 					std::exit(1);
@@ -91,7 +92,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 			test_str.c_str();
 								
 			if (parser->formatArgumants(i)[0] == test_str.c_str())	
-				test->runCommand(parser->formatArguments(i));
+				test->runCommand(parser->Parser::formatArguments(i));
 		//		if(parser->formatArguments(i)[1] == 
 					
                //      		test_str = parser->formatArguments(i)[0];
