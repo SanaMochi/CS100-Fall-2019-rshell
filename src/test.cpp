@@ -32,7 +32,7 @@ void Test::runCommand(char ** argv) {
 		if (argv[1] == "-e") { 		// if file exists
 		//	struct stat buf;
 			stat(argv[2], &buf);
-			if (S_ISREG(buf.st_mode) != 0) {
+			if (S_ISREG(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
 			if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
@@ -77,7 +77,7 @@ void Test::runAll(int numOfCommands, Component* parser) {
 		if (argv[1] == "-e") { 		// if file exists
 		//	struct stat buf;
 			stat(argv[2], &buf);
-			if (S_ISREG(buf.st_mode) != 0) {
+			if (S_ISREG(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
 			if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
