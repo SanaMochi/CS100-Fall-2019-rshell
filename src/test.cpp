@@ -57,10 +57,8 @@ void Test::runCommand(char ** argv) {
         		printf("(True)"); //, file_path) ;
 		else if (S_ISDIR(buf.st_mode) != 0)
         		printf("(True)"); //, file_path) ;
-	    	}
-    		else {
+    		else
         		printf("(False)"); //, file_path) ;
-    		}
 	//	if (stat(argv[2], &buf) == 0) {
 	//		cout << "(True)" << endl;
 			//return 0;
@@ -76,9 +74,8 @@ void Test::runCommand(char ** argv) {
 	//	struct stat buf;
 		if (S_ISREG(buf.st_mode) != 0) 
         		printf("(True)"); //, file_path) ;
-    		else {
+    		else
         		printf("(False)"); //, file_path) ;
-    		}
 	//	if (stat(argv[2], &buf) == 0) {
 	//		cout << "(True)" << endl;
 			//return 0;
@@ -92,12 +89,10 @@ void Test::runCommand(char ** argv) {
 	}
 	else if (argv[1] == "-d") {		//if is a directory
 	//	struct stat buf;
-		else if (S_ISDIR(buf.st_mode) != 0)
+		if (S_ISDIR(buf.st_mode) != 0)
         		printf("(True)"); //, file_path) ;
-	    	}
-    		else {
+    		else
         		printf("(False)"); //, file_path) ;
-    		}
 	//	if (stat(argv[2], &buf) == 0) {
 	//		cout << "(True)" << endl;
 			//return 0;
@@ -115,10 +110,8 @@ void Test::runCommand(char ** argv) {
         		printf("(True)"); //, file_path) ;
 		else if (S_ISDIR(buf.st_mode) != 0)
         		printf("(True)"); //, file_path) ;
-	    	}
-    		else {
+    		else
         		printf("(False)"); //, file_path) ;
-    		}
 	//	if (stat(argv[1], &buf) == 0) {
 	//		cout << "(True)" << endl;
 			//return 0;
