@@ -32,7 +32,7 @@ void Command::runCommand(char ** argv){
 void Command::runAll(int numOfCommands, Component* parser){
 	err = 0;
 	std::string exit_str = "";
-	std::cout << numOfCommands << std::endl;
+	std::cout << "numOfCommands: " << numOfCommands << std::endl;
 		for(int i = 0; i < numOfCommands; i++){
 			exit_str = "";
 			
@@ -55,10 +55,10 @@ void Command::runAll(int numOfCommands, Component* parser){
 					perror("exec");
 					//return 1;	
 					std::exit(1);
-				} else {
-					//return 1;
-					std::exit(1);
-				}
+		//		} else {
+		//			//return 1;
+		//			std::exit(1);
+		//		}
 			}
 				
 			/*	std::string test_str.c_str() = "test";
