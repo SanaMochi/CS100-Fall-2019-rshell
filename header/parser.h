@@ -42,7 +42,7 @@ class Parser: public Component {
 	int getSize(); 				//get total number of commands to execute
 	
 	virtual void runCommand(char ** argv);
-	virtual int runAll(int numOfCommands, Component* parser);
+	virtual void runAll(int numOfCommands, Component* parser);
 	
 	void deletePointer();		//We don't dynamically allocate memory, so I don't think we need it
 };
