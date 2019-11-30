@@ -56,6 +56,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 					//return 1;	
 					std::exit(1);
 				}
+			std::cout << "fork works" << std::endl;
 		//		else {
 		//			//return 1;
 		//			std::exit(1);
@@ -89,7 +90,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 			}
 			std::string test_str = "test";				//check if test
 			test_str.c_str();
-								
+							
+			std::cout << "checking test" << std << endl;
 			if (arga[0] == test_str.c_str())	
 				std::cout << "test -- " << std::endl;
 				test->runCommand(arga);
