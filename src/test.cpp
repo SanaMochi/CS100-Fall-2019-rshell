@@ -45,6 +45,93 @@ int isDirectory(std::string directoryName) {
 }
 */
 void Test::runCommand(char ** argv) {
+	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
+        	perror("stat");
+        	//return;
+		std::exit(1);
+    	}
+	else if (argv[1] == "-e") { 		// if file exists
+		struct stat buf;
+		if (S_ISREG(buf.st_mode) != 0) 
+        		printf("(True)"); //, file_path) ;
+		else if (S_ISDIR(buf.st_mode) != 0)
+        		printf("(True)"); //, file_path) ;
+	    	}
+    		else {
+        		printf("(False)"); //, file_path) ;
+    		}
+	//	if (stat(argv[2], &buf) == 0) {
+	//		cout << "(True)" << endl;
+			//return 0;
+	//		std::exit(0);
+	//	}
+	//	else {
+	//		cout << "(False)" << endl;
+			//return 1;
+	//		std::exit(1);
+	//	}
+	}
+	else if (argv[1] == "-f") { 		// if is a regular file
+		struct stat buf;
+		if (S_ISREG(buf.st_mode) != 0) 
+        		printf("(True)"); //, file_path) ;
+    		else {
+        		printf("(False)"); //, file_path) ;
+    		}
+	//	if (stat(argv[2], &buf) == 0) {
+	//		cout << "(True)" << endl;
+			//return 0;
+	//		std::exit(0);
+	//	}
+	//	else {
+	//		cout << "(False)" << endl;
+			//return 1;
+	//		std::exit(1);
+	//	}
+	}
+	else if (argv[1] == "-d") {		//if is a directory
+		struct stat buf;
+		else if (S_ISDIR(buf.st_mode) != 0)
+        		printf("(True)"); //, file_path) ;
+	    	}
+    		else {
+        		printf("(False)"); //, file_path) ;
+    		}
+	//	if (stat(argv[2], &buf) == 0) {
+	//		cout << "(True)" << endl;
+			//return 0;
+	//		std::exit(0);
+	//	}
+	//	else {
+	//		cout << "(False)" << endl;
+			//return 1;
+	//		std::exit(1);
+	//	}
+	}
+	else {					// default to check if exists
+		struct stat buf;
+		if (S_ISREG(buf.st_mode) != 0) 
+        		printf("(True)"); //, file_path) ;
+		else if (S_ISDIR(buf.st_mode) != 0)
+        		printf("(True)"); //, file_path) ;
+	    	}
+    		else {
+        		printf("(False)"); //, file_path) ;
+    		}
+	//	if (stat(argv[1], &buf) == 0) {
+	//		cout << "(True)" << endl;
+			//return 0;
+	//		std::exit(0);
+	//	}
+	//	else {
+	//		cout << "(False)" << endl;
+			//return 1;
+	//		std::exit(0);
+	//	}
+	}
+	
+	
+	/*
 	struct stat buf;
 
 	if (stat(argv[1], &buf) == -1) {
@@ -60,7 +147,7 @@ void Test::runCommand(char ** argv) {
     	else {
         	printf("(False)"); //, file_path) ;
     	}
-	
+	*/
 }
 /*int i = 0;
 	//assuming ONLY test executables
@@ -95,44 +182,50 @@ void Test::runCommand(char ** argv) {
 }
 */
 
-int Test::runAll(int numOfCommands, Component* parser) {
-/*	err = 0;
-	std::string exit = "";
-		for(int i = 0; i < numOfCommands; i++){
-			exit = "";
-			
-			exit = parser->formatArguments(i)[0];
-				if(exit == "exit"){
-					parser->shouldIExit(true);
-					parser->resetVectors();
-					std::exit(0);
-				}
-			int pid = fork();				//make a child process
-			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-			
-			if(pid == 0){
-
-				//std::cout << "\nError: " << err;
-				//std::cout << "\nsymbol: " << parser->pattern.at(i);
-				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){	//for &&
-					parser->removeNextCommand(i);
-
-				}else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||"){ //for ||
-					parser->removeNextCommand(i);
-				}
-				//std::cout << "\nargs2: "  << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
-					quick_exit(EXIT_FAILURE);
-				}
-				Test::runCommand(parser->formatArguments(i));
-				
-			}else if (pid < 0) {
-				quick_exit(EXIT_FAILURE);
-			}else if (pid > 0) {
-				waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-			}
+void Test::runAll(int numOfCommands, Component* parser) {
+	if (commands.at(1) == "-e") { 
+		struct stat buf;
+		if (stat(arga[2], &buf) == 0) {
+			cout << "(True)" << endl;
+			return 0;
 		}
-*/
+		else {
+			cout << "(False)" << endl;
+			return 1;
+		}
+	}
+	else if (commands.at(1) == "-f") { 
+		struct stat buf;
+		if (stat(arga[2], &buf) == 0) {
+			cout << "(True)" << endl;
+			return 0;
+		}
+		else {
+			cout << "(False)" << endl;
+			return 1;
+		}
+	}
+	else if (commands.at(1) == "-d") { 
+		struct stat buf;
+		if (stat(arga[2], &buf) == 0) {
+			cout << "(True)" << endl;
+			return 0;
+		}
+		else {
+			cout << "(False)" << endl;
+			return 1;
+		}
+	}
+	else {
+		struct stat buf;
+		if (stat(arga[1], &buf) == 0) {
+			cout << "(True)" << endl;
+			return 0;
+		}
+		else {
+			cout << "(False)" << endl;
+			return 1;
+		}
+	}
 }
 
