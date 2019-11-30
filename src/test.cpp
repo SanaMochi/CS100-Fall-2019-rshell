@@ -177,7 +177,7 @@ void Test::runCommand(char ** argv) {
 */
 
 void Test::runAll(int numOfCommands, Component* parser) {
-	if (commands.at(1) == "-e") { 
+/*	if (commands.at(1) == "-e") { 
 		struct stat buf;
 		if (stat(argv[2], &buf) == 0) {
 			std::cout << "(True)" << std::endl;
@@ -221,5 +221,6 @@ void Test::runAll(int numOfCommands, Component* parser) {
 			return;
 		}
 	}
+*/
 }
 
