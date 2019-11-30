@@ -91,7 +91,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 			std::string test_str = "test";				//check if test
 			test_str.c_str();
 							
-			std::cout << "checking test" << std << endl;
+			std::cout << "checking test" << std::endl;
 			if (arga[0] == test_str.c_str())	
 				std::cout << "test -- " << std::endl;
 				test->runCommand(arga);
