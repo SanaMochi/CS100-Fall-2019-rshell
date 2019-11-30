@@ -92,7 +92,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 			std::string test_str = "test";				//check if test
 			test_str.c_str();
 								
-			if (parser->formatArgumants(i)[0] == test_str.c_str())	
+			if (arga[0] == test_str.c_str())	
 				test->runCommand(arga);
 		//		test->runCommand(parser->Parser::formatArguments(i));
 		//		if(parser->formatArguments(i)[1] == 
