@@ -5,7 +5,7 @@
 #exec > data-file   # stdin replaced by file "data-file"
 ../src/rshell.cpp
 
-g++ rshell.cpp -o rshell
+g++ rshell.cpp component.cpp command.cpp parser.cpp test.cpp -o rshell
 
 test -e "rshell" # then echo (True)
 test -f "header/command.h" # then echo (True)
