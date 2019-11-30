@@ -45,13 +45,14 @@ int isDirectory(std::string directoryName) {
 }
 */
 void Test::runCommand(char ** argv) {
+	struct stat buf;
 	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
         	perror("stat");
         	//return;
 		std::exit(1);
     	}
 	else if (argv[1] == "-e") { 		// if file exists
-		struct stat buf;
+	//	struct stat buf;
 		if (S_ISREG(buf.st_mode) != 0) 
         		printf("(True)"); //, file_path) ;
 		else if (S_ISDIR(buf.st_mode) != 0)
@@ -72,7 +73,7 @@ void Test::runCommand(char ** argv) {
 	//	}
 	}
 	else if (argv[1] == "-f") { 		// if is a regular file
-		struct stat buf;
+	//	struct stat buf;
 		if (S_ISREG(buf.st_mode) != 0) 
         		printf("(True)"); //, file_path) ;
     		else {
@@ -90,7 +91,7 @@ void Test::runCommand(char ** argv) {
 	//	}
 	}
 	else if (argv[1] == "-d") {		//if is a directory
-		struct stat buf;
+	//	struct stat buf;
 		else if (S_ISDIR(buf.st_mode) != 0)
         		printf("(True)"); //, file_path) ;
 	    	}
@@ -109,7 +110,7 @@ void Test::runCommand(char ** argv) {
 	//	}
 	}
 	else {					// default to check if exists
-		struct stat buf;
+	//	struct stat buf;
 		if (S_ISREG(buf.st_mode) != 0) 
         		printf("(True)"); //, file_path) ;
 		else if (S_ISDIR(buf.st_mode) != 0)
