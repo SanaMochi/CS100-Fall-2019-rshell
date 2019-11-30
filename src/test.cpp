@@ -59,7 +59,7 @@ void Test::runCommand(char ** argv) {
 	}
 }
 void Test::runAll(int numOfCommands, Component* parser) {
-	struct stat buf;
+/*	struct stat buf;
 	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
         	perror("stat");
 		std::exit(1);
@@ -102,5 +102,5 @@ void Test::runAll(int numOfCommands, Component* parser) {
 				std::cout << "(False)" << std::endl;
 		}
 	}
+	*/
 }
-
