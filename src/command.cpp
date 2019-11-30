@@ -85,19 +85,15 @@ void Command::runAll(int numOfCommands, Component* parser){
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
 					perror("wait on child");
 				if (WIFEXITED(status)) {
-					return WEXITSTATUS(status);
+					WEXITSTATUS(status);
 			}
 			std::string test_str = "test";				//check if test
-				test_str.c_str();
+			test_str.c_str();
 								
-				if (parser->formatArgumants(i)[0] == test_str.c_str())	
-					test->runCommand(parser->formatArguments(i));
-		//			if(parser->formatArguments(i)[1] == 
+			if (parser->formatArgumants(i)[0] == test_str.c_str())	
+				test->runCommand(parser->formatArguments(i));
+		//		if(parser->formatArguments(i)[1] == 
 					
-		//		if (commands.at(0) == "test") {
-		//			test->runCommand();
-		//		test_str = "";
-
                //      		test_str = parser->formatArguments(i)[0];
                //               if(test_str.find("test") == -1){
 		//			 test->runCommand(parser->formatArguments(i));
