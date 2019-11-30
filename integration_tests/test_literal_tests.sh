@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 #exec 6>&1           # Link file descriptor #6 with stdout.
                     # Saves stdout.
 #exec > data-file   # stdin replaced by file "data-file"
 ../src/rshell.cpp
 
-g++ rshell.cpp component.cpp command.cpp parser.cpp test.cpp -o rshell
+g++ ../src/rshell.cpp ../src/component.cpp ../src/command.cpp ../src/parser.cpp ../src/test.cpp -o rshell
 
 test -e "rshell" # then echo (True)
 test -f "header/command.h" # then echo (True)
