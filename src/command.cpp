@@ -51,7 +51,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 			pid_t pid = fork();				//make a child process
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 
-			char ** arga[] = parser->formatArguments(i);	
+			char ** arga = parser->formatArguments(i);	
 			if(pid == 0){
 		//		char ** arga[] = parser->formatArguments(i);
 				if (execvp(*arga, arga) != 0) {
