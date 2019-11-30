@@ -287,7 +287,7 @@ void Parser::parseArguments(){
 			pos_start = pos_end;
 	}
 	//assume there is always a last command ofter the last space
-	argv.push_back(NULL);
+	argv.push_back("???");
 	}
 }
 
