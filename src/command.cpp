@@ -52,7 +52,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 			
 			if(pid == 0){
-				if (execvp(argv[0], argv) != 0) {
+				if (execvp(*argv, argv) != 0) {
 					perror("exec");
 					//return 1;	
 					std::exit(1);
