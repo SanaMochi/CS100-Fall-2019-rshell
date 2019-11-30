@@ -346,8 +346,7 @@ void Parser::runCommand(char ** argv){
 }
 
 
-int Parser::runAll(int numOfCommands, Component* parser){
-return 0;
+void Parser::runAll(int numOfCommands, Component* parser){
 
 //Command::runAll(numOfCommands, parser);
 
