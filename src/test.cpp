@@ -179,7 +179,7 @@ void Test::runCommand(char ** argv) {
 void Test::runAll(int numOfCommands, Component* parser) {
 	if (commands.at(1) == "-e") { 
 		struct stat buf;
-		if (stat(arga[2], &buf) == 0) {
+		if (stat(argv[2], &buf) == 0) {
 			std::cout << "(True)" << std::endl;
 			return;
 		}
@@ -190,7 +190,7 @@ void Test::runAll(int numOfCommands, Component* parser) {
 	}
 	else if (commands.at(1) == "-f") { 
 		struct stat buf;
-		if (stat(arga[2], &buf) == 0) {
+		if (stat(argv[2], &buf) == 0) {
 			std::cout << "(True)" << std::endl;
 			return;
 		}
@@ -201,7 +201,7 @@ void Test::runAll(int numOfCommands, Component* parser) {
 	}
 	else if (commands.at(1) == "-d") { 
 		struct stat buf;
-		if (stat(arga[2], &buf) == 0) {
+		if (stat(argv[2], &buf) == 0) {
 			std::cout << "(True)" << std::endl;
 			return;
 		}
@@ -212,7 +212,7 @@ void Test::runAll(int numOfCommands, Component* parser) {
 	}
 	else {
 		struct stat buf;
-		if (stat(arga[1], &buf) == 0) {
+		if (stat(argv[1], &buf) == 0) {
 			std::cout << "(True)" << std::endl;
 			return;
 		}
