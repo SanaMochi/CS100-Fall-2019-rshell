@@ -11,39 +11,8 @@
         numOfCommands = 0;
         exit = false;
 }
-Test::Test(std::string s) {
-	command = s;
-	err = 0;
-	status = 0;
-	numOfCommands = 0;
-	exit = false;
-}
-/*
-int exists(std::string fileName) {
-	if (isRegularFile(fileName) == 0 || isDirectory(fileName) == 0) {
-		return 0;
-	}
-	return 1;
-}
-
-int isRegularFile(std::string fileName) {
-	FILE* file;
-	file = fopen(fileName);
-	if (file == NULL) {
-		return 1;
-	}
-	return 0;
-}
-
-int isDirectory(std::string directoryName) {
-	DIR* dir;
-	dir = opendir(directoryName);
-	if (dir == NULL) {
-		return 1;
-	}
-	return 0;
-}
 */
+
 void Test::runCommand(char ** argv) {
 	struct stat buf;
 	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
