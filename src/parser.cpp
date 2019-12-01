@@ -105,12 +105,12 @@ void Parser::parse(){
 		}	
 		for (int n = 0; n < command.size(); n++) { //while(command.find(opening_parens, pos_start) != -1) {
 			if (command.at(n) == '(') {
-				std::cout << " open" << n << std::endl;
+//				std::cout << " open" << n << std::endl;
 				opened_parens.push_back(n);
 //				std::cout << opened_parens.at(0) << std::endl;
 			}
 			else if (command.at(n) == ')') {
-				std::cout << " closed" << n << std::endl;
+//				std::cout << " closed" << n << std::endl;
 			    	closed_parens.push_back(n);
 			}
 		}
@@ -142,13 +142,13 @@ void Parser::parse(){
 					else {
 						pos_end = command.find(space, pos_start);
 					}
-		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
+//		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
 					int end_paren_num = 0;
 //					int temp_end = pos_end;
 					if (command.at(pos_end - 1) == ')') {	//bc end == ' '
 //						end_paren_num++;
 						pos_end--;
-						std::cout << " end " << pos_end << std::endl;
+//						std::cout << " end " << pos_end << std::endl;
 					}
 //					pos_end -=  end_paren_num;
 	//	std::cout << " end " << pos_end;
@@ -159,29 +159,29 @@ void Parser::parse(){
 		std::cout << " start " << pos_start << " end " << pos_end << std::endl;
 		std::cout << " command: " << command << std::endl;
 					if (command.at(pos_end + end_paren_num) == ')') {		//pos_end < (command.size() - end_paren_num - 1) && 
-				std::cout << "c";
+//				std::cout << "c";
 						pos_end += 2;
-				std::cout << "d";
+//				std::cout << "d";
 
 						if (opened_parens.size() > 0)
 							opened_parens.erase(opened_parens.begin() + o);
-		std::cout << "open_parens: " << opened_parens.size() << std::endl;
-		std::cout << "e";
+//		std::cout << "open_parens: " << opened_parens.size() << std::endl;
+//		std::cout << "e";
 					}else 
 						pos_end++;
-				std::cout << "f";
+//				std::cout << "f";
 					if (pos_end != command.size())
 						pos_start = pos_end;
-				std::cout << " start/end " << pos_start << " " << pos_end << std::endl;
+//				std::cout << " start/end " << pos_start << " " << pos_end << std::endl;
 					if ((pos_start == command.size() - 1) && (command_og.at(0) !=  '('))
 						pos_start = k;
-					std::cout << "g"; 
+//					std::cout << "g"; 
 					if (pos_start == k)
 						isk = true;
 
-			std::cout << "a"; 
+//			std::cout << "a"; 
 				}
-				std::cout << "b";
+//				std::cout << "b";
 
 			int paren_count = 0;
 			std::string temporary = command;
@@ -191,9 +191,9 @@ void Parser::parse(){
 			}
 
 			commands.push_back(command.substr(pos_start, (command.size() - paren_count - pos_start)));
-			std::cout << " command_substr: " << commands.back() << std::endl;
+//			std::cout << " command_substr: " << commands.back() << std::endl;
 
-		std::cout << "b";
+//		std::cout << "b";
 //		if (opened_parens.size() > 0)
 //			opened_parens.erase(opened_parens.begin() + o);
 
@@ -324,12 +324,6 @@ const char* Parser::formatFileName(int location){
 }
 
 void Parser::preParse(){
-	//std::cout << "\nShould delete \" at: " << command.find_first_of("\"") << " and " << command.find_last_of("\"") << std::endl;
-	//std::cout << "\nOld String: " << command;
-	//command.erase(command.find_first_of("\""));			//Fix this
-	//command.erase(command.find_last_of("\""));
-	//std::cout << "\nNew String: " << command;
-												//look for comments
 	int commentLocation = command.find("#");
 	if(commentLocation != -1){
 		command.erase(commentLocation, (command.size() - commentLocation));
@@ -344,159 +338,8 @@ int Parser::getSize(){
 	return fileNames.size();
 }
 
-void Parser::runCommand(char ** argv){
-	err = 0;
+void Parser::runCommand(char ** argv) {}
 
-	execvp(*argv, argv);		//hijacks child process to return to parent
-	perror("Error");
-	err = errno;
-}
+void Parser::runAll(int numOfCommands, Component* parser) {}
 
-
-void Parser::runAll(int numOfCommands, Component* parser){
-
-//Command::runAll(numOfCommands, parser);
-
-/*	err = 0;	
-			char* arga[commands.size() + 1];
-			for (int i = 0; i < commands.size() + 1; i++)
-				arga[i] = (char*)commands.at(i).c_str();
-				
-			arga[commands.size() + 1] = NULL;
-			
-			pid_t pid = fork();				//make a child process
-
-			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-			
-			if(pid == 0){
-
-				//std::cout << "\nError: " << err;
-				//std::cout << "\nsymbol: " << parser->pattern.at(i);
-				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				
-				if (execvp(arga[0], arga) != 0) {
-					perror("exec");
-					//return 1;	
-					exit(1)
-				} else {
-					//return 1;
-					exit(1)
-				}
-			}
-				
-			/*	if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){	//for &&
-					parser->removeNextCommand(i);
-				}else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||"){ //for ||
-					parser->removeNextCommand(i);
-				}
-				//std::cout << "\nargs2: "  << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
-					quick_exit(EXIT_FAILURE);
-				}
-				std::string test_str = "test";
-		//		test_str.c_str();
-		//						
-		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
-		//			test->runCommand(parser->formatArguments(i));
-	
-				test_str = "";
-                       		test_str = parser->formatArguments(i)[0];
-                                if(test_.find("test") == -1){
-					 test->runCommand(parser->formatArguments(i));
-				}	
-				else {
-					Command::runCommand(parser->formatArguments(i));
-				}
-			else if (pid < 0) {
-				perror("failed fork");
-				//return 1;
-				exit(1)
-			}else if (pid > 0) {
-				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
-					perror("wait on child");
-				if (WIFEXITED(status)) {
-					return WEXITSTATUS(status);
-			}
-		//	std::string test_str = "test";
-		//		test_str.c_str();
-		//						
-		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
-		//			if(parser->formatArguments(i)[1] == 
-					
-				if (commands.at(0) == "test") {
-					if (commands.at(1) == "-e") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else if (commands.at(1) == "-f") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else if (commands.at(1) == "-d") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else {
-						struct stat buf;
-						if (stat(arga[1], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-				}
-		
-		//		test_str = "";
-
-               //      		test_str = parser->formatArguments(i)[0];
-               //               if(test_str.find("test") == -1){
-		//			 test->runCommand(parser->formatArguments(i));
-				}	
-				else {
-					std::string exit_str = "";
-               				for(int i = 0; i < numOfCommands; i++){
-                       				 exit_str = "";
-
-                       				exit_str = parser->formatArguments(i)[0];
-                               			if(exit_str == "exit"){
-                                        	parser->shouldIExit(true);
-                                        	parser->resetVectors();
-                                        	std::exit(0);
-                                		}	
-					Command::runCommand(parser->formatArguments(i));
-					}
-				}
-		}
-	return 0;
-*/
-
-}
-void Parser::deletePointer(){
-//	for(int i = 0; i < pointerSize; i++)
-//		delete[] pointer[i];
-//	delete[] pointer;
-}
+void Parser::deletePointer() {}
