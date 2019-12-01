@@ -24,7 +24,8 @@ class Parser: public Component {
 	void getInput(std::string s);		//get the input from user and store it
 	void print();						//print input, mainly used for testing
 	
-	void parse();						//parse the input string and makes a vector of words broken up by spaces, and by seperators ,that gets stored in commands and to_run respectivly
+	void parse();					//parse the input string and makes a vector of words broken up by spaces, and by seperators ,that gets stored in commands and to_run respectivly
+	void parseNoParens(string comm);				//parse the input if no parens
 	void printCommands();				//print commands, mainly used for testing
 	std::vector<std::string> getCommandsToRun(); //get to_run, mainly used for testing
 	
