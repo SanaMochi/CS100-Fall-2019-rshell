@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <signal.h>
+#include <stack>
 
 using namespace std;
 
@@ -58,51 +59,28 @@ void Parser::parse(){
 		perror("Error: Odd parens");
 		return;
 	}
-	if (numParens == 0) {
-		while(pos_start < command.size() && command.find(space, pos_start) != -1) {
-			pos_end = command.find(space, pos_start);
-			if (pos_start < command.size() && command.find(quotation_mark, pos_start) != -1) {			//if starts with "
-				int temp_pos_start = command.find(quotation_mark, pos_start);
-				if (temp_pos_start <= pos_end) {
-					if (command.at(pos_start) == '\"') {
-						pos_start++;
-						pos_end = command.find(quotation_mark, pos_start);
-						if (pos_start + (pos_end - pos_start) < command.size()) {
-						commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-							pos_end += 2;
-							pos_start = pos_end;
-						}
-					}
-				}
-				else {
-					if (pos_start + (pos_end - pos_start) < command.size())
-                                        	commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-						pos_end++;
-	                                        pos_start = pos_end;
-				}
-			}	
-			else {
-				 if (pos_start + (pos_end - pos_start) < command.size()) {
-					commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-					pos_end++;
-					pos_start = pos_end;
-				}
-			}
-		}
-		//assume there is always a last command ofter the last space
-		if (pos_start < command.size()) {
-			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
-		}
-	}
-/*	else if (numParens > 0) {
+	if (numParens == 0)
+		Parser::parseNoParens(command);
+	else if (numParens > 0) {
 		std::string command_og = command;
-		if (command.at(0) != '(') {
+//		if (command.at(0) != '(') {
 			
 			std::string temp;
 			temp += "(" + command + ")";
 			command = temp;
 	//		std::cout << command << std::endl;
-		}	
+//		}
+		stack<int> s;
+		for (int i = 0; i < command.size(); i++) {
+			if (command.at(i) == '(')
+				s.append(i);
+			else if (command.at(i) == ')') {
+				start = s.pop();
+				for (int j = start; j < i - start; j++) {
+					Parser::parseNoParens(command.substr(start, i - start));	
+				command.erase(start, i - start);
+			}
+		}
 		for (int n = 0; n < command.size(); n++) { //while(command.find(opening_parens, pos_start) != -1) {
 			if (command.at(n) == '(') {
 //				std::cout << " open" << n << std::endl;
@@ -121,8 +99,8 @@ void Parser::parse(){
 			for (int j = 0; j < closed_parens.size(); j++) {
 //				int k = opened_parens.at(opened_parens.size() - 1 - j);
 //				int o = opened_parens.size() - 1;
-				std::cout << "blah" << std::endl;
-				std::cout << opened_parens.back();
+//				std::cout << "blah" << std::endl;
+//				std::cout << opened_parens.back();
 //          	int o = opened_parens.size() - 1;
 
 				std::cout << " Size & at(open): " << opened_parens.size() << " " << k;
@@ -252,6 +230,43 @@ void Parser::parse(){
 	//pattern.push_back("");
 }
 
+void Parser::parseNoParens(string comm) {
+	while(pos_start < comm.size() && comm.find(space, pos_start) != -1) {
+		pos_end = comm.find(space, pos_start);
+		if (pos_start < comm.size() && comm.find(quotation_mark, pos_start) != -1) {			//if starts with "
+			int temp_pos_start = comm.find(quotation_mark, pos_start);
+			if (temp_pos_start <= pos_end) {
+				if (comm.at(pos_start) == '\"') {
+					pos_start++;
+					pos_end = comm.find(quotation_mark, pos_start);
+					if (pos_start + (pos_end - pos_start) < comm.size()) {
+					commands.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+						pos_end += 2;
+						pos_start = pos_end;
+					}
+				}
+			}
+			else {
+				if (pos_start + (pos_end - pos_start) < comm.size())
+					commands.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+					pos_end++;
+					pos_start = pos_end;
+			}
+		}	
+		else {
+			 if (pos_start + (pos_end - pos_start) < comm.size()) {
+				commands.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+				pos_end++;
+				pos_start = pos_end;
+			}
+		}
+	}
+	//assume there is always a last command ofter the last space
+	if (pos_start < comm.size()) {
+		commands.push_back(comm.substr(pos_start, (comm.size() - pos_start)));
+	}
+}
+	
 void Parser::printCommands(){
 	if(commands.empty())
 		std::cout << "No commands" << std::endl;
