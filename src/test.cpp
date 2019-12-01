@@ -24,10 +24,10 @@ void Test::runCommand(char ** argv) {
 		stat(argv[1], &buf);
 		if (S_ISREG(buf.st_mode) != 0) 
 			std::cout << "(True)" << std::endl;
+			test_bool = true;
 		else if (S_ISDIR(buf.st_mode) != 0)
 			std::cout << "(True)" << std::endl;
-//		else
-//			std::cout << "(False)" << std::endl;
+			test_bool = true;
 	}
 	else if (stat(argv[2], &buf) != -1) {
 //		std::cout << "Flag: \"" << argv[1] << "\"" << std::endl;
@@ -37,10 +37,10 @@ void Test::runCommand(char ** argv) {
 			stat(argv[2], &buf);
 			if (S_ISREG(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
+				test_bool = true;
 			else if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
-//			else if (S_ISREG(buf.st_mode) == 0 && S_ISDIR(buf.st_mode) == 0)
-//				std::cout << "(False)" << std::endl;
+				test_bool = true;
 		}
 		else if (std::string(argv[1]) == "-f") { 		// if is a regular file
 //			std::cout << "f flag" << std::endl;
@@ -48,9 +48,7 @@ void Test::runCommand(char ** argv) {
 			stat(argv[2], &buf);
 			if (S_ISREG(buf.st_mode) != 0) 
 				std::cout << "(True)" << std::endl;
-//			else
-//				std::cout << "(False)" << std::endl;
-
+				test_bool = true;
 		}
 		else if (std::string(argv[1]) == "-d") {		//if is a directory
 //			std::cout << "d flag" << std::endl;
@@ -58,8 +56,7 @@ void Test::runCommand(char ** argv) {
 			stat(argv[2], &buf);
 			if (S_ISDIR(buf.st_mode) != 0)
 				std::cout << "(True)" << std::endl;
-//			else
-//				std::cout << "(False)" << std::endl;
+				test_bool = true;
 		}
 		else {
 //			std::cout << "Nothing" << std::endl;
@@ -70,7 +67,8 @@ void Test::runCommand(char ** argv) {
 		}
 	}
 	else 
-		 std::cout << "(False)" << std::endl;
+		std::cout << "(False)" << std::endl;
+		test_bool = false;
 }
 void Test::runAll(int numOfCommands, Component* parser) {
 //	Test::runCommand(
