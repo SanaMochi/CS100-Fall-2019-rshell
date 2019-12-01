@@ -86,10 +86,9 @@ TEST(TestAssn3, parentheses) {
 
         c->runAll(p.getSize(), &p);
 
-	EXPECT_TRUE(c->test_bool);
-	EXPECT_EQ(p.pattern.size(), 9);
-	EXPECT_EQ(p.to_run.size(), 3);
-	EXPECT_EQ(p.commands.size(), 11);
+	EXPECT_EQ(p.pattern.size(), 4);
+	EXPECT_EQ(p.to_run.size(), 4);
+	EXPECT_EQ(p.commands.size(), 10);
 }
 
 TEST(TestAssn3, nested_parentheses) {
@@ -101,10 +100,9 @@ TEST(TestAssn3, nested_parentheses) {
 
         c->runAll(p.getSize(), &p);
 
-        EXPECT_TRUE(c->test_bool);
-        EXPECT_EQ(p.pattern.size(), 9);
-        EXPECT_EQ(p.to_run.size(), 3);
-        EXPECT_EQ(p.commands.size(), 11);
+        EXPECT_EQ(p.pattern.size(), 4);
+        EXPECT_EQ(p.to_run.size(), 4);
+        EXPECT_EQ(p.commands.size(), 10);
 }
 
 
