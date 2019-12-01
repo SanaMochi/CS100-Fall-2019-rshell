@@ -73,6 +73,8 @@ void Test::runCommand(char ** argv) {
 		 std::cout << "(False)" << std::endl;
 }
 void Test::runAll(int numOfCommands, Component* parser) {
+//	Test::runCommand(
+
 /*	struct stat buf;
 	if (stat(argv[1], &buf) == -1) {	// if no arguments for test
         	perror("stat");

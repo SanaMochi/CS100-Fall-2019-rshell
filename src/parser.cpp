@@ -67,23 +67,59 @@ void Parser::parse(){
 	//max is how many pairs of parens 
 	if (max == 0) {
 		*/
-		while(command.find(space, pos_start) != -1) {		
-			if (command.find(quotation_mark, pos_start) != -1) {			//if starts with quotation mark
-				pos_end = command.find(quotation_mark, pos_start + 1);
-			}
+		while(pos_start < command.size() && command.find(space, pos_start) != -1) {
+			pos_end = command.find(space, pos_start);
+//			int temp_pos_end = (command.find(quotation_mark, pos_start);
+			if (pos_start < command.size() && command.find(quotation_mark, pos_start) != -1) {			//if starts with "
+//std::cout << "d";
+				int temp_pos_start = command.find(quotation_mark, pos_start);
+				if (temp_pos_start <= pos_end) {
+					if (command.at(pos_start) == '\"') {
+						pos_start++;
+//std::cout << 'a';
+						pos_end = command.find(quotation_mark, pos_start);
+						if (pos_start + (pos_end - pos_start) < command.size()) {
+//std::cout << 'b';		
+						commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+//std::cout << commands.back() << std::endl;						
+							pos_end += 2;
+							
+							pos_start = pos_end;
+						}
+					}
+				}
+				else {
+					if (pos_start + (pos_end - pos_start) < command.size())
+//std::cout << 'c';
+                                        	commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+//std::cout << commands.back() << std::endl;
+						pos_end++;
+	                                        pos_start = pos_end;
+				}
+			}	
 			else {
-				pos_end = command.find(space, pos_start);
+		//		pos_end = command.find(space, pos_start);
+//std::cout << 'e';
+				 if (pos_start + (pos_end - pos_start) < command.size()) {
+					commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+//std::cout << commands.back() << std::endl;
+
+					pos_end++;
+					pos_start = pos_end;
+				}
 			}
 
-			if (pos_start + (pos_end - pos_start) < command.size()) {
-				commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-			
-			pos_end++;
-			pos_start = pos_end;
-			}
+//	printCommands();
+//	std::cout << std::endl;
 		}
 		//assume there is always a last command ofter the last space
-		commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+		if (pos_start < command.size()) {
+			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+//std::cout << "last: " << commands.back() << std::endl;
+
+//std::cout << 'g';
+		}
+//	printCommands();
 //	}
 /*	else if (max > 0) {
 		std::string command_og = command;
@@ -231,11 +267,11 @@ void Parser::parse(){
 					commands.at(i).pop_back();
 				temp_str += " ";
 				i++;
-				std::cout << temp_str << std::endl;
+//				std::cout << temp_str << std::endl;
 			}
 		}
 			to_run.push_back(temp_str);
-	std::cout << "Command: " << temp_str << std::endl;
+//	std::cout << "Command: " << temp_str << std::endl;
 	}
 	Parser::parseFileNames();
 	Parser::parseArguments();
@@ -487,7 +523,7 @@ void Parser::runAll(int numOfCommands, Component* parser){
 
 }
 void Parser::deletePointer(){
-	for(int i = 0; i < pointerSize; i++)
-		delete[] pointer[i];
-	delete[] pointer;
+//	for(int i = 0; i < pointerSize; i++)
+//		delete[] pointer[i];
+//	delete[] pointer;
 }

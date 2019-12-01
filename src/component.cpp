@@ -2,10 +2,10 @@
 #include <string>
 
 Component::~Component() {
-	for (int i = 0; i < pointerSize; i++) {
-		delete[] pointer[i];
-	}
-	delete[] pointer;
+//	for (int i = 0; i < pointerSize; i++) {
+//		delete[] pointer[i];
+//	}
+//	delete[] pointer;
 }
 
 char** Component::formatArguments(int location){
