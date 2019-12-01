@@ -39,6 +39,7 @@ class Component{
 	std::vector<std::string> pattern; 	//stores the seperators in order	
 	int numOfCommands;
 	bool exit_bool = false;
+	bool test_bool = false;			//if test returns true of false;
 	std::string command;				//used to store the whole command entered as a string
 
 	~Component();					// deallocates dynamially made pointers 
