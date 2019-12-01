@@ -73,9 +73,9 @@ void Parser::parse(){
 		stack<int> s;
 		for (int i = 0; i < command.size(); i++) {
 			if (command.at(i) == '(')
-				s.append(i);
+				s.push(i);
 			else if (command.at(i) == ')') {
-				start = s.pop();
+				int start = s.pop();
 				for (int j = start; j < i - start; j++) {
 					Parser::parseNoParens(command.substr(start, i - start));	
 				command.erase(start, i - start);
@@ -177,7 +177,7 @@ void Parser::parse(){
 
 		}
 	}
-	*/
+
 	
 	for (int i = 0; i < commands.size(); i++){
 		//std::cout << "comparing: " << commands.at(i) << " and &&\n";
@@ -230,7 +230,7 @@ void Parser::parse(){
 	//pattern.push_back("");
 }
 
-void Parser::parseNoParens(string comm) {
+void Parser::parseNoParens(std::string comm) {
 	while(pos_start < comm.size() && comm.find(space, pos_start) != -1) {
 		pos_end = comm.find(space, pos_start);
 		if (pos_start < comm.size() && comm.find(quotation_mark, pos_start) != -1) {			//if starts with "
