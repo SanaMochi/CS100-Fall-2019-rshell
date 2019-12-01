@@ -24,6 +24,7 @@ class Component{
 //	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
 	std::vector<std::string> to_run;	//stores and combines the strings from commands, but broken up by '||' , '&&' , ';'
+	std::vector<std::string> to_run_parens;	//stores commands combined by parens
 	std::vector<std::string> fileNames; //stores only the file name of each program to be run
 	std::vector<std::string> argv;		//stores only the arguments for each program, seperates diffrent arguments by '???' to signify that the next arguments are to by run by a diffrent program
 										//e.g. fileNames.print == ls , geany , mkdir
