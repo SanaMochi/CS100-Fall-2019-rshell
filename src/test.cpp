@@ -22,12 +22,16 @@ void Test::runCommand(char ** argv) {
 	if (stat(argv[1], &buf) != -1) {
 //		std::cout << "no flag" << std::endl;
 		stat(argv[1], &buf);
-		if (S_ISREG(buf.st_mode) != 0) 
+		if (S_ISREG(buf.st_mode) != 0) {
 			std::cout << "(True)" << std::endl;
-			test_bool = true;
-		else if (S_ISDIR(buf.st_mode) != 0)
+//			Component::test_bool = true;
+			Component::setTestTrue();
+		}
+		else if (S_ISDIR(buf.st_mode) != 0) {
 			std::cout << "(True)" << std::endl;
-			test_bool = true;
+//			Component::test_bool = true;
+			Component::setTestTrue();
+		}
 	}
 	else if (stat(argv[2], &buf) != -1) {
 //		std::cout << "Flag: \"" << argv[1] << "\"" << std::endl;
@@ -35,28 +39,36 @@ void Test::runCommand(char ** argv) {
 //			std::cout << "e flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
-			if (S_ISREG(buf.st_mode) != 0)
+			if (S_ISREG(buf.st_mode) != 0) {
 				std::cout << "(True)" << std::endl;
-				test_bool = true;
-			else if (S_ISDIR(buf.st_mode) != 0)
+//				Component::test_bool = true;
+				Component::setTestTrue();
+			}
+			else if (S_ISDIR(buf.st_mode) != 0) {
 				std::cout << "(True)" << std::endl;
-				test_bool = true;
+//				Component::test_bool = true;
+				Component::setTestTrue();
+			}
 		}
 		else if (std::string(argv[1]) == "-f") { 		// if is a regular file
 //			std::cout << "f flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
-			if (S_ISREG(buf.st_mode) != 0) 
+			if (S_ISREG(buf.st_mode) != 0) {
 				std::cout << "(True)" << std::endl;
-				test_bool = true;
+//				Component::test_bool = true;
+				Component::setTestTrue();
+			}
 		}
 		else if (std::string(argv[1]) == "-d") {		//if is a directory
 //			std::cout << "d flag" << std::endl;
 		//	struct stat buf;
 			stat(argv[2], &buf);
-			if (S_ISDIR(buf.st_mode) != 0)
+			if (S_ISDIR(buf.st_mode) != 0) {
 				std::cout << "(True)" << std::endl;
-				test_bool = true;
+//				Component::test_bool = true;
+				Component::setTestTrue();
+			}
 		}
 		else {
 //			std::cout << "Nothing" << std::endl;
@@ -66,9 +78,11 @@ void Test::runCommand(char ** argv) {
 			}
 		}
 	}
-	else 
+	else {
 		std::cout << "(False)" << std::endl;
-		test_bool = false;
+//		Component::test_bool = false;
+		Component::setTestFalse();
+	}
 }
 void Test::runAll(int numOfCommands, Component* parser) {
 //	Test::runCommand(

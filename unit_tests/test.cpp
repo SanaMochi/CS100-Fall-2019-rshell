@@ -15,6 +15,68 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
+TEST(TestAssn3, single_test) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "test -e src/command.cpp";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->getTestBool());	
+	EXPECT_EQ(p.pattern.size(), 1);
+        EXPECT_EQ(p.to_run.size(), 1);
+        EXPECT_EQ(p.commands.size(), 3);
+
+}
+
+TEST(TestAssn3, single_test_brackets) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "[ -e src/command.cpp ]";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->getTestBool());
+	EXPECT_EQ(p.pattern.size(), 3);
+        EXPECT_EQ(p.to_run.size(), 1);
+        EXPECT_EQ(p.commands.size(), 3);
+}
+
+TEST(TestAssn3, multiple_test) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "test -e src/command.cpp && test -f src/parser.cpp && test -d src";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//        EXPECT_TRUE(c->test_bool);
+	EXPECT_EQ(p.pattern.size(), 3);
+        EXPECT_EQ(p.to_run.size(), 3);
+        EXPECT_EQ(p.commands.size(), 11);
+
+}
+
+TEST(TestAssn3, multiple_test_brackets) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "[ -e src/command.cpp ] && [ -f src/parser.cpp ] && [ -d src ]";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->test_bool);
+	EXPECT_EQ(p.pattern.size(), 9);
+        EXPECT_EQ(p.to_run.size(), 3);
+        EXPECT_EQ(p.commands.size(), 11);
+
+}
 
 TEST(TestAssn2, single_command_test) {
 	Component* c = new Command();
@@ -76,6 +138,7 @@ TEST(TestAssn2, exit_command_test) {
 
 }
 */
+/*
 TEST(TestAssn3, single_test) {
  Component* c = new Command();
         Parser p;
@@ -113,7 +176,8 @@ TEST(TestAssn3, multiple_test) {
         p.parse();
 
         c->runAll(p.getSize(), &p);
-
+	
+	EXPECT_TRUE(c->test_bool);
         EXPECT_EQ(p.pattern.size(), 2);
         EXPECT_EQ(p.commands.size(), 11);
         EXPECT_EQ(p.to_run.size(), 3);
@@ -134,7 +198,7 @@ TEST(TestAssn3, multiple_test_brackets) {
         EXPECT_EQ(p.to_run.size(), 3);
         p.printCommands();
 }
-
+*/
 
 TEST(TestAssn2, exit_test_1) {
 	Component* parser = new Command();

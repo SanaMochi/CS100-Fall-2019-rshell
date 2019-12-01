@@ -96,4 +96,13 @@ bool Component::shouldIExit(){
 void Component::shouldIExit(bool shouldI){
 	exit_bool = shouldI;
 }
+bool Component::getTestBool() {
+	return this->test_bool;
+}
+void Component::setTestTrue() {
+	this->test_bool = true;
+}
+void Component::setTestFalse() {
+	this->test_bool = false;
+}
 

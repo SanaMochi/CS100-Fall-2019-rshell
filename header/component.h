@@ -8,6 +8,7 @@
 //#include "command.h"
 
 class Component{
+// bool test_bool = false; 
 	public:
 	const std::string space = " ";			//
 	const std::string and_symbol = "&&";		//probably dont need these, but I thought the code would look nicer with 
@@ -45,7 +46,10 @@ class Component{
 	~Component();					// deallocates dynamially made pointers 
 	virtual char** formatArguments(int location);
 	virtual void removeNextCommand(int location);	//removes the next command e.g. it failed with ||
-	
+
+	bool getTestBool();	
+	void setTestTrue();
+	void setTestFalse();
 	void resetVectors();
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
