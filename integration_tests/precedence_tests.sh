@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-exec 6>&1           # Link file descriptor #6 with stdout.
-                    # Saves stdout.
-exec > data-file   # stdin replaced by file "data-file"
-./rshell echo hello world
-./rshell echo it works
-exec 1>&6 6>&-      # Restore stdout and close file descriptor #6.
+test.cpp
+
+g++ test.cpp -o test
+
+echo "Should echo Alhamdulillah and ls"
+(echo Alhamdulillah && ls) || (eecho fail && git status)
+
+./test
+
 exit 0
