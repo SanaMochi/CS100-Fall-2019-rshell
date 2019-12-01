@@ -14,7 +14,7 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 1. Print a command prompt (e.g. `$`)
 2. Read in a line of command(s) (and connector(s)) from standard input
-3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
+3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid`,except if `test` (details later)
 4. The connector class inherits from and references the command class (making connecto a composite) If the commands are connected by:
     * ";" : execute both
     * "&&" :  execute the next command if the previous one passed
@@ -30,15 +30,49 @@ Inteface class that doesn't do much except hold onto variables needed by inherit
 
 Command:
 Composite class that runs the commands given using  `execvp()`
-Now has functionality to call Test class when test is invoked for added functionality.
+the runCommand function also has an added functionality to call Test class when `test` is invoked.
+   
+      int pid = fork();				                                       //make a child process
+			char ** arga = parser->formatArguments(i);	
+			if(pid == 0) {
+				std::string test_str = "test";                              //check if test
+	            if (*arga == test_str)                       //if test
+	               test->Test::runCommand(parser->formatArguments(i));
+	            else                                         //if not test
+	               Command::runCommand(parser->formatArguments(i));
+         }
 
 Parser:
 Leaf class that parses the command and executes based on the connector
 If surrounded by quotes, arguments are treated as a single argument, no matter what they contain.
 Parentheses can be used in order to change the order of precedence of operators in the rshell. Includes multiple and nested parenthesis.
 
+		while(pos_start < command.size() && command.find(space, pos_start) != -1) {      //simplified for no '\"' or '('
+			pos_end = command.find(space, pos_start);
+			if (pos_start + (pos_end - pos_start) < command.size())
+           	commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+						pos_end++;
+                  pos_start = pos_end;
+   		}
+		}
+		//assume there is always a last command ofter the last space
+		if (pos_start < command.size()) {
+			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+		}
+
 Test:
-Runs test through the `test` operator and square brackets, `[ ]`. This is done through `stat()` and can now print "(True)" or "(False)" for the flags -e, -f, and -d.
+Runs test through the `test` operator and square brackets, `[ ]`. This is done using `stat()` to check the specifics of a file based on  the privided flag. 
+    * "-e" : file exists (`ISREG()` or `ISDIR()`) - used as default if no flag is provided
+    * "-f" : file is a regular file (`ISREG()`)
+    * "-d" : file is a directory (`ISDIR()`)
+
+            if (stat(argv[1], &buf) != -1) { //if no flag
+               stat(argv[1], &buf);
+               if (S_ISREG(buf.st_mode) != 0)
+                  std::cout << "(True)" << std::endl;
+               else if (S_ISDIR(buf.st_mode) != 0)
+                  std::cout << "(True)" << std::endl;
+            }
 
 <h1> Prototypes / Reaserch </h1>
 
