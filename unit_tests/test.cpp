@@ -75,8 +75,38 @@ TEST(TestAssn3, multiple_test_brackets) {
 	EXPECT_EQ(p.pattern.size(), 9);
         EXPECT_EQ(p.to_run.size(), 3);
         EXPECT_EQ(p.commands.size(), 11);
-
 }
+
+TEST(TestAssn3, parentheses) {
+	Component* c = new Command();
+        Parser p;
+        std::string input = "(echo Alhamdulillah || ls) && (eecho fail || git status)";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+	EXPECT_TRUE(c->test_bool);
+	EXPECT_EQ(p.pattern.size(), 9);
+	EXPECT_EQ(p.to_run.size(), 3);
+	EXPECT_EQ(p.commands.size(), 11);
+}
+
+TEST(TestAssn3, nested_parentheses) {
+        Component* c = new Command();
+        Parser p;
+        std::string input = "((echo Alhamdulillah || (ls || (eecho fail || git status)";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+        EXPECT_TRUE(c->test_bool);
+        EXPECT_EQ(p.pattern.size(), 9);
+        EXPECT_EQ(p.to_run.size(), 3);
+        EXPECT_EQ(p.commands.size(), 11);
+}
+
 
 TEST(TestAssn2, single_command_test) {
 	Component* c = new Command();
