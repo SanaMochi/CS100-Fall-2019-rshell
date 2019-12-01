@@ -39,89 +39,62 @@ void Parser::parse(){
  	Parser::preParse();
 	pattern.push_back("");
 
-/*	int curr_max = 0; 
-    	int max = 0;
- //	std::string temp;
-//	temp += "(" + command + ")";
-//std::cout << command << std::endl;	
+	int curr_max = 0; 
+    	int numParens = 0;
+
 	//find how many pairs of parens
 	for (int i = 0; i < command.size(); i++) { 
         	if (command.at(i) == '(') {
             		curr_max++;
-			if (curr_max > max) 
-               			max = curr_max; 
+			if (curr_max > numParens) 
+               			numParens = curr_max; 
         	} 
        		else if (command.at(i) == ')') { 
             		if (curr_max > 0)
                 	curr_max--; 
 		}
-//		else {
-//                	perror("Error: Uneven parens ");
-//			return;
- //       	} 
  	}
     	if (curr_max != 0) {
 		perror("Error: Odd parens");
 		return;
 	}
-	//max is how many pairs of parens 
-	if (max == 0) {
-		*/
+	if (numParens == 0) {
 		while(pos_start < command.size() && command.find(space, pos_start) != -1) {
 			pos_end = command.find(space, pos_start);
-//			int temp_pos_end = (command.find(quotation_mark, pos_start);
 			if (pos_start < command.size() && command.find(quotation_mark, pos_start) != -1) {			//if starts with "
-//std::cout << "d";
 				int temp_pos_start = command.find(quotation_mark, pos_start);
 				if (temp_pos_start <= pos_end) {
 					if (command.at(pos_start) == '\"') {
 						pos_start++;
-//std::cout << 'a';
 						pos_end = command.find(quotation_mark, pos_start);
 						if (pos_start + (pos_end - pos_start) < command.size()) {
-//std::cout << 'b';		
 						commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-//std::cout << commands.back() << std::endl;						
 							pos_end += 2;
-							
 							pos_start = pos_end;
 						}
 					}
 				}
 				else {
 					if (pos_start + (pos_end - pos_start) < command.size())
-//std::cout << 'c';
                                         	commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-//std::cout << commands.back() << std::endl;
 						pos_end++;
 	                                        pos_start = pos_end;
 				}
 			}	
 			else {
-		//		pos_end = command.find(space, pos_start);
-//std::cout << 'e';
 				 if (pos_start + (pos_end - pos_start) < command.size()) {
 					commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
-//std::cout << commands.back() << std::endl;
-
 					pos_end++;
 					pos_start = pos_end;
 				}
 			}
-
-//	printCommands();
-//	std::cout << std::endl;
 		}
 		//assume there is always a last command ofter the last space
 		if (pos_start < command.size()) {
 			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
-//std::cout << "last: " << commands.back() << std::endl;
-
-//std::cout << 'g';
 		}
-//	printCommands();
-//	}
-/*	else if (max > 0) {
+	}
+/*	else if (numParens > 0) {
 		std::string command_og = command;
 		if (command.at(0) != '(') {
 			
