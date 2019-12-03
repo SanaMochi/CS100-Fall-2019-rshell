@@ -1,8 +1,8 @@
 # CS 100 Programming Project
 
-[Link](https://docs.google.com/document/d/1rIrPz5glX_SOD-Oi87J7bxxZykglxa-xB84qcXeUTc8/edit) to specs so I dont have to keep on signing into ilearn
+[Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to assignment 4 specs so I dont have to keep on signing into ilearn
 compile with `g++ rshell.cpp parser.cpp command.cpp test.cpp -o main -std=c++11` in src directory
-
+[Link](https://thoughtbot.com/blog/input-output-redirection-in-the-shell) to info on operators to make
 <h1> Project Information </h1>
 Fall 2019
 
@@ -14,11 +14,17 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 1. Print a command prompt (e.g. `$`)
 2. Read in a line of command(s) (and connector(s)) from standard input
-3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid`,except if `test` (details later)
+3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid`
+    * If `test`, use `stat()` instead and print (Ture) or (False)
 4. The connector class inherits from and references the command class (making connecto a composite) If the commands are connected by:
     * ";" : execute both
     * "&&" :  execute the next command if the previous one passed
     * "||" : execute the next command if the previous one falied
+5. Also no redirects input and output
+    * "<" : 
+    * ">" : redirects stdout to a new file (creates the file first and then outputs it there & overwrites if already exists)
+    * ">>" : redirects stdout to an existing file (adds on to file)
+    * "|" : 
 
 <h1> Diagram </h1>
 
