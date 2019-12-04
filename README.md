@@ -1,8 +1,11 @@
 # CS 100 Programming Project
 
-[Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to assignment 4 specs so I dont have to keep on signing into ilearn
+* [Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to assignment 4 specs so I dont have to keep on signing into ilearn
 compile with `g++ rshell.cpp parser.cpp command.cpp test.cpp -o main -std=c++11` in src directory
-[Link](https://thoughtbot.com/blog/input-output-redirection-in-the-shell) to info on operators to make
+* [Link](https://thoughtbot.com/blog/input-output-redirection-in-the-shell) to info on operators to make
+* [Link](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) to info on operations to make
+* [Link](https://en.wikipedia.org/wiki/Pipeline_(Unix)) to helpful pipeline info
+
 <h1> Project Information </h1>
 Fall 2019
 
@@ -21,10 +24,10 @@ We have created a shell in C++ called rshell using a composite pattern to do the
     * "&&" :  execute the next command if the previous one passed
     * "||" : execute the next command if the previous one falied
 5. Also no redirects input and output
-    * "<" : 
+    * "<" : edirects stdin to a new file (creates the file first and then outputs it there & overwrites if already exists)
     * ">" : redirects stdout to a new file (creates the file first and then outputs it there & overwrites if already exists)
-    * ">>" : redirects stdout to an existing file (adds on to file)
-    * "|" : 
+    * ">>" : redirects stdout to a file (if doesn't exist - create a new file; if exists - adds on to file)
+    * "|" : passes the output of one command as input to another
 
 <h1> Diagram </h1>
 
