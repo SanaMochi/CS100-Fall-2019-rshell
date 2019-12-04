@@ -139,13 +139,22 @@ void Parser::parse(){
 			pattern.push_back(open_bracket);
 		else if (commands.at(i) == closed_bracket)
 			pattern.push_back(closed_bracket);
+		
+		else if (commands.at(i) == pipe_symbol)
+			pattern.push_back(pipe_symbol);
+		else if (commands.at(i) == redirect_in)
+			pattern.push_back(redirect_in);
+		else if (commands.at(i) == redirect_out_new_file)
+			pattern.push_back(redirect_out_new_file);
+		else if (commands.at(i) == redirect_out)
+			pattern.push_back(redirect_out);
 
 	}
 	
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
 		
-		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol){
+		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
 			if (commands.at(i) == open_bracket) {			//if symbolic test
 				commands.at(i) = "test";
 				while (commands.at(i) != closed_bracket) {

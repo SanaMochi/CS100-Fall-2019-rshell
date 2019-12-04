@@ -20,6 +20,10 @@ class Component{
 	const std::string opening_parens = "(";
 	const std::string closing_parens = ")";
 	const std::string test_obj = "test";
+	const std::string pipe_symbol = "|";
+	const std::string redirect_in = "<";
+	const std::string redirect_out_new_file = ">";
+	const std::string redirect_out = ">>";
 
 //	std::vector<std::string> pattern; 	//stores the seperators in order
 	std::vector<std::string> commands;	//stores the initial string, but broken up by space charecters
