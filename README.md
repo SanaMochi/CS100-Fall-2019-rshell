@@ -24,7 +24,7 @@ We have created a shell in C++ called rshell using a composite pattern to do the
     * "&&" :  execute the next command if the previous one passed
     * "||" : execute the next command if the previous one falied
 5. Also no redirects input and output
-    * "<" : edirects stdin to a new file (creates the file first and then outputs it there & overwrites if already exists)
+    * "<" : redirects input from stdin to a file
     * ">" : redirects stdout to a new file (creates the file first and then outputs it there & overwrites if already exists)
     * ">>" : redirects stdout to a file (if doesn't exist - create a new file; if exists - adds on to file)
     * "|" : passes the output of one command as input to another
