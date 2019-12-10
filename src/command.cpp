@@ -1,9 +1,10 @@
-//#include "../header/component.h"
 #include "../header/component.h"
 #include "../header/command.h"
 #include "../header/test.h"
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,7 +22,7 @@ Command::Command(){
 
 void Command::runCommand(char ** argv){
 	Command::err = 0;
-	
+
 	execvp(*argv, argv);		//hijacks child process to return to parent
 	perror("Error");
 	//err = errno;
@@ -29,141 +30,186 @@ void Command::runCommand(char ** argv){
 	std::exit(EXIT_FAILURE);
 }
 
-int Command::runAll(int numOfCommands, Component* parser){
-	err = 0;	
-			char* arga[commands.size() + 1];
-			for (int i = 0; i < commands.size() + 1; i++)
-				arga[i] = (char*)commands.at(i).c_str();
-				
-			arga[commands.size() + 1] = NULL;
+void Command::runAll(int numOfCommands, Component* parser){
+	err = 0;
+	std::string exit_str = "";
+//	std::cout << "numOfCommands: " << numOfCommands << std::endl;
+		for(int i = 0; i < numOfCommands; i++){
+			exit_str = "";
 			
-			pid_t pid = fork();				//make a child process
-			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-			
-			if(pid == 0){
-
-				//std::cout << "\nError: " << err;
-				//std::cout << "\nsymbol: " << parser->pattern.at(i);
-				//std::cout << "\nargs: " << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				
-				if (execvp(arga[0], arga) != 0) {
-					perror("exec");
-					//return 1;	
-					exit(1);
-				} else {
-					//return 1;
-					exit(1);
+			exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
+				if(exit_str == "exit"){
+					parser->shouldIExit(true);
+					parser->resetVectors();
+					std::exit(0);
 				}
-			}
-				
-			/*	if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){	//for &&
-					parser->removeNextCommand(i);
-
-				}else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||"){ //for ||
-					parser->removeNextCommand(i);
-				}
-				//std::cout << "\nargs2: "  << getpid() << " status: " << WEXITSTATUS(status);parser->printArguments();
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&"){
-					quick_exit(EXIT_FAILURE);
-				}
-				std::string test_str = "test";
-		//		test_str.c_str();
-		//						
-		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
-		//			test->runCommand(parser->formatArguments(i));
+	
+			int pid = fork();						//make a child process		
+//			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
 		
-				test_str = "";
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//if && fails
+				parser->removeNextCommand(i);
 
-                       		test_str = parser->formatArguments(i)[0];
-                                if(test_.find("test") == -1){
-					 test->runCommand(parser->formatArguments(i));
-				}	
-				else {
-					Command::runCommand(parser->formatArguments(i));
-				}
-		*/	else if (pid < 0) {
+			else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||") //if || passes
+				parser->removeNextCommand(i);
+	
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
+				quick_exit(EXIT_FAILURE);
+
+	//something is off		
+/*			else if (parser->pattern.at(i) == "|" && pid == 0)
+				Piping(to_run.at(i), i, parser); //, to_run.at(i + 1));
+			
+			else if (parser->pattern.at(i) == "<" && pid == 0) {
+				OverwriteIn(to_run.at(i), i,  parser); //, to_run.at(i + 1));
+			}
+			
+			else if (parser->pattern.at(i) == ">" && pid == 0)
+				OverwriteOutNew(to_run.at(i), i, parser); //, to_run.at(i + 1));
+			
+			else if (parser->pattern.at(i) == ">>" && pid == 0)
+				OverwriteOut(to_run.at(i), i, parser); //, to_run.at(i + 1));
+			
+*/			
+			char ** arga = parser->formatArguments(i);	
+
+			if(pid == 0 && parser->pattern.at(i) != "|" && parser->pattern.at(i) != "<" && parser->pattern.at(i) != ">" && parser->pattern.at(i) != ">>") {
+				std::string test_str = "test";                          //check if test
+				if (*arga == test_str)
+						test->Test::runCommand(parser->formatArguments(i));
+				else
+						Command::runCommand(parser->formatArguments(i));
+			}
+			else if (pid < 0) {
 				perror("failed fork");
 				//return 1;
-				exit(1);
-			}else if (pid > 0) {
+				std::exit(1);
+			}
+			else if (pid > 0) {
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
 					perror("wait on child");
-				if (WIFEXITED(status)) {
-					return WEXITSTATUS(status);
+				if (WIFEXITED(status)) 
+					WEXITSTATUS(status);
 			}
-		//	std::string test_str = "test";
-		//		test_str.c_str();
-		//						
-		//		if (parser->formatArgumants(i)[0] == test_str.c_str())	
-		//			if(parser->formatArguments(i)[1] == 
-					
-				if (commands.at(0) == "test") {
-					if (commands.at(1) == "-e") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else if (commands.at(1) == "-f") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else if (commands.at(1) == "-d") { 
-						struct stat buf;
-						if (stat(arga[2], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-					else {
-						struct stat buf;
-						if (stat(arga[1], &buf) == 0) {
-							cout << "(True)" << endl;
-							return 0;
-						}
-						else {
-							cout << "(False)" << endl;
-							return 1;
-						}
-					}
-				}
-		
-		//		test_str = "";
-
-               //      		test_str = parser->formatArguments(i)[0];
-               //               if(test_str.find("test") == -1){
-		//			 test->runCommand(parser->formatArguments(i));
-				}	
-				else {
-					std::string exit_str = "";
-               				for(int i = 0; i < numOfCommands; i++){
-                       				 exit_str = "";
-
-                       				exit_str = parser->formatArguments(i)[0];
-                               			if(exit_str == "exit"){
-                                        	parser->shouldIExit(true);
-                                        	parser->resetVectors();
-                                        	std::exit(0);
-                                		}	
-					Command::runCommand(parser->formatArguments(i));
-					}
-				}
-
-	return 0;
+	}
 }
+
+void Command::OverwriteOutNew(std::string to_run_command, int i, Component* parser) {
+	int savestdout = dup(1);						//saves stdout in next available loc
+	mode_t mode =  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	int file_start = to_run_command.find(redirect_out_new_file, 0) + 2;
+//	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
+	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
+	int newout = open(fileName.c_str(), O_WRONLY, mode);			//open file to writ in
+
+	if (newout < 0)
+		perror("negative fd");
+
+	char** arga = parser->formatArguments(i);
+	std::string test_str = "test";
+		if (*arga == test_str)
+			test->Test::runCommand(parser->formatArguments(i));
+		else
+			Command::runCommand(parser->formatArguments(i));
+
+		
+	close(1);								//close file to write in
+//	dup(newout);
+
+	dup2(savestdout, 1);							//puts stdout back to og loc
+}
+
+void Command::OverwriteOut(std::string to_run_command, int i, Component* parser) {
+	int savestdout = dup(1);						//saves stdout in next available loc
+	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	int file_start = to_run_command.find(redirect_out, 0) + 3;
+//	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
+	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
+	int newout = open(fileName.c_str(), O_WRONLY | O_CREAT | O_APPEND, mode);          //open file to writ in
+
+	if (newout < 0)
+		perror("negative fd");
+
+	char** arga = parser->formatArguments(i);
+	std::string test_str = "test";
+		if (*arga == test_str)
+			test->Test::runCommand(parser->formatArguments(i));
+		else 
+			Command::runCommand(parser->formatArguments(i));
+
+	close(1);
+	dup2(savestdout, 1);							//puts stdout back to og loc
+}
+
+void Command::OverwriteIn(std::string to_run_command, int i, Component* parser) {
+	int savestdin = dup(0);							//saves stdin in next available loc
+	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	int file_start = to_run_command.find(redirect_in, 0) + 2;
+//	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
+	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
+	int newin = open(fileName.c_str(), O_RDONLY, mode);
+
+	if (newin < 0)
+		perror("negative fd");
+
+//	to_run.at(i) = 
+	char** arga = parser->formatArguments(i); 
+	std::string test_str = "test";  		                        //check if test
+		if (*arga == test_str)
+			test->Test::runCommand(parser->formatArguments(i));
+		else
+			Command::runCommand(parser->formatArguments(i));
+
+	close(1);
+	dup2(savestdin, 0);							//puts stdin back to og loc
+}
+
+void Command::Piping(std::string to_run_command, int i, Component* parser) {
+	
+}
+/*
+void Command::parseNoParens(std::string comm, std::vector<std::string> comms) {
+        int pos_start = 0;
+        int pos_end = 0;
+
+	while(pos_start < comm.size() && comm.find(space, pos_start) != -1) {
+		pos_end = comm.find(space, pos_start);
+		if (pos_start < comm.size() && comm.find(quotation_mark, pos_start) != -1) {			//if starts with "
+			int temp_pos_start = comm.find(quotation_mark, pos_start);
+			if (temp_pos_start <= pos_end) {
+				if (comm.at(pos_start) == '\"') {
+					pos_start++;
+					pos_end = comm.find(quotation_mark, pos_start);
+					if (pos_start + (pos_end - pos_start) < comm.size()) {
+					comms.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+//	std::cout << comms.back() << " = 1 , ";
+						pos_end += 2;
+						pos_start = pos_end;
+					}
+				}
+			}
+			else {
+				if (pos_start + (pos_end - pos_start) < comm.size()) {
+					comms.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+//	std::cout << comms.back() << " = 2 , ";
+					pos_end++;
+					pos_start = pos_end;
+				}
+			}
+		}	
+		else {
+			 if (pos_start + (pos_end - pos_start) < comm.size()) {
+				comms.push_back(comm.substr(pos_start, (pos_end - pos_start)));
+//	std::cout << comms.back() << " = 3 , ";
+				pos_end++;
+				pos_start = pos_end;
+			}
+		}
+	}
+	//assume there is always a last command ofter the last space
+	if (pos_start < comm.size()) {
+		comms.push_back(comm.substr(pos_start, (comm.size() - pos_start)));
+//	std::cout << comms.back() << " = 4 , ";
+	}
+}
+*/

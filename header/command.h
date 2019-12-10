@@ -21,14 +21,14 @@ class Command : public Component{
 	Test* test;
 	
 	public:
-	Command();
-//	void removeNextCommand(int location);
-	
+	Command();	
 	virtual void runCommand(char ** argv);
-	
-	virtual int runAll(int numOfCommands, Component* parser);
-	//void makeList(int numOfCommands, Parser* parser);
-	
+	virtual void runAll(int numOfCommands, Component* parser);
+	void OverwriteOutNew(std::string to_run_command, int i, Component* parser);
+	void OverwriteOut(std::string to_run_command, int i, Component* parser);
+	void OverwriteIn(std::string to_run_command, int i, Component* parser);
+	void Piping(std::string to_run_command, int i, Component* parser);
+//	void parseNoParens(std::string comm);
 };
 
 #endif

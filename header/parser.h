@@ -16,7 +16,7 @@ class Parser: public Component {
 	int err = 0;
 	std::vector<int> opened_parens;
 	std::vector<int> closed_parens;
-	
+
 	public:
 	Parser();
 	Parser(std::string s);
@@ -24,7 +24,8 @@ class Parser: public Component {
 	void getInput(std::string s);		//get the input from user and store it
 	void print();						//print input, mainly used for testing
 	
-	void parse();						//parse the input string and makes a vector of words broken up by spaces, and by seperators ,that gets stored in commands and to_run respectivly
+	void parse();					//parse the input string and makes a vector of words broken up by spaces, and by seperators ,that gets stored in commands and to_run respectivly
+	void parseNoParens(std::string comm);				//parse the input if no parens
 	void printCommands();				//print commands, mainly used for testing
 	std::vector<std::string> getCommandsToRun(); //get to_run, mainly used for testing
 	
@@ -42,7 +43,7 @@ class Parser: public Component {
 	int getSize(); 				//get total number of commands to execute
 	
 	virtual void runCommand(char ** argv);
-	virtual int runAll(int numOfCommands, Component* parser);
+	virtual void runAll(int numOfCommands, Component* parser);
 	
 	void deletePointer();		//We don't dynamically allocate memory, so I don't think we need it
 };

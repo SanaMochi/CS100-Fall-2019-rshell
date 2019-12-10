@@ -2,10 +2,10 @@
 #include <string>
 
 Component::~Component() {
-	for (int i = 0; i < pointerSize; i++) {
-		delete[] pointer[i];
-	}
-	delete[] pointer;
+//	for (int i = 0; i < pointerSize; i++) {
+//		delete[] pointer[i];
+//	}
+//	delete[] pointer;
 }
 
 char** Component::formatArguments(int location){
@@ -17,6 +17,7 @@ char** Component::formatArguments(int location){
 	while(countQ != location){
 		for(int i = index; i < argv.size(); i++){
 			index++;
+	//		std::cout << "argv: " << argv.at(i) << std::endl;
 			if(argv.at(i) == "???"){
 				countQ++;
 				break;
@@ -26,6 +27,7 @@ char** Component::formatArguments(int location){
 	}
 	//count how many commands are in between that ??? and the next one
 	for(int i = index; i < argv.size();i++){
+	//	 std::cout << "argv: " << argv.at(i) << std::endl;
 		if(argv.at(i) == "???")
 			break;
 		commandCount++;
@@ -93,5 +95,14 @@ bool Component::shouldIExit(){
 
 void Component::shouldIExit(bool shouldI){
 	exit_bool = shouldI;
+}
+bool Component::getTestBool() {
+	return this->test_bool;
+}
+void Component::setTestTrue() {
+	this->test_bool = true;
+}
+void Component::setTestFalse() {
+	this->test_bool = false;
 }
 

@@ -16,15 +16,8 @@
 class Command;
 class Test : public Parser {
 	public:
-//	Test();
-/*	std::vector<std::string> flags;
-	int isTrue;
-	
-	int exists(std::string fileName);
-	int isRegularFile(std::string fileName);
-	int isdirectory(std::string directoryName);
-*/	void runCommand(char ** argv);
-	int runAll(int numOfCommands, Component* parser);
+	void runCommand(char ** argv);
+	void runAll(int numOfCommands, Component* parser);
 };
 
 #endif //_TEST_H_
