@@ -35,7 +35,8 @@ void Command::runAll(int numOfCommands, Component* parser){
 	std::string exit_str = "";
 //	std::cout << "numOfCommands: " << numOfCommands << std::endl;
 		for(int i = 0; i < numOfCommands; i++){
-			exit_str = "";			
+			exit_str = "";
+			
 			exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
 				if(exit_str == "exit"){
 					parser->shouldIExit(true);
@@ -72,7 +73,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 */			
 			char ** arga = parser->formatArguments(i);	
 
-			if (pid == 0) { // && parser->pattern.at(i) != "|" && parser->pattern.at(i) != "<" && parser->pattern.at(i) != ">" && parser->pattern.at(i) != ">>") {
+			if(pid == 0 && parser->pattern.at(i) != "|" && parser->pattern.at(i) != "<" && parser->pattern.at(i) != ">" && parser->pattern.at(i) != ">>") {
 				std::string test_str = "test";                          //check if test
 				if (*arga == test_str)
 						test->Test::runCommand(parser->formatArguments(i));
