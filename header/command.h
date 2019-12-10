@@ -23,19 +23,12 @@ class Command : public Component{
 	public:
 	Command();	
 	virtual void runCommand(char ** argv);
-<<<<<<< HEAD
 	virtual void runAll(int numOfCommands, Component* parser);
 	void OverwriteOutNew(std::string to_run_command, int i, Component* parser);
 	void OverwriteOut(std::string to_run_command, int i, Component* parser);
 	void OverwriteIn(std::string to_run_command, int i, Component* parser);
 	void Piping(std::string to_run_command, int i, Component* parser);
 //	void parseNoParens(std::string comm);
-=======
-	
-	virtual void runAll(int numOfCommands, Component* parser);
-	//void makeList(int numOfCommands, Parser* parser);
-	
->>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 };
 
 #endif
