@@ -1,13 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-exec 6>&1           # Link file descriptor #6 with stdout.
-                    # Saves stdout.
-exec > data-file   # stdin replaced by file "data-file"
+test.cpp
 
-if [ -e "rshell" ]
-then echo (True)
-if [ -f "header/command.h" ]
-then echo (True)
+g++ test.cpp -o test
 
-exec 1>&6 6>&-      # Restore stdout and close file descriptor #6.
+if test -e "rshell"; then
+	echo "(True)"
+fi
+if test -f "header/command.h"; then
+	echo "(True)"
+fi
+if test -d integration_tests; then
+	echo "(True)"
+fi
+
+./test
+
 exit 0

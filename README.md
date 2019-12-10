@@ -1,7 +1,10 @@
 # CS 100 Programming Project
 
-[Link](https://docs.google.com/document/d/1s2KtW2oBfghC4v9x3tm3DPjYiKK5R0QllsNlExJ0rt4/edit) to specs so I dont have to keep on signing into ilearn
-compile with `g++ rshell.cpp parser.cpp command.cpp -o main -std=c++11` in src directory
+* [Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to assignment 4 specs so I dont have to keep on signing into ilearn
+compile with `g++ rshell.cpp parser.cpp command.cpp test.cpp -o main -std=c++11` in src directory
+* [Link](https://thoughtbot.com/blog/input-output-redirection-in-the-shell) to info on operators to make
+* [Link](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) to info on operations to make
+* [Link](https://en.wikipedia.org/wiki/Pipeline_(Unix)) to helpful pipeline info
 
 <h1> Project Information </h1>
 Fall 2019
@@ -14,101 +17,80 @@ We have created a shell in C++ called rshell using a composite pattern to do the
 
 1. Print a command prompt (e.g. `$`)
 2. Read in a line of command(s) (and connector(s)) from standard input
-3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid` 
+3. Parse the input and execute the appropriate commands using `fork` , `execvp` , and `waitpid`
+    * If `test`, use `stat()` instead and print (Ture) or (False)
 4. The connector class inherits from and references the command class (making connecto a composite) If the commands are connected by:
     * ";" : execute both
     * "&&" :  execute the next command if the previous one passed
     * "||" : execute the next command if the previous one falied
+5. Also no redirects input and output
+    * "<" : redirects input from stdin to a file
+    * ">" : redirects stdout to a new file (creates the file first and then outputs it there & overwrites if already exists)
+    * ">>" : redirects stdout to a file (if doesn't exist - create a new file; if exists - adds on to file)
+    * "|" : passes the output of one command as input to another
 
 <h1> Diagram </h1>
 
-![OMT Diagram:](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
-
+![OMTDiagram: ](https://github.com/cs100/assignment-michael_sana/blob/master/images/RShell_OMT_Diagram.jpeg)
 <h1> Classes </h1>
 
-* Commands - will take in all of the executables and connectors into a vector (using std::cin)
+Composite:
+Inteface class that doesn't do much except hold onto variables needed by inherited classes and some important functions.
 
-                class Commands {
-                  vector <Commands*> comm;
-                  void getCommands() {
-                    string command;
-                    while (cin >> command) {
-                      comm.push_back(command);
-                    }
-                  }
-                };
-        
-* Connector - inherits from Commands; will have subclasses to run each command based on the connector
+Command:
+Composite class that runs the commands given using  `execvp()`
+the runCommand function also has an added functionality to call Test class when `test` is invoked.
+   
+      int pid = fork();				                                       //make a child process
+			char ** arga = parser->formatArguments(i);	
+			if(pid == 0) {
+				std::string test_str = "test";                              //check if test
+	            if (*arga == test_str)                       //if test
+	               test->Test::runCommand(parser->formatArguments(i));
+	            else                                         //if not test
+	               Command::runCommand(parser->formatArguments(i));
+         }
 
-                class Connector : public Commands {
-                  vector <Command*> conn
-                  public:
-                  void getConnectors() {
-                    for (int i = 0; comm.at(i) != " " && comm.at(i) != "\n"; i++) {
-                      conn.push_back(comm.at(i));
-                    }
-                  }
-                  virtual void runCommands() {...}
-                };
+Parser:
+Leaf class that parses the command and executes based on the connector
+If surrounded by quotes, arguments are treated as a single argument, no matter what they contain.
+Parentheses can be used in order to change the order of precedence of operators in the rshell. Includes multiple and nested parenthesis.
 
-* SemicolonConnector - will run the next command (no matter what)
+		while(pos_start < command.size() && command.find(space, pos_start) != -1) {      //simplified for no '\"' or '('
+			pos_end = command.find(space, pos_start);
+			if (pos_start + (pos_end - pos_start) < command.size())
+           	commands.push_back(command.substr(pos_start, (pos_end - pos_start)));
+						pos_end++;
+                  pos_start = pos_end;
+   		}
+		}
+		//assume there is always a last command ofter the last space
+		if (pos_start < command.size()) {
+			commands.push_back(command.substr(pos_start, (command.size() - pos_start)));
+		}
 
-                class SemicolonConnector : public Connector {
-                  public:
-                  bool isSemicolon() {
-                    //check if semicolon (or not && and not ||)
-                  }
-                  void runCommand() {
-                    //always execute next command
-                  }
-                };
-    
-* ANDConnector - will execute the next command if the previous one was successful
+Test:
+Runs test through the `test` operator and square brackets, `[ ]`. This is done using `stat()` to check the specifics of a file based on  the privided flag. 
+    * "-e" : file exists (`ISREG()` or `ISDIR()`) - used as default if no flag is provided
+    * "-f" : file is a regular file (`ISREG()`)
+    * "-d" : file is a directory (`ISDIR()`)
 
-                class ADDConnector : public Connector {
-                  public:
-                  bool isADD() {
-                    //check if ADD (or not ; and not ||)
-                  }
-                  void runCommand() {
-                    //execute next command is prev passed
-                  }
-                };
-
-* ORConnector - will execute if the first one fails
-
-                class ORConnector : public Connector {
-                  public:
-                  bool isOR() {
-                    //check if OR (or not ; and not &&)
-                  }
-                  void runCommand() {
-                    //execute next command is prev failed
-                  }
-                };
-
-* ExecutableExpression - inherits from Commands; will run the executables
-
-                class ExecutableExpression : public Command {
-                  vector <Executable*> commandList;
-                  Executable()
-                  void parse(const string&) {...}
-                  void runExeCommand() {
-                    //runs the command
-                    //executes next command based on connector
-                  }
-                }
+            if (stat(argv[1], &buf) != -1) { //if no flag
+               stat(argv[1], &buf);
+               if (S_ISREG(buf.st_mode) != 0)
+                  std::cout << "(True)" << std::endl;
+               else if (S_ISDIR(buf.st_mode) != 0)
+                  std::cout << "(True)" << std::endl;
+            }
 
 <h1> Prototypes / Reaserch </h1>
 
 We have created basic prototypes that test and show basic functionality of `fork()` , `execvp()` , `waitpid()`, and parse function.
-
-
+We have also now created a funtional parse class.
 
 <h1> Development and Testing Roadmap </h1>
 
-* Create relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
-* Figure out a parser to use and the functionality of other relevant functions that work with it
-* Make unit tests using the `googletest` framework
-* Make integration tests using the `googletest` framework
-* Add more items as they become necessary
+* We have created relavant classes that work with the parser (for inputs such as `&&` , `||` , `;`)
+* We have figures out a parser to use and the functionality of other relevant functions that work with it
+* We made unit and integration tests using the `googletest` framework
+* Add more items as they become necessary such as special cases (parenthesis, etc)

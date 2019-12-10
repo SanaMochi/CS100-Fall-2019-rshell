@@ -88,11 +88,19 @@ void Parser::parse(){
 				while (command.at(start + end - temp2) == ' ' || command.at(start + end - temp2) == ')')
 					temp2++; 
 				Parser::parseNoParens(command.substr(start + temp1, end - temp2));	
+<<<<<<< HEAD
 //	std::cout << "to be parsed: " << command.substr(start + temp1, end - temp2) << std::endl;
 
 				to_run_parens.push_back(command.substr(start + temp1, end - temp2));
 				command.erase(start, end);
 //	std::cout << "leftover: " << command << std::endl;
+=======
+	std::cout << "to be parsed: " << command.substr(start + temp1, end - temp2) << std::endl;
+
+				to_run_parens.push_back(command.substr(start + temp1, end - temp2));
+				command.erase(start, end);
+	std::cout << "leftover: " << command << std::endl;
+>>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 					if (start < command.size())
 						i = start;
 					else if (command.size() != 0)
@@ -154,7 +162,11 @@ void Parser::parse(){
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
 		
+<<<<<<< HEAD
 		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol) { // && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+=======
+		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+>>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 			if (commands.at(i) == open_bracket) {			//if symbolic test
 				commands.at(i) = "test";
 				while (commands.at(i) != closed_bracket) {
@@ -166,6 +178,7 @@ void Parser::parse(){
 				}
 				commands.erase(commands.begin() + 1);
 			}
+<<<<<<< HEAD
 /*			else if (commands.at(i) == redirect_in || commands.at(i) == redirect_out_new_file || commands.at(i) == redirect_out || commands.at(i) != pipe_symbol) {
 				while (commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out) {
 					i--;
@@ -187,6 +200,8 @@ void Parser::parse(){
 				}
 			}
 */
+=======
+>>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 			else {
 				temp_str += commands.at(i);
 

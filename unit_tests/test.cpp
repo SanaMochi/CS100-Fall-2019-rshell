@@ -4,6 +4,7 @@
 #include "../header/command.h"
 #include "../header/component.h"
 #include "../header/parser.h"
+#include "../header/test.h"
 #include <string>
 #include <fstream>
 #include <iostream> 
@@ -14,154 +15,183 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
+TEST(TestAssn3, single_test) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "test -e src/command.cpp";
+        p.getInput(input);
+        p.parse();
 
-TEST(Test1, single_command_test) {
-	//remove("data-file");
-	system("./integration_tests/single_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
-    while ((c = std::fgetc(file)) != EOF) { 
-       std::putchar(c);
-       output += c;
-    }
-	//std::getline(file, output);
-	std::fclose(file);
-    EXPECT_EQ(output, "hello world\nit works\n");
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->getTestBool());	
+	EXPECT_EQ(p.pattern.size(), 1);
+        EXPECT_EQ(p.to_run.size(), 1);
+        EXPECT_EQ(p.commands.size(), 3);
+
 }
 
-TEST(Test1, multiple_command_test) {
-	//remove("data-file");
-	system("./integration_tests/multiple_commands_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
-    while ((c = std::fgetc(file)) != EOF) { 
-       std::putchar(c);
-       output += c;
-    }
-	//std::getline(file, output);
-	std::fclose(file);
-    EXPECT_EQ(output, "hello\nyes\nit works\n");
+TEST(TestAssn3, single_test_brackets) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "[ -e src/command.cpp ]";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->getTestBool());
+	EXPECT_EQ(p.pattern.size(), 3);
+        EXPECT_EQ(p.to_run.size(), 1);
+        EXPECT_EQ(p.commands.size(), 3);
+}
+
+TEST(TestAssn3, multiple_test) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "test -e src/command.cpp && test -f src/parser.cpp && test -d src";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//        EXPECT_TRUE(c->test_bool);
+	EXPECT_EQ(p.pattern.size(), 3);
+        EXPECT_EQ(p.to_run.size(), 3);
+        EXPECT_EQ(p.commands.size(), 11);
+
+}
+
+TEST(TestAssn3, multiple_test_brackets) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "[ -e src/command.cpp ] && [ -f src/parser.cpp ] && [ -d src ]";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+//	EXPECT_TRUE(c->test_bool);
+	EXPECT_EQ(p.pattern.size(), 9);
+        EXPECT_EQ(p.to_run.size(), 3);
+        EXPECT_EQ(p.commands.size(), 11);
+}
+
+TEST(TestAssn3, parentheses) {
+	Component* c = new Command();
+        Parser p;
+        std::string input = "(echo Alhamdulillah || ls) && (eecho fail || git status)";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+	EXPECT_EQ(p.pattern.size(), 4);
+	EXPECT_EQ(p.to_run.size(), 4);
+	EXPECT_EQ(p.commands.size(), 10);
+}
+
+TEST(TestAssn3, nested_parentheses) {
+        Component* c = new Command();
+        Parser p;
+        std::string input = "((echo Alhamdulillah || (ls || (eecho fail || git status)";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+        EXPECT_EQ(p.pattern.size(), 4);
+        EXPECT_EQ(p.to_run.size(), 4);
+        EXPECT_EQ(p.commands.size(), 10);
 }
 
 
-TEST(Test1, commented_command_test) {
-	//remove("data-file");
-	system("./integration_tests/commented_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
-    while ((c = std::fgetc(file)) != EOF) { 
-       std::putchar(c);
-       output += c;
-    }
-	//std::getline(file, output);
-	std::fclose(file);
-    EXPECT_EQ(output, "it works\n");
+TEST(TestAssn2, single_command_test) {
+	Component* c = new Command();
+	Parser p;
+	std::string input = "echo hello";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+	EXPECT_EQ(p.pattern.size(), 1);
+	EXPECT_EQ(p.to_run.size(), 1);
+	EXPECT_EQ(p.commands.size(), 2);
 }
 
-TEST(Test1, exit_command_test) {
-	//remove("data-file");
-	system("./integration_tests/exit_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	//file.open("data-file");      // open input file
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
-    while ((c = std::fgetc(file)) != EOF) { 
-       std::putchar(c);
-       output += c;
-    }
-	//std::getline(file, output);
-	std::fclose(file);
-    EXPECT_EQ(output, "it should work\n");
+TEST(TestAssn2, multiple_command_test_without_quotes) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "ls || git status";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+        EXPECT_EQ(p.pattern.size(), 1);
+	EXPECT_EQ(p.commands.size(), 4);
+        EXPECT_EQ(p.to_run.size(), 2);
+        p.printCommands();
 }
-TEST(Test2, exit_test_1) {
+
+
+TEST(TestAssn2, multiple_command_test_with_quotes) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "echo \"hello && goodbye\" || git status"; 
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+	EXPECT_EQ(p.pattern.size(), 1);
+	EXPECT_EQ(p.commands.size(), 5);
+	EXPECT_EQ(p.to_run.size(), 2);
+	p.printCommands();
+}
+
+TEST(TestAssn2, exit_test_1) {
 	Component* parser = new Command();
-	parser->exit = true;
+	parser->exit_bool = true;
 
 	EXPECT_TRUE(parser->shouldIExit()== true);
 }
-TEST(Test2, exit_test_2) {
+TEST(TestAssn2, exit_test_2) {
 	Component* parser = new Command();
-	parser->exit = false;
+	parser->exit_bool = false;
 
 	EXPECT_FALSE(parser->shouldIExit());
 }
-TEST(Test3, reset_vectors) {
+TEST(TestAssgn2, reset_vectors) {
 	Component* c = new Command();
 
 	c->resetVectors();
 
 	ASSERT_EQ(c->pattern.size(), 0);
-//	EXPECT_EQ(c->Component::commands(), 0);
-//	EXPECT_EQ(c->Component::to_run.size(), 0);
-
 	EXPECT_EQ(c->numOfCommands, 0);
 }
 
-TEST(Test4, getSize) {
+TEST(TestAssn2, getSize) {
 	Parser* p = new Parser();
 	EXPECT_EQ(p->getSize(), 0);
 }
 
-/*
-TEST(Test5, single_command_test) {
-	system("./integration_tests/single_command_tests.sh");
-	std::string output;
-	int c;
-	FILE* file = std::fopen("data-file", "r");
-	if(!file)	
-		std::cout << std::endl << "error "  << std::endl;
-		
-    while ((c = std::fgetc(file)) != EOF) { 
-       std::putchar(c);
-       if (c == "&&" || c == "||" || c == ";")
-		output += c;
-    }
-	std::fclose(file);
-    EXPECT_EQ(output, "");
+TEST(TestAssn2, exit_command_test) {
+ Component* c = new Command();
+        Parser p;
+        std::string input = "exit";
+        p.getInput(input);
+        p.parse();
+
+        c->runAll(p.getSize(), &p);
+
+        EXPECT_EQ(p.pattern.size(), 1);
+        EXPECT_EQ(p.argv.size(), 0);
+        EXPECT_EQ(p.to_run.size(), 1);
+
 }
-*/
-// TEST(Test4, removeNextCommand) {
-// 	system("./integration_tests/single_command_tests.sh");
-// 	std::string output;
-// 	int c;
-// 	FILE* file = std::fopen("data-file", "r");
-// 	//file.open("data-file");      // open input file
-// 	if(!file)	
-// 		std::cout << std::endl << "error "  << std::endl;
-		
-//  		while ((c = std::fgetc(file)) != EOF) { 
-// 			std::putchar(c);
-//     		numOfCommands++;
-//     	}
-// 	std::fclose(file);
-// // 	Component* c = new Command();
-// // 	c->numOfCommands = 1;
-// // 	c->fileNames.at(0) = "x";
-// // 	c->fileNames.at(1) = "y";
-// // 	c->pattern.at(0) = "||";
-// // 	c->pattern.at(1) = "&&";
-// // 	c->removeNextCommand(0);
-// // 	EXPECT_EQ(c->pattern.size(),0);
-// 	EXPECT_EQ(c->numOfCommands, 0);
-// }
+
 
 #endif
 
