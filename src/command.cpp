@@ -35,9 +35,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 	std::string exit_str = "";
 //	std::cout << "numOfCommands: " << numOfCommands << std::endl;
 		for(int i = 0; i < numOfCommands; i++){
-			exit_str = "";
-<<<<<<< HEAD
-			
+			exit_str = "";			
 			exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
 				if(exit_str == "exit"){
 					parser->shouldIExit(true);
@@ -74,7 +72,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 */			
 			char ** arga = parser->formatArguments(i);	
 
-			if(pid == 0 && parser->pattern.at(i) != "|" && parser->pattern.at(i) != "<" && parser->pattern.at(i) != ">" && parser->pattern.at(i) != ">>") {
+			if (pid == 0) { // && parser->pattern.at(i) != "|" && parser->pattern.at(i) != "<" && parser->pattern.at(i) != ">" && parser->pattern.at(i) != ">>") {
 				std::string test_str = "test";                          //check if test
 				if (*arga == test_str)
 						test->Test::runCommand(parser->formatArguments(i));
@@ -87,53 +85,12 @@ void Command::runAll(int numOfCommands, Component* parser){
 				std::exit(1);
 			}
 			else if (pid > 0) {
-=======
-			
-			exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
-				if(exit_str == "exit"){
-					parser->shouldIExit(true);
-					parser->resetVectors();
-					std::exit(0);
-				}
-	
-			int pid = fork();						//make a child process		
-//			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-		
-			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//for &&
-				parser->removeNextCommand(i);
-
-			else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||") //for ||
-				parser->removeNextCommand(i);
-			
-			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
-				quick_exit(EXIT_FAILURE);
-
-			char ** arga = parser->formatArguments(i);	
-
-			if(pid == 0) {
-				std::string test_str = "test";                          //check if test
-//  	std::cout << "checking test" << std::endl;
-				if (*arga == test_str) {
-//	    std::cout << "running test -- " << std::endl;
-						test->Test::runCommand(parser->formatArguments(i));
-				}
-				else {
-//		std::cout << "running non-test: " << std::endl;
-						Command::runCommand(parser->formatArguments(i));
-				}
-			}else if (pid < 0) {
-				perror("failed fork");
-				//return 1;
-				std::exit(1);
-			}else if (pid > 0) {
->>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
 					perror("wait on child");
 				if (WIFEXITED(status)) 
 					WEXITSTATUS(status);
 			}
 	}
-<<<<<<< HEAD
 }
 
 void Command::OverwriteOutNew(std::string to_run_command, int i, Component* parser) {
@@ -253,7 +210,5 @@ void Command::parseNoParens(std::string comm, std::vector<std::string> comms) {
 		comms.push_back(comm.substr(pos_start, (comm.size() - pos_start)));
 //	std::cout << comms.back() << " = 4 , ";
 	}
-=======
->>>>>>> ecf77f3dd78e4635d76419e175f1399c0460be2d
 }
 */
