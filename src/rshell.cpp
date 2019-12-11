@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
 	std::string test = "geany f1 || ls -a ./ -a ../ ; gedit -s f2";
 	char money = '$';
 	Parser p;
-	Component* c = new Command();
+	Command* c = new Command();
 	
 	if(argc > 1){
 		for(int i = 1; i < argc; i++){
@@ -29,8 +29,11 @@ int main(int argc, char *argv[]){
 	if(input == "exit" || p.shouldIExit()){
 		return 0;
 	}
-	p.parse();				//
+	p.parse();
 	input = "";
+//			std::cout << "Commands: "; p.printCommands();
+//			std::cout << "filenames: "; p.printFileNames();
+
 	c->runAll(p.getSize(), &p);
 	if(argc > 1)
 		return 0;

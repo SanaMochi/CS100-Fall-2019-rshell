@@ -32,8 +32,8 @@ char** Component::formatArguments(int location){
 			break;
 		commandCount++;
 	}
-	pointerSize = commandCount;//argv.size();
-	pointerSize += 2;		// for some reson execvp ignores the first argument and there needs to be room for a null char at the end
+	pointerSize = commandCount;		//argv.size();
+	pointerSize += 2;		// for some reason execvp ignores the first argument and there needs to be room for a null char at the end
 	char** c = new char *[pointerSize];
 	int num = 0;
 	c[num] = const_cast<char*> (fileNames.at(location).c_str());	//make the first argument the name of the file, get ignored by ececvp

@@ -19,6 +19,7 @@ class Command : public Component{
 	int status;
 	int err;
 	Test* test;
+	bool redirect;
 	
 	public:
 	Command();	

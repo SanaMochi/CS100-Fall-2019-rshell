@@ -15,6 +15,19 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
+TEST(TestAssn4, redirect_in) {
+ Component* c = new Command();
+	Parser p;
+	std::string input = "cat < names.txt";
+	p.getInput(input);
+	p.parse();
+
+	c->runAll(p.getSize(), &p);
+
+	EXPECT_EQ(p.pattern.size(), 2);
+	EXPECT_EQ(p.to_run.size(), 1);
+	EXPECT_EQ(p.commands.size(), 3);
+}
 TEST(TestAssn3, single_test) {
  Component* c = new Command();
         Parser p;
@@ -132,7 +145,7 @@ TEST(TestAssn2, multiple_command_test_without_quotes) {
         EXPECT_EQ(p.pattern.size(), 1);
 	EXPECT_EQ(p.commands.size(), 4);
         EXPECT_EQ(p.to_run.size(), 2);
-        p.printCommands();
+//        p.printCommands();
 }
 
 
@@ -148,7 +161,7 @@ TEST(TestAssn2, multiple_command_test_with_quotes) {
 	EXPECT_EQ(p.pattern.size(), 1);
 	EXPECT_EQ(p.commands.size(), 5);
 	EXPECT_EQ(p.to_run.size(), 2);
-	p.printCommands();
+//	p.printCommands();
 }
 
 TEST(TestAssn2, exit_test_1) {
