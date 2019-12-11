@@ -35,20 +35,21 @@ void Command::runAll(int numOfCommands, Component* parser){
 	err = 0;
 	std::string exit_str = "";
 //	std::cout << "numOfCommands: " << numOfCommands << std::endl;
-
 	for(int i = 0; i < numOfCommands; i++){
 		exit_str = "";
 
 		exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
 			if(exit_str == "exit") {
+cout << "exitting" << endl;
 				parser->shouldIExit(true);
 				parser->resetVectors();
 				std::exit(0);
 			}
-	
+
+		redirect = false;	
 		int pid = fork();						//make a child process	
 		if(pid == 0) {
-			std::cout << "pid == 0" << std::endl;
+//	std::cout << "pid == 0" << std::endl;
 			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//if && fails
 				parser->removeNextCommand(i);
 			
@@ -65,21 +66,30 @@ void Command::runAll(int numOfCommands, Component* parser){
 //				parser->removeNextCommand(i);
 			}
 */
+
+//cout << "i + 1 = " << i + 1 << " vs. .size()" <<  parser->pattern.size() << endl;
+//cout << "at i " << parser->pattern.at(i) << " vs at i + 1: " << parser->pattern.at(i + 1) << endl;
 			if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == "<") {
-				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+//				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
 //				if (parser->pattern.at(i) == "<") {
-					OverwriteIn(to_run.at(i), i,  parser);
-					redirect = true;
+//		cout << "in < if" << endl;
+				
+				OverwriteIn(to_run.front(), i,  parser);
+//		cout << "erase" << endl;
+				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+				redirect = true;
 //				}
 			}
 			else if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == ">") {
 				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+//		cout << "in > if" << endl;
 				OverwriteOutNew(to_run.at(i), i, parser);
 				redirect = true;
 			}
 			
 			else if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == ">>") {
 				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+//		cout << "in >> if" << endl;
 				OverwriteOut(to_run.at(i), i, parser);
 				redirect = true;
 			}
@@ -107,11 +117,13 @@ void Command::runAll(int numOfCommands, Component* parser){
 				WEXITSTATUS(status);
 		}
 	redirect = false;
-std::cout << "d";
+	parser->to_run_pop_front();
+//std::cout << "d";
 	}
 }
 
 void Command::OverwriteOutNew(std::string to_run_command, int i, Component* parser) {
+cout << "in < func" << endl;
 	int savestdout = dup(1);						//saves stdout in next available loc
 	mode_t mode =  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_out_new_file, 0) + 2;
@@ -136,6 +148,7 @@ std::cout << "arga: " << *arga;
 }
 
 void Command::OverwriteOut(std::string to_run_command, int i, Component* parser) {
+cout << "in << func" << endl;
 	int savestdout = dup(1);						//saves stdout in next available loc
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_out, 0) + 3;
@@ -159,6 +172,7 @@ std::cout << "arga: " << *arga;
 }
 
 void Command::OverwriteIn(std::string to_run_command, int i, Component* parser) {
+cout << "in > func" << endl;
 	int savestdin = dup(0);							//saves stdin in next available loc
 
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;

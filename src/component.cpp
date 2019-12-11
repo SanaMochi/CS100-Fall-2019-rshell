@@ -105,4 +105,6 @@ void Component::setTestTrue() {
 void Component::setTestFalse() {
 	this->test_bool = false;
 }
-
+void Component::to_run_pop_front() {
+	to_run.erase(to_run.begin(), to_run.begin() + 1);
+}

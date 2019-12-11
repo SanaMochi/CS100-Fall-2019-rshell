@@ -59,9 +59,9 @@ void Parser::parse(){
 		perror("Error: Odd parens");
 		return;
 	}
-	if (numParens == 0)
+//	if (numParens == 0)
 		Parser::parseNoParens(command);
-	else if (numParens > 0) {
+/*	else if (numParens > 0) {
 		std::string command_og = command;
 //		if (command.at(0) != '(') {
 			
@@ -101,6 +101,7 @@ void Parser::parse(){
 			if (i >= command.size() && i != 0)
 				i = 0;
 		}
+
 //for (int i = 0; i < commands.size(); i++) {
 //	std::cout << commands.at(i) << ", ";
 //}
@@ -117,13 +118,12 @@ void Parser::parse(){
 			    	closed_parens.push_back(n);
 			}
 		}
-*/      //                temp += "(" + command_og + ")";
+*/     //                temp += "(" + command_og + ")";
         //                command = temp;
 
 //			int k = opened_parens.back();
 //			int o = opened_parens.size() - 1;
-	}
-
+//	}
 	
 	for (int i = 0; i < commands.size(); i++){
 		//std::cout << "comparing: " << commands.at(i) << " and &&\n";
@@ -141,26 +141,30 @@ void Parser::parse(){
 			pattern.push_back(closed_bracket);
 		
 		else if (commands.at(i) == pipe_symbol) {
-			pattern.push_back("");
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(pipe_symbol);
 		}
 		else if (commands.at(i) == redirect_in) {
-			pattern.push_back("");
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_in);
 		}
 		else if (commands.at(i) == redirect_out_new_file) {
-			pattern.push_back("");
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_out_new_file);
 		}
 		else if (commands.at(i) == redirect_out) {
-			pattern.push_back("");
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_out);
 		}
 	}
 	
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
-		
+	bool is_redirect = false;	
 		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol) { // && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
 			if (commands.at(i) == open_bracket) {			//if symbolic test
 				commands.at(i) = "test";
@@ -173,7 +177,26 @@ void Parser::parse(){
 				}
 				commands.erase(commands.begin() + 1);
 			}
-			else {
+/*			if (commands.at(i) == pipe_symbol || commands.at(i) == redirect_in || commands.at(i) == redirect_out_new_file || commands.at(i) == redirect_out){
+				while (i > 0 && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					i--;
+				}	//go back to first redirect command
+				while (i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					temp_str += commands.at(i);
+					temp_str += " ";
+					i++;
+				}	//go until at redirect command
+				temp_str += commands.at(i);	//include redirect command
+				temp_str += " ";
+				i++;
+				while (i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					temp_str += commands.at(i);	//continue until next connector
+					temp_str += " ";
+					i++;
+				}
+			to_run.push_back(temp_str);
+			}
+*/			else {
 				temp_str += commands.at(i);
 
 				if (commands.at(i).back() == ')')
@@ -182,12 +205,13 @@ void Parser::parse(){
 				i++;
 			}
 		}
+
 			to_run.push_back(temp_str);
 //	std::cout << "Command: " << temp_str << std::endl;
 	}
 //std::cout << "pattern: "; printPattern();
 	Parser::parseFileNames();
-//		std:: cout << "files: "; printFileNames();
+		std:: cout << "files: "; printFileNames();
 	Parser::parseArguments();
 	numOfCommands = fileNames.size();
 }
@@ -294,6 +318,10 @@ void Parser::printFileNames(){
 	}
 	std::cout << std::endl;
 }
+
+//void Parser::pop_front() {
+//	to_run.erase(0);
+//}
 
 void Parser::printPattern(){
 	for(int i = 0; i < pattern.size(); i++){

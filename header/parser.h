@@ -33,6 +33,7 @@ class Parser: public Component {
 	void parseArguments();				//seperates out the arguments from to_run and stores them in argv
 	void printArguments();				//print the arguments, mainly used for testing
 	void printFileNames();
+	void pop_front();
 	void printPattern();
 	
 	const char* formatFileName(int location);	//get the file name at a location and return it to be run with execvp
