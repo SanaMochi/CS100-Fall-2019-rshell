@@ -140,15 +140,22 @@ void Parser::parse(){
 		else if (commands.at(i) == closed_bracket)
 			pattern.push_back(closed_bracket);
 		
-		else if (commands.at(i) == pipe_symbol)
+		else if (commands.at(i) == pipe_symbol) {
+			pattern.push_back("");
 			pattern.push_back(pipe_symbol);
-		else if (commands.at(i) == redirect_in)
+		}
+		else if (commands.at(i) == redirect_in) {
+			pattern.push_back("");
 			pattern.push_back(redirect_in);
-		else if (commands.at(i) == redirect_out_new_file)
+		}
+		else if (commands.at(i) == redirect_out_new_file) {
+			pattern.push_back("");
 			pattern.push_back(redirect_out_new_file);
-		else if (commands.at(i) == redirect_out)
+		}
+		else if (commands.at(i) == redirect_out) {
+			pattern.push_back("");
 			pattern.push_back(redirect_out);
-
+		}
 	}
 	
 	for(int i = 0; i < commands.size(); i++){

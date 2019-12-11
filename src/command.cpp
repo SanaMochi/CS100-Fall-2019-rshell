@@ -36,80 +36,77 @@ void Command::runAll(int numOfCommands, Component* parser){
 	std::string exit_str = "";
 //	std::cout << "numOfCommands: " << numOfCommands << std::endl;
 
-for (int j = 0; j < pattern.size(); j++)
-	std::cout << "Pattern: "  << pattern.at(j) << std::endl;
+	for(int i = 0; i < numOfCommands; i++){
+		exit_str = "";
 
-		for(int i = 0; i < numOfCommands; i++){
-			exit_str = "";
-			
-			exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
-				if(exit_str == "exit"){
-					parser->shouldIExit(true);
-					parser->resetVectors();
-					std::exit(0);
-				}
+		exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
+			if(exit_str == "exit") {
+				parser->shouldIExit(true);
+				parser->resetVectors();
+				std::exit(0);
+			}
 	
-			int pid = fork();						//make a child process	
-			if(pid == 0) {
-				std::cout << "pid == 0";
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//if && fails
-					parser->removeNextCommand(i);
-				
-				else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||")	//if || passes
-					parser->removeNextCommand(i);
+		int pid = fork();						//make a child process	
+		if(pid == 0) {
+			std::cout << "pid == 0" << std::endl;
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//if && fails
+				parser->removeNextCommand(i);
+			
+			else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||")	//if || passes
+				parser->removeNextCommand(i);
 
-				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
-					quick_exit(EXIT_FAILURE);
+			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
+				quick_exit(EXIT_FAILURE);
 
 /*	//something is off		
 			if (parser->pattern.at(i) == "|" && pid == 0) {
-				Piping(to_run.at(i), i, parser); //, to_run.at(i + 1));
+				Piping(to_run.at(i), i, parser);
 				redirect = true;
 //				parser->removeNextCommand(i);
 			}
-			else if (parser->pattern.at(i) == "<" && pid == 0) {
-				OverwriteIn(to_run.at(i), i,  parser); //, to_run.at(i + 1));
-				redirect = true;
-//				parser->removeNextCommand(i);
+*/
+			if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == "<") {
+				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+//				if (parser->pattern.at(i) == "<") {
+					OverwriteIn(to_run.at(i), i,  parser);
+					redirect = true;
+//				}
 			}
-			
-			else if (parser->pattern.at(i) == ">" && pid == 0) {
-				OverwriteOutNew(to_run.at(i), i, parser); //, to_run.at(i + 1));
+			else if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == ">") {
+				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+				OverwriteOutNew(to_run.at(i), i, parser);
 				redirect = true;
-//				parser->removeNextCommand(i);
-			}
-			
-			else if (parser->pattern.at(i) == ">>" && pid == 0) {
-				OverwriteOut(to_run.at(i), i, parser); //, to_run.at(i + 1));
-				redirect = true;
-//				parser->removeNextCommand(i);
 			}
 			
-*/		
+			else if (i + 1 < parser->pattern.size() && parser->pattern.at(i) == "" && parser->pattern.at(i + 1) == ">>") {
+				parser->pattern.erase(pattern.begin() + i, pattern.begin() + i + 1);
+				OverwriteOut(to_run.at(i), i, parser);
+				redirect = true;
+			}
+			
 			char ** arga = parser->formatArguments(i);	
 
 //std::cout << "arga: " << *arga;
 			std::string test_str = "test";                          //check if test
-				if (*arga == test_str)
-					test->Test::runCommand(parser->formatArguments(i));
-				
-				else {
-					this->Command::runCommand(parser->formatArguments(i));
-std::cout << "c";
-}
-			}
-			else if (pid < 0) {
-				perror("failed fork");
-				//return 1;
-				std::exit(1);
-			}
-			else if (pid > 0) {
-				if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
-					perror("wait on child");
-				if (WIFEXITED(status)) 
-					WEXITSTATUS(status);
-			}
-//	redirect = false;
+			if (*arga == test_str)
+				test->Test::runCommand(parser->formatArguments(i));
+		
+			else if (redirect == false)
+				this->Command::runCommand(parser->formatArguments(i));
+
+		}
+		else if (pid < 0) {
+			perror("failed fork");
+			//return 1;
+			std::exit(1);
+		}
+		else if (pid > 0) {
+			if (waitpid(-1, &status, 0) < 0)		//wait for the child to continue
+				perror("wait on child");
+			if (WIFEXITED(status)) 
+				WEXITSTATUS(status);
+		}
+	redirect = false;
 std::cout << "d";
 	}
 }
@@ -168,13 +165,15 @@ void Command::OverwriteIn(std::string to_run_command, int i, Component* parser) 
 	int file_start = to_run_command.find(redirect_in, 0) + 2;
 	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
 	int newin = open(fileName.c_str(), O_RDONLY, mode);			//opens a file
-std::cout << "e";
+std::cout << "e" << endl;
 	
 	int command_end = to_run_command.find(redirect_in, 0) - 2;
 	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
+	
+cout << "command " << parser->to_run.at(i) << endl;
 
-std::cout << "arga: " << *arga;
 	char** arga = parser->formatArguments(i); 
+std::cout << "arga: " << *arga;
 	std::string test_str = "test";  		                        //check if test
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
