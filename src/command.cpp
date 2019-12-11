@@ -49,9 +49,18 @@ for (int j = 0; j < pattern.size(); j++)
 					std::exit(0);
 				}
 	
-			int pid = fork();						//make a child process		
-//			waitpid(pid, &status, WCONTINUED);		//wait for the child to continue
-		
+			int pid = fork();						//make a child process	
+			if(pid == 0) {
+				std::cout << "pid == 0";
+				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")	//if && fails
+					parser->removeNextCommand(i);
+				
+				else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||")	//if || passes
+					parser->removeNextCommand(i);
+
+				if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
+					quick_exit(EXIT_FAILURE);
+
 /*	//something is off		
 			if (parser->pattern.at(i) == "|" && pid == 0) {
 				Piping(to_run.at(i), i, parser); //, to_run.at(i + 1));
@@ -76,26 +85,10 @@ for (int j = 0; j < pattern.size(); j++)
 //				parser->removeNextCommand(i);
 			}
 			
-*/
-			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&") {	//if && fails
-				parser->removeNextCommand(i);
-std::cout << "a";
-			}
-				
-			else if(WEXITSTATUS(status) == 0  && parser->pattern.at(i) == "||") {	//if || passes
-				parser->removeNextCommand(i);
-std::cout << "b";
-			}
-
-			if(WEXITSTATUS(status) == 1 && parser->pattern.at(i) == "&&")
-				quick_exit(EXIT_FAILURE);
-		
+*/		
 			char ** arga = parser->formatArguments(i);	
 
-//std::cout << *arga;
-
-			if(pid == 0 && redirect == false) {
-std::cout << "pid == 0";
+//std::cout << "arga: " << *arga;
 			std::string test_str = "test";                          //check if test
 				if (*arga == test_str)
 					test->Test::runCommand(parser->formatArguments(i));
@@ -127,10 +120,12 @@ void Command::OverwriteOutNew(std::string to_run_command, int i, Component* pars
 	int file_start = to_run_command.find(redirect_out_new_file, 0) + 2;
 	std::string fileName =  to_run_command.substr(file_start, (to_run_command.size() - 1));
 	int newout = open(fileName.c_str(), O_WRONLY | O_CREAT, mode);
+
 	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
+	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
 
 	char** arga = parser->formatArguments(i);
-std::cout << "arga: " << arga;
+std::cout << "arga: " << *arga;
 	std::string test_str = "test";
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
@@ -139,8 +134,7 @@ std::cout << "arga: " << arga;
 
 		
 	close(1);								//close file to write in
-//	dup(newout);
-
+	dup(newout);
 	dup2(savestdout, 1);							//puts stdout back to og loc
 }
 
@@ -148,12 +142,14 @@ void Command::OverwriteOut(std::string to_run_command, int i, Component* parser)
 	int savestdout = dup(1);						//saves stdout in next available loc
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_out, 0) + 3;
-	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
 	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
 	int newout = open(fileName.c_str(), O_WRONLY | O_CREAT | O_APPEND, mode);          //open file to writ in
 
+	int command_end = to_run_command.find(redirect_out, 0) - 2;
+	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
+	
 	char** arga = parser->formatArguments(i);
-std::cout << "arga: " << arga;
+std::cout << "arga: " << *arga;
 	std::string test_str = "test";
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
@@ -161,6 +157,7 @@ std::cout << "arga: " << arga;
 			Command::runCommand(parser->formatArguments(i));
 
 	close(1);
+	dup(newout);
 	dup2(savestdout, 1);							//puts stdout back to og loc
 }
 
@@ -169,21 +166,15 @@ void Command::OverwriteIn(std::string to_run_command, int i, Component* parser) 
 
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_in, 0) + 2;
-//	int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
 	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
-	//dup(fileName);
-	int newin = open(fileName.c_str(), O_RDONLY, mode);
+	int newin = open(fileName.c_str(), O_RDONLY, mode);			//opens a file
 std::cout << "e";
-
-//	if (newin < 0)
-	//	perror("negative fd");
-//	to_run.at(i) = 
-	char** arga = parser->formatArguments(i); 
-//std::cout << "arga: " << arga;
-	int end_index = to_run_command.find(redirect_in, 0) - 2;
-	to_run_command = to_run_command.substr(0, end_index);
-	parser->to_run.at(i) = to_run_command;
 	
+	int command_end = to_run_command.find(redirect_in, 0) - 2;
+	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
+
+std::cout << "arga: " << *arga;
+	char** arga = parser->formatArguments(i); 
 	std::string test_str = "test";  		                        //check if test
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
