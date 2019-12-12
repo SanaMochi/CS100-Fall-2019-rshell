@@ -40,7 +40,7 @@ void Command::runAll(int numOfCommands, Component* parser){
 
 		exit_str = parser->formatArguments(i)[0];	//check if supposed to exit
 			if(exit_str == "exit") {
-cout << "exitting" << endl;
+//cout << "exitting" << endl;
 				parser->shouldIExit(true);
 				parser->resetVectors();
 				std::exit(0);
@@ -123,7 +123,7 @@ cout << "exitting" << endl;
 }
 
 void Command::OverwriteOutNew(std::string to_run_command, int i, Component* parser) {
-cout << "in < func" << endl;
+//cout << "in < func" << endl;
 	int savestdout = dup(1);						//saves stdout in next available loc
 	mode_t mode =  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_out_new_file, 0) + 2;
@@ -134,7 +134,7 @@ cout << "in < func" << endl;
 	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
 
 	char** arga = parser->formatArguments(i);
-std::cout << "arga: " << *arga;
+//std::cout << "arga: " << *arga;
 	std::string test_str = "test";
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
@@ -148,7 +148,7 @@ std::cout << "arga: " << *arga;
 }
 
 void Command::OverwriteOut(std::string to_run_command, int i, Component* parser) {
-cout << "in << func" << endl;
+//cout << "in << func" << endl;
 	int savestdout = dup(1);						//saves stdout in next available loc
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_out, 0) + 3;
@@ -159,7 +159,7 @@ cout << "in << func" << endl;
 	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
 	
 	char** arga = parser->formatArguments(i);
-std::cout << "arga: " << *arga;
+//std::cout << "arga: " << *arga;
 	std::string test_str = "test";
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
@@ -172,22 +172,22 @@ std::cout << "arga: " << *arga;
 }
 
 void Command::OverwriteIn(std::string to_run_command, int i, Component* parser) {
-cout << "in > func" << endl;
+//cout << "in > func" << endl;
 	int savestdin = dup(0);							//saves stdin in next available loc
 
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int file_start = to_run_command.find(redirect_in, 0) + 2;
 	std::string fileName = to_run_command.substr(file_start, (to_run_command.size() - 1));
 	int newin = open(fileName.c_str(), O_RDONLY, mode);			//opens a file
-std::cout << "e" << endl;
+//std::cout << "e" << endl;
 	
 	int command_end = to_run_command.find(redirect_in, 0) - 2;
 	parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
 	
-cout << "command " << parser->to_run.at(i) << endl;
+//cout << "command " << parser->to_run.at(i) << endl;
 
 	char** arga = parser->formatArguments(i); 
-std::cout << "arga: " << *arga;
+//std::cout << "arga: " << *arga;
 	std::string test_str = "test";  		                        //check if test
 		if (*arga == test_str)
 			test->Test::runCommand(parser->formatArguments(i));
