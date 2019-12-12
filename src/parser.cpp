@@ -59,9 +59,9 @@ void Parser::parse(){
 		perror("Error: Odd parens");
 		return;
 	}
-	if (numParens == 0)
+//	if (numParens == 0)
 		Parser::parseNoParens(command);
-	else if (numParens > 0) {
+/*	else if (numParens > 0) {
 		std::string command_og = command;
 //		if (command.at(0) != '(') {
 			
@@ -88,11 +88,11 @@ void Parser::parse(){
 				while (command.at(start + end - temp2) == ' ' || command.at(start + end - temp2) == ')')
 					temp2++; 
 				Parser::parseNoParens(command.substr(start + temp1, end - temp2));	
-	std::cout << "to be parsed: " << command.substr(start + temp1, end - temp2) << std::endl;
+//	std::cout << "to be parsed: " << command.substr(start + temp1, end - temp2) << std::endl;
 
 				to_run_parens.push_back(command.substr(start + temp1, end - temp2));
 				command.erase(start, end);
-	std::cout << "leftover: " << command << std::endl;
+//	std::cout << "leftover: " << command << std::endl;
 					if (start < command.size())
 						i = start;
 					else if (command.size() != 0)
@@ -101,6 +101,7 @@ void Parser::parse(){
 			if (i >= command.size() && i != 0)
 				i = 0;
 		}
+
 //for (int i = 0; i < commands.size(); i++) {
 //	std::cout << commands.at(i) << ", ";
 //}
@@ -117,13 +118,12 @@ void Parser::parse(){
 			    	closed_parens.push_back(n);
 			}
 		}
-*/      //                temp += "(" + command_og + ")";
+*/     //                temp += "(" + command_og + ")";
         //                command = temp;
 
 //			int k = opened_parens.back();
 //			int o = opened_parens.size() - 1;
-	}
-
+//	}
 	
 	for (int i = 0; i < commands.size(); i++){
 		//std::cout << "comparing: " << commands.at(i) << " and &&\n";
@@ -140,21 +140,32 @@ void Parser::parse(){
 		else if (commands.at(i) == closed_bracket)
 			pattern.push_back(closed_bracket);
 		
-		else if (commands.at(i) == pipe_symbol)
+		else if (commands.at(i) == pipe_symbol) {
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(pipe_symbol);
-		else if (commands.at(i) == redirect_in)
+		}
+		else if (commands.at(i) == redirect_in) {
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_in);
-		else if (commands.at(i) == redirect_out_new_file)
+		}
+		else if (commands.at(i) == redirect_out_new_file) {
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_out_new_file);
-		else if (commands.at(i) == redirect_out)
+		}
+		else if (commands.at(i) == redirect_out) {
+			if (pattern.back() != "")
+				pattern.push_back("");
 			pattern.push_back(redirect_out);
-
+		}
 	}
 	
 	for(int i = 0; i < commands.size(); i++){
 		std::string temp_str = "";
-		
-		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+	bool is_redirect = false;	
+		while(i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol) { // && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
 			if (commands.at(i) == open_bracket) {			//if symbolic test
 				commands.at(i) = "test";
 				while (commands.at(i) != closed_bracket) {
@@ -166,23 +177,43 @@ void Parser::parse(){
 				}
 				commands.erase(commands.begin() + 1);
 			}
-			else {
+/*			if (commands.at(i) == pipe_symbol || commands.at(i) == redirect_in || commands.at(i) == redirect_out_new_file || commands.at(i) == redirect_out){
+				while (i > 0 && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					i--;
+				}	//go back to first redirect command
+				while (i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					temp_str += commands.at(i);
+					temp_str += " ";
+					i++;
+				}	//go until at redirect command
+				temp_str += commands.at(i);	//include redirect command
+				temp_str += " ";
+				i++;
+				while (i < commands.size() && commands.at(i) != and_symbol && commands.at(i) != or_symbol && commands.at(i) != end_symbol && commands.at(i) != pipe_symbol && commands.at(i) != redirect_in && commands.at(i) != redirect_out_new_file && commands.at(i) != redirect_out){
+					temp_str += commands.at(i);	//continue until next connector
+					temp_str += " ";
+					i++;
+				}
+			to_run.push_back(temp_str);
+			}
+*/			else {
 				temp_str += commands.at(i);
 
 				if (commands.at(i).back() == ')')
 					commands.at(i).pop_back();
 				temp_str += " ";
 				i++;
-//				std::cout << temp_str << std::endl;
 			}
 		}
+
 			to_run.push_back(temp_str);
 //	std::cout << "Command: " << temp_str << std::endl;
 	}
+//std::cout << "pattern: "; printPattern();
 	Parser::parseFileNames();
+		std:: cout << "files: "; printFileNames();
 	Parser::parseArguments();
 	numOfCommands = fileNames.size();
-	//pattern.push_back("");
 }
 
 void Parser::parseNoParens(std::string comm) {
@@ -217,7 +248,6 @@ void Parser::parseNoParens(std::string comm) {
 		else {
 			 if (pos_start + (pos_end - pos_start) < comm.size()) {
 				commands.push_back(comm.substr(pos_start, (pos_end - pos_start)));
-//	std::cout << commands.back() << " = 3 , ";
 				pos_end++;
 				pos_start = pos_end;
 			}
@@ -226,7 +256,6 @@ void Parser::parseNoParens(std::string comm) {
 	//assume there is always a last command ofter the last space
 	if (pos_start < comm.size()) {
 		commands.push_back(comm.substr(pos_start, (comm.size() - pos_start)));
-//	std::cout << commands.back() << " = 4 , ";
 	}
 }
 	
@@ -253,7 +282,8 @@ void Parser::parseFileNames(){
 	int pos_end = 0;
 	for(int i = 0; i < to_run.size(); i++){
 		pos_end = to_run.at(i).find(" ", pos_start);
-		fileNames.push_back(to_run.at(i).substr(pos_start, pos_end));
+//		if (to_run.at(i).substr(pos_start, pos_end) != ">" || to_run.at(i).substr(pos_start, pos_end) != "<" || to_run.at(i).substr(pos_start, pos_end) != ">>" || to_run.at(i).substr(pos_start, pos_end) != "|")
+			fileNames.push_back(to_run.at(i).substr(pos_start, pos_end));
 	}
 }
 
@@ -265,7 +295,8 @@ void Parser::parseArguments(){
 		pos_start = to_run.at(x).find(" ", pos_start) + 1;		//ignore the firsr word (its the file name)
 		while(to_run.at(x).find(space, pos_start) != -1){	
 			pos_end = to_run.at(x).find(space, pos_start);
-			argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
+//			if (to_run.at(x).substr(pos_start, (pos_end - pos_start)) != ">" || to_run.at(x).substr(pos_start, (pos_end - pos_start)) != "<" || to_run.at(x).substr(pos_start, (pos_end - pos_start)) != ">>" || to_run.at(x).substr(pos_start, (pos_end - pos_start)) != "|")
+				argv.push_back(to_run.at(x).substr(pos_start, (pos_end - pos_start)));
 			pos_end++;
 			pos_start = pos_end;
 	}
@@ -287,6 +318,10 @@ void Parser::printFileNames(){
 	}
 	std::cout << std::endl;
 }
+
+//void Parser::pop_front() {
+//	to_run.erase(0);
+//}
 
 void Parser::printPattern(){
 	for(int i = 0; i < pattern.size(); i++){
