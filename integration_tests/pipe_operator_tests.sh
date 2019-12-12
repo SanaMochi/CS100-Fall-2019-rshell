@@ -3,7 +3,7 @@
 test.cpp
 g++ test.cpp -o test
 
-#insert test
+cat < names.txt | tr A-Z a-z > newOutputFile10
 
 ./test
 

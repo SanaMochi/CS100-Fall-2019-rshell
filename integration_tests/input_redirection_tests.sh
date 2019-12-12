@@ -3,7 +3,7 @@
 test.cpp
 g++ test.cpp -o test
 
-#insert test
+cat < names.txt 
 
 ./test
 

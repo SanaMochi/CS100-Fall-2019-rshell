@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
 	if(input == "exit" || p.shouldIExit()){
 		return 0;
 	}
-	p.parse();				//
+	p.parse();
 	input = "";
 	c->runAll(p.getSize(), &p);
 	if(argc > 1)
