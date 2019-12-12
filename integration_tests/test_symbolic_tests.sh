@@ -1,18 +1,13 @@
 #!/bin/sh
 
-#exec 6>&1           # Link file descriptor #6 with stdout.
-                    # Saves stdout.
-#exec > data-file   # stdin replaced by file "data-file"
-../src/rshell.cpp
-
-g++ rshell.cpp component.cpp command.cpp parser.cpp test.cpp -o rshell
+PATH="$PATH:.test.cpp"
+g++ integration_tests/test.cpp src/command.cpp src/component.cpp src/parser.cpp src/test.cpp -o test -std=c++11
 
 [ -e "rshell" ]  # echo (True)
 [ -f "header/command.h" ] # echo (True)
 [ -d integration_tests ]  # echo (True)
 [ -e asdf ] # echo (False)
 
-./rshell
+./test
 
-#exec 1>&6 6>&-      # Restore stdout and close file descriptor #6.
 exit 0
