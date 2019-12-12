@@ -19,16 +19,17 @@ class Command : public Component{
 	int status;
 	int err;
 	Test* test;
+	bool redirect;
 	
 	public:
-	Command();
-//	void removeNextCommand(int location);
-	
+	Command();	
 	virtual void runCommand(char ** argv);
-	
 	virtual void runAll(int numOfCommands, Component* parser);
-	//void makeList(int numOfCommands, Parser* parser);
-	
+	void OverwriteOutNew(std::string to_run_command, int i, Component* parser);
+	void OverwriteOut(std::string to_run_command, int i, Component* parser);
+	void OverwriteIn(std::string to_run_command, int i, Component* parser);
+	void Piping(std::string to_run_command, int i, Component* parser);
+//	void parseNoParens(std::string comm);
 };
 
 #endif
