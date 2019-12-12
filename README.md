@@ -1,11 +1,5 @@
 # CS 100 Programming Project
 
-* [Link](https://docs.google.com/document/d/1Y5DATAeU7McB0YAMThAHkEdS3_kNyPMaZqNx1qU2X4M/edit) to assignment 4 specs so I dont have to keep on signing into ilearn
-compile with `g++ rshell.cpp parser.cpp command.cpp test.cpp -o main -std=c++11` in src directory
-* [Link](https://thoughtbot.com/blog/input-output-redirection-in-the-shell) to info on operators to make
-* [Link](https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators) to info on operations to make
-* [Link](https://en.wikipedia.org/wiki/Pipeline_(Unix)) to helpful pipeline info
-
 <h1> Project Information </h1>
 Fall 2019
 
@@ -50,7 +44,32 @@ the runCommand function also has an added functionality to call Test class when 
 	            else                                         //if not test
 	               Command::runCommand(parser->formatArguments(i));
          }
+Also uses `dup()` and `dup2()` to redirect `stdout` and `stdin`.
+	
+	void Command::OverwriteOutNew(std::string to_run_command, int i, Component* parser) {
+		int savestdout = dup(1);						//saves stdout in next available loc
+		mode_t mode =  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+		int file_start = to_run_command.find(redirect_out_new_file, 0) + 2;
+		std::string fileName =  to_run_command.substr(file_start, (to_run_command.size() - 1));
+		int newout = open(fileName.c_str(), O_WRONLY | O_CREAT, mode);
 
+		int command_end = to_run_command.find(redirect_out_new_file, 0) - 2;
+		parser->to_run.at(i) = to_run_command.substr(0, command_end);		//gets command to run in execvp
+
+		char** arga = parser->formatArguments(i);
+		std::string test_str = "test";
+			if (*arga == test_str)
+				test->Test::runCommand(parser->formatArguments(i));
+			else
+				Command::runCommand(parser->formatArguments(i));
+
+
+		close(1);								//close file to write in
+		dup(newout);
+		dup2(savestdout, 1);							//puts stdout back to og loc
+	}
+
+	
 Parser:
 Leaf class that parses the command and executes based on the connector
 If surrounded by quotes, arguments are treated as a single argument, no matter what they contain.
