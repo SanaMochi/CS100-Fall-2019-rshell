@@ -58,8 +58,10 @@ class Component{
 	void resetVectors();
 	bool shouldIExit();
 	void shouldIExit(bool shouldI);
+	void to_run_pop_front();
 	
 	virtual void runCommand(char ** argv) = 0;
 	virtual void runAll(int numOfCommands, Component* parser) = 0;
+
 };
 #endif
