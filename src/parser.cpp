@@ -211,7 +211,7 @@ void Parser::parse(){
 	}
 //std::cout << "pattern: "; printPattern();
 	Parser::parseFileNames();
-		std:: cout << "files: "; printFileNames();
+//		std:: cout << "files: "; printFileNames();
 	Parser::parseArguments();
 	numOfCommands = fileNames.size();
 }
@@ -267,9 +267,9 @@ void Parser::printCommands(){
 			std::cout << commands.at(i) << " , ";
 		std::cout << std::endl;
 	}
-	for(int i = 0; i < to_run.size(); i++)
-		std::cout << to_run.at(i) << " , ";
-	std::cout << std::endl;
+//	for(int i = 0; i < to_run.size(); i++)
+//		std::cout << to_run.at(i) << " , ";
+//	std::cout << std::endl;
 }
 
 std::vector<std::string> Parser::getCommandsToRun(){
